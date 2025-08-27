@@ -36,19 +36,19 @@ header nav a:hover {
 .carousel-window {
   width: 80%;
   max-width: 800px;
-  height: 400px;               /* fixed height to prevent scrolling */
+  height: 400px;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 
-  /* Gradient background that does not repeat */
   background: linear-gradient(135deg, #ffafbd, #ffc3a0);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  /* centers smaller images vertically */
 }
 
 .carousel img {
