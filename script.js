@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let scrollIndex = 0;
     const totalImages = images.length;
 
+    // Ensure carousel container scrolls horizontally
+    carousel.style.display = "flex";
+    carousel.style.overflowX = "hidden";
+
     setInterval(() => {
       scrollIndex = (scrollIndex + 1) % totalImages;
       const offset = images[scrollIndex].offsetLeft;
@@ -27,19 +31,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Initialize cart count in header if cart exists
+  updateCartCount();
 });
 
 // Add items to cart
 function addToCart(item) {
   cart.push(item);
   alert(item + " added to cart!");
+  updateCartCount();
+}
+
+// Update cart count display in header
+function updateCartCount() {
+  const countElem = document.getElementById("cart-count");
+  if (countElem) {
+    countElem.textContent = cart.length;
+  }
 }
 
 // Open checkout modal
-document.getElementById("cart-icon").addEventListener("click", (e) => {
-  e.preventDefault();
-  openCheckout();
-});
+const cartIcon = document.getElementById("cart-icon");
+if (cartIcon) {
+  cartIcon.addEventListener("click", (e) => {
+    e.preventDefault();
+    openCheckout();
+  });
+}
 
 function openCheckout() {
   const modal = document.getElementById("checkout-modal");
@@ -61,7 +80,7 @@ function closeCheckout() {
 // Close modal if user clicks outside the content
 window.addEventListener("click", (e) => {
   const modal = document.getElementById("checkout-modal");
-  if (e.target === modal) {
+  if (modal && e.target === modal) {
     closeCheckout();
   }
 });
