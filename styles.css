@@ -48,13 +48,13 @@ header nav a:hover {
 
   display: flex;
   justify-content: center;
-  align-items: center;  /* centers smaller images vertically */
+  align-items: center;
 }
 
 .carousel img {
   width: 100%;
   height: 100%;
-  object-fit: contain;          /* smaller images fit without stretching */
+  object-fit: contain;
   display: block;
 }
 
@@ -96,9 +96,8 @@ button:hover {
 }
 
 /* === Modal === */
-/* Hide modal by default */
 .modal {
-  display: none; /* hidden until triggered */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -112,19 +111,17 @@ button:hover {
   align-items: center;
 }
 
-/* Center modal content */
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   max-width: 500px;
   width: 90%;
-  max-height: 90vh;       /* prevents modal from exceeding screen height */
-  overflow-y: auto;       /* scroll if content is taller than modal */
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
 }
 
-/* Close button */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -152,10 +149,10 @@ label {
 /* === Responsive Adjustments === */
 @media (max-width: 600px) {
   .carousel-window {
-    height: 250px;  /* smaller height on mobile */
+    height: 250px;
   }
 
   .product {
-    width: 45%;      /* smaller product cards on mobile */
+    width: 45%;
   }
 }
