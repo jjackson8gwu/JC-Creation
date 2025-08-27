@@ -1,3 +1,4 @@
+/* === General Layout === */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #ffafbd, #ffc3a0);
@@ -18,6 +19,7 @@ nav a {
   text-decoration: none;
 }
 
+/* === Carousel === */
 .carousel-window {
   width: 80%;
   margin: 2em auto;
@@ -28,14 +30,17 @@ nav a {
 
 .carousel img {
   width: 100%;
-  height: auto;
+  display: block;
   border-radius: 12px;
 }
 
+/* === Products === */
 .products {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
   padding: 1em;
+  justify-content: center;
 }
 
 .product {
@@ -44,13 +49,50 @@ nav a {
   padding: 1em;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  max-width: 200px;
 }
 
+.product img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.product button {
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product button:hover {
+  background: #ff4757;
+}
+
+/* === Cart === */
 .cart {
   background: #fff;
   padding: 1em;
   margin: 2em;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.cart button {
+  padding: 0.8em 1.5em;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cart button:hover {
+  background: #45a049;
 }
 
 /* === Modal Styles === */
@@ -60,7 +102,7 @@ nav a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* dimmed background */
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +113,8 @@ nav a {
   display: none;
 }
 
-.modal form {
+.modal-content {
+  position: relative;
   background: #fff;
   padding: 2em;
   border-radius: 12px;
@@ -81,16 +124,16 @@ nav a {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal form label {
+.modal-content label {
   display: block;
   margin-bottom: 1em;
   font-weight: bold;
   color: #333;
 }
 
-.modal form input,
-.modal form select,
-.modal form textarea {
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
   width: 100%;
   padding: 0.6em;
   margin-top: 0.3em;
@@ -99,7 +142,7 @@ nav a {
   font-size: 1em;
 }
 
-.modal form button {
+.modal-content button {
   background: #ff6b6b;
   color: #fff;
   border: none;
@@ -112,26 +155,11 @@ nav a {
   transition: background 0.3s ease;
 }
 
-.modal form button:hover {
+.modal-content button:hover {
   background: #ff4757;
 }
 
-/* Smooth fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.modal-content {
-  position: relative;
-  background: #fff;
-  padding: 2em;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
-}
-
+/* Close Button */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -147,4 +175,10 @@ nav a {
 
 .close-btn:hover {
   color: #ff4757;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
