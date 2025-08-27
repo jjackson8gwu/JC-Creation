@@ -122,12 +122,10 @@ nav a {
 .modal-content {
   position: relative;
   background: #fff;
-  padding: 2em;
+  padding: 3em 2em 2em 2em; /* added extra top padding for close button */
   border-radius: 12px;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .modal-content label {
@@ -177,6 +175,7 @@ nav a {
   cursor: pointer;
   color: #666;
   transition: color 0.3s ease;
+  z-index: 10;
 }
 
 .close-btn:hover {
