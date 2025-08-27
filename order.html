@@ -15,20 +15,25 @@
   </header>
 
   <main>
+    <!-- Product Grid -->
     <section class="products">
-      <!-- Repeat this block per item -->
+      <!-- Repeat this block for each item -->
       <div class="product">
         <img src="images/pokeball.jpg" alt="Pokeball">
         <h3>Pokeball</h3>
         <button onclick="addToCart('Pokeball')">Add to Cart</button>
       </div>
+
       <div class="product">
         <img src="images/flexicat.jpg" alt="Flexi Cat">
         <h3>Flexi Cat</h3>
         <button onclick="addToCart('Flexi Cat')">Add to Cart</button>
       </div>
+
+      <!-- Add more products as needed -->
     </section>
 
+    <!-- Cart Section -->
     <section class="cart">
       <h2>Your Cart</h2>
       <ul id="cart-items"></ul>
@@ -36,42 +41,48 @@
     </section>
   </main>
 
+  <!-- Checkout Modal -->
   <div id="checkout-form" class="modal hidden">
-  <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
-    <label>
-      Name:
-      <input type="text" name="name" required>
-    </label>
+    <div class="modal-content">
+      <button type="button" class="close-btn" onclick="closeModal()">×</button>
+      
+      <!-- ✅ Formspree integrated -->
+      <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
+        <label>
+          Name:
+          <input type="text" name="name" required>
+        </label>
 
-    <label>
-      Phone:
-      <input type="text" name="phone" required>
-    </label>
+        <label>
+          Phone:
+          <input type="text" name="phone" required>
+        </label>
 
-    <label>
-      Email:
-      <input type="email" name="email" required>
-    </label>
+        <label>
+          Email:
+          <input type="email" name="email" required>
+        </label>
 
-    <label>
-      Address:
-      <input type="text" name="address">
-    </label>
+        <label>
+          Address:
+          <input type="text" name="address">
+        </label>
 
-    <label>
-      Pickup or Shipping:
-      <select name="delivery" id="delivery" required>
-        <option value="pickup">Local Pickup</option>
-        <option value="shipping">Shipping</option>
-      </select>
-    </label>
+        <label>
+          Pickup or Shipping:
+          <select name="delivery" id="delivery" required>
+            <option value="pickup">Local Pickup</option>
+            <option value="shipping">Shipping</option>
+          </select>
+        </label>
 
-    <!-- This hidden field will store cart contents -->
-    <input type="hidden" name="cart" id="cartData">
+        <!-- Hidden input to hold cart data -->
+        <input type="hidden" name="cart" id="cartData">
 
-    <button type="submit">Submit Order</button>
-  </form>
-</div>
+        <button type="submit">Submit Order</button>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
