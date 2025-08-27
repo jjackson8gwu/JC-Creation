@@ -37,25 +37,41 @@
   </main>
 
   <div id="checkout-form" class="modal hidden">
-    <form id="orderForm">
-      <label>Name: <input type="text" name="name" required></label>
-      <label>Phone: <input type="text" name="phone" required></label>
-      <label>Email: <input type="email" name="email" required></label>
-      <label>Address: <input type="text" name="address"></label>
+  <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
+    <label>
+      Name:
+      <input type="text" name="name" required>
+    </label>
 
-      <label>
-        Pickup or Shipping:
-        <select name="delivery" id="delivery" required>
-          <option value="pickup">Local Pickup</option>
-          <option value="shipping">Shipping</option>
-        </select>
-      </label>
+    <label>
+      Phone:
+      <input type="text" name="phone" required>
+    </label>
 
-      <input type="hidden" name="cart" id="cartData">
+    <label>
+      Email:
+      <input type="email" name="email" required>
+    </label>
 
-      <button type="submit">Submit Order</button>
-    </form>
-  </div>
+    <label>
+      Address:
+      <input type="text" name="address">
+    </label>
+
+    <label>
+      Pickup or Shipping:
+      <select name="delivery" id="delivery" required>
+        <option value="pickup">Local Pickup</option>
+        <option value="shipping">Shipping</option>
+      </select>
+    </label>
+
+    <!-- This hidden field will store cart contents -->
+    <input type="hidden" name="cart" id="cartData">
+
+    <button type="submit">Submit Order</button>
+  </form>
+</div>
 
   <script src="script.js"></script>
 </body>
