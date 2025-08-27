@@ -31,3 +31,22 @@ document.getElementById("orderForm")?.addEventListener("submit", function(e) {
     document.getElementById("checkout-form").classList.add("hidden");
   });
 });
+// Auto-scrolling carousel
+let carouselIndex = 0;
+const carousel = document.getElementById("carousel");
+const slides = carousel?.children;
+
+function showSlide() {
+  if (!slides) return;
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  carouselIndex++;
+  if (carouselIndex > slides.length) carouselIndex = 1;
+  slides[carouselIndex - 1].style.display = "block";
+  setTimeout(showSlide, 3000); // change every 3s
+}
+
+if (carousel) {
+  showSlide();
+}
