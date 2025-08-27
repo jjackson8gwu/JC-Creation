@@ -43,46 +43,51 @@
 
   <!-- Checkout Modal -->
   <div id="checkout-form" class="modal hidden">
-    <div class="modal-content">
-      <button type="button" class="close-btn" onclick="closeModal()">×</button>
-      
-      <!-- ✅ Formspree integrated -->
-      <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
-        <label>
-          Name:
-          <input type="text" name="name" required>
-        </label>
+  <div class="modal-content">
+    <button type="button" class="close-btn" onclick="closeModal()">×</button>
+    <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+      </div>
 
-        <label>
-          Phone:
-          <input type="text" name="phone" required>
-        </label>
+      <div class="form-group">
+        <label>Phone:</label>
+        <input type="text" name="phone" required>
+      </div>
 
-        <label>
-          Email:
-          <input type="email" name="email" required>
-        </label>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+      </div>
 
-        <label>
-          Address:
-          <input type="text" name="address">
-        </label>
+      <!-- Updated Address -->
+      <div class="form-group">
+        <label>City:</label>
+        <input type="text" name="city">
+      </div>
+      <div class="form-group">
+        <label>State:</label>
+        <input type="text" name="state">
+      </div>
+      <div class="form-group">
+        <label>Zip:</label>
+        <input type="text" name="zip">
+      </div>
 
-        <label>
-          Pickup or Shipping:
-          <select name="delivery" id="delivery" required>
-            <option value="pickup">Local Pickup</option>
-            <option value="shipping">Shipping</option>
-          </select>
-        </label>
+      <div class="form-group">
+        <label>Pickup or Shipping:</label>
+        <select name="delivery" id="delivery" required>
+          <option value="pickup">Local Pickup</option>
+          <option value="shipping">Shipping</option>
+        </select>
+      </div>
 
-        <!-- Hidden input to hold cart data -->
-        <input type="hidden" name="cart" id="cartData">
-
-        <button type="submit">Submit Order</button>
-      </form>
-    </div>
+      <input type="hidden" name="cart" id="cartData">
+      <button type="submit">Submit Order</button>
+    </form>
   </div>
+</div>
 
   <script src="script.js"></script>
 </body>
