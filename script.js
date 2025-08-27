@@ -2,16 +2,30 @@ let cart = [];
 
 // Carousel auto-scroll
 document.addEventListener("DOMContentLoaded", () => {
-  const carousel = document.querySelector(".carousel-container");
+  const carousel = document.getElementById("carousel");
   if (carousel) {
-    let scrollAmount = 0;
+    const images = carousel.querySelectorAll("img");
+    let scrollIndex = 0;
+    const totalImages = images.length;
+
     setInterval(() => {
-      scrollAmount += carousel.clientWidth;
-      if (scrollAmount >= carousel.scrollWidth) {
-        scrollAmount = 0;
-      }
-      carousel.scrollTo({ left: scrollAmount, behavior: "smooth" });
+      scrollIndex = (scrollIndex + 1) % totalImages;
+      const offset = images[scrollIndex].offsetLeft;
+      carousel.scrollTo({ left: offset, behavior: "smooth" });
     }, 3000);
+  }
+
+  // Handle pickup change for shipping note
+  const pickupSelect = document.getElementById("pickup");
+  if (pickupSelect) {
+    pickupSelect.addEventListener("change", (e) => {
+      const note = document.getElementById("shipping-note");
+      if (e.target.value === "no") {
+        note.classList.remove("hidden");
+      } else {
+        note.classList.add("hidden");
+      }
+    });
   }
 });
 
@@ -24,30 +38,30 @@ function addToCart(item) {
 // Open checkout modal
 document.getElementById("cart-icon").addEventListener("click", (e) => {
   e.preventDefault();
-  document.getElementById("checkout-modal").style.display = "block";
-});
-
-// Close modal if user clicks outside
-window.addEventListener("click", (e) => {
-  const modal = document.getElementById("checkout-modal");
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
+  openCheckout();
 });
 
 function openCheckout() {
-  document.getElementById("checkout-modal").style.display = "flex";
-  document.getElementById("cart-items").value = cart.join(", ");
+  const modal = document.getElementById("checkout-modal");
+  const cartTextarea = document.getElementById("cart-items");
+  if (modal && cartTextarea) {
+    cartTextarea.value = cart.join(", ");
+    modal.style.display = "flex";
+  }
 }
 
+// Close checkout modal
 function closeCheckout() {
-  document.getElementById("checkout-modal").style.display = "none";
+  const modal = document.getElementById("checkout-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
 }
 
-// Show shipping note
-document.addEventListener("change", (e) => {
-  if (e.target.id === "pickup") {
-    const note = document.getElementById("shipping-note");
-    note.classList.toggle("hidden", e.target.value !== "no");
+// Close modal if user clicks outside the content
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("checkout-modal");
+  if (e.target === modal) {
+    closeCheckout();
   }
 });
