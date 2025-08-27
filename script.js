@@ -24,7 +24,15 @@ function addToCart(item) {
 // Open checkout modal
 document.getElementById("cart-icon").addEventListener("click", (e) => {
   e.preventDefault();
-  openCheckout();
+  document.getElementById("checkout-modal").style.display = "block";
+});
+
+// Close modal if user clicks outside
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("checkout-modal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
 });
 
 function openCheckout() {
