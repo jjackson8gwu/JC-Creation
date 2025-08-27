@@ -22,16 +22,22 @@ nav a {
 /* === Carousel === */
 .carousel-window {
   width: 80%;
+  height: 400px; /* set a fixed height for the carousel */
   margin: 2em auto;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* gradient background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .carousel img {
-  width: 75%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* ensures smaller images scale proportionally */
   display: block;
-  border-radius: 12px;
 }
 
 /* === Products === */
