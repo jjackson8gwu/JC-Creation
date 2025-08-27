@@ -28,7 +28,8 @@ nav a {
 
 .carousel img {
   width: 100%;
-  display: block;
+  height: auto;
+  border-radius: 12px;
 }
 
 .products {
