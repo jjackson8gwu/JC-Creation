@@ -17,18 +17,26 @@ document.getElementById("delivery")?.addEventListener("change", (e) => {
   }
 });
 
-// Example using Formspree for email
 document.getElementById("orderForm")?.addEventListener("submit", function(e) {
   e.preventDefault();
-  fetch("https://formspree.io/f/yourFormID", {
-    method: "POST",
-    body: new FormData(this),
+  const form = this;
+
+  fetch(form.action, {
+    method: form.method,
+    body: new FormData(form),
     headers: { 'Accept': 'application/json' }
-  }).then(() => {
-    alert("Order submitted! Please pay via Venmo: @YourVenmo or CashApp: $YourCashApp");
-    cart = [];
-    document.getElementById("cart-items").innerHTML = "";
-    document.getElementById("checkout-form").classList.add("hidden");
+  }).then(response => {
+    if (response.ok) {
+      alert("✅ Order submitted!\n\nPlease pay via:\nVenmo: @YourVenmo\nCashApp: $YourCashApp\nOr cash at pickup.");
+      cart = [];
+      document.getElementById("cart-items").innerHTML = "";
+      document.getElementById("checkout-form").classList.add("hidden");
+      form.reset();
+    } else {
+      alert("❌ There was a problem submitting your order. Please try again.");
+    }
+  }).catch(() => {
+    alert("❌ Could not connect to server. Please try again later.");
   });
 });
 // Auto-scrolling carousel
