@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order - J&C Creations</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Order Your 3D Prints</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="order.html">Order</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="products">
+      <!-- Repeat this block per item -->
+      <div class="product">
+        <img src="images/pokeball.jpg" alt="Pokeball">
+        <h3>Pokeball</h3>
+        <button onclick="addToCart('Pokeball')">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="images/flexicat.jpg" alt="Flexi Cat">
+        <h3>Flexi Cat</h3>
+        <button onclick="addToCart('Flexi Cat')">Add to Cart</button>
+      </div>
+    </section>
+
+    <section class="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <button onclick="checkout()">Checkout</button>
+    </section>
+  </main>
+
+  <div id="checkout-form" class="modal hidden">
+    <form id="orderForm">
+      <label>Name: <input type="text" name="name" required></label>
+      <label>Phone: <input type="text" name="phone" required></label>
+      <label>Email: <input type="email" name="email" required></label>
+      <label>Address: <input type="text" name="address"></label>
+
+      <label>
+        Pickup or Shipping:
+        <select name="delivery" id="delivery" required>
+          <option value="pickup">Local Pickup</option>
+          <option value="shipping">Shipping</option>
+        </select>
+      </label>
+
+      <input type="hidden" name="cart" id="cartData">
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
