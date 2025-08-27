@@ -1,0 +1,57 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #222;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 1em;
+  color: white;
+  text-decoration: none;
+}
+
+.carousel-window {
+  width: 80%;
+  margin: 2em auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.carousel img {
+  width: 100%;
+  display: block;
+}
+
+.products {
+  display: flex;
+  gap: 1em;
+  padding: 1em;
+}
+
+.product {
+  background: white;
+  border-radius: 8px;
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.cart {
+  background: #fff;
+  padding: 1em;
+  margin: 2em;
+  border-radius: 8px;
+}
+
+.modal.hidden {
+  display: none;
+}
