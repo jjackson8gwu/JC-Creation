@@ -1,74 +1,45 @@
-// === Carousel Auto Scroll ===
-let carouselIndex = 0;
-const carousel = document.getElementById("carousel");
-const slides = carousel?.children;
-
-function showSlide() {
-  if (!slides) return;
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  carouselIndex++;
-  if (carouselIndex > slides.length) carouselIndex = 1;
-  slides[carouselIndex - 1].style.display = "block";
-  setTimeout(showSlide, 3000); // change every 3s
-}
-
-if (carousel) {
-  showSlide();
-}
-
-// === Shopping Cart Logic ===
 let cart = [];
 
-function addToCart(item) {
-  cart.push(item);
-  document.getElementById("cart-items").innerHTML =
-    cart.map(i => `<li>${i}</li>`).join("");
-}
-
-function checkout() {
-  document.getElementById("checkout-form").classList.remove("hidden");
-  document.getElementById("cartData").value = cart.join(", ");
-}
-
-function closeModal() {
-  document.getElementById("checkout-form").classList.add("hidden");
-}
-
-document.getElementById("delivery")?.addEventListener("change", (e) => {
-  if (e.target.value === "shipping") {
-    alert("Shipping will be calculated when invoice is sent.");
+// Carousel auto-scroll
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.querySelector(".carousel-container");
+  if (carousel) {
+    let scrollAmount = 0;
+    setInterval(() => {
+      scrollAmount += carousel.clientWidth;
+      if (scrollAmount >= carousel.scrollWidth) {
+        scrollAmount = 0;
+      }
+      carousel.scrollTo({ left: scrollAmount, behavior: "smooth" });
+    }, 3000);
   }
 });
 
-// === Handle Formspree Submission ===
-document.getElementById("orderForm")?.addEventListener("submit", function(e) {
-  e.preventDefault();
-  const form = this;
+// Add items to cart
+function addToCart(item) {
+  cart.push(item);
+  alert(item + " added to cart!");
+}
 
-  fetch(form.action, {
-    method: form.method,
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-    if (response.ok) {
-      alert("✅ Order submitted!\n\nPlease pay via:\nVenmo: @YourVenmo\nCashApp: $YourCashApp\nOr cash at pickup.");
-      cart = [];
-      document.getElementById("cart-items").innerHTML = "";
-      document.getElementById("checkout-form").classList.add("hidden");
-      form.reset();
-    } else {
-      alert("❌ There was a problem submitting your order. Please try again.");
-    }
-  }).catch(() => {
-    alert("❌ Could not connect to server. Please try again later.");
-  });
+// Open checkout modal
+document.getElementById("cart-icon").addEventListener("click", (e) => {
+  e.preventDefault();
+  openCheckout();
 });
 
-// === Close Modal by Clicking Outside ===
-document.getElementById("checkout-form")?.addEventListener("click", (e) => {
-  if (e.target.id === "checkout-form") {
-    closeModal();
+function openCheckout() {
+  document.getElementById("checkout-modal").style.display = "flex";
+  document.getElementById("cart-items").value = cart.join(", ");
+}
+
+function closeCheckout() {
+  document.getElementById("checkout-modal").style.display = "none";
+}
+
+// Show shipping note
+document.addEventListener("change", (e) => {
+  if (e.target.id === "pickup") {
+    const note = document.getElementById("shipping-note");
+    note.classList.toggle("hidden", e.target.value !== "no");
   }
 });
