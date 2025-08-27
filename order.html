@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - J&C Creations</title>
   <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header>
@@ -11,7 +13,7 @@
     <nav>
   <a href="index.html">Home</a>
   <a href="order.html">Order</a>
-  <a href="#" id="cart-header">
+  <a href="#" id="cart-icon">
     🛒 Cart (<span id="cart-count">0</span>) 
   </a>
 </nav>
@@ -45,52 +47,32 @@
   </main>
 
   <!-- Checkout Modal -->
-  <div id="checkout-form" class="modal hidden">
-  <div class="modal-content">
-    <button type="button" class="close-btn" onclick="closeModal()">×</button>
-    <form id="orderForm" action="https://formspree.io/f/mdklkkga" method="POST">
-      <div class="form-group">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-      </div>
-
-      <div class="form-group">
-        <label>Phone:</label>
-        <input type="text" name="phone" required>
-      </div>
-
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-      </div>
-
-      <!-- Updated Address -->
-      <div class="form-group">
-        <label>City:</label>
-        <input type="text" name="city">
-      </div>
-      <div class="form-group">
-        <label>State:</label>
-        <input type="text" name="state">
-      </div>
-      <div class="form-group">
-        <label>Zip:</label>
-        <input type="text" name="zip">
-      </div>
-
-      <div class="form-group">
-        <label>Pickup or Shipping:</label>
-        <select name="delivery" id="delivery" required>
-          <option value="pickup">Local Pickup</option>
-          <option value="shipping">Shipping</option>
-        </select>
-      </div>
-
-      <input type="hidden" name="cart" id="cartData">
-      <button type="submit">Submit Order</button>
-    </form>
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeCheckout()">✖</button>
+      <h2>Checkout</h2>
+      <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
+        <label>Name: <input type="text" name="name" required></label>
+        <label>Phone: <input type="tel" name="phone" required></label>
+        <label>Email: <input type="email" name="email" required></label>
+        <label>Street Address: <input type="text" name="street"></label>
+        <label>City: <input type="text" name="city"></label>
+        <label>State: <input type="text" name="state"></label>
+        <label>Zip: <input type="text" name="zip"></label>
+        <label>
+          Local Pickup:
+          <select name="pickup" id="pickup" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+        <p id="shipping-note" class="hidden">Shipping will be calculated when invoice is sent.</p>
+        <label>Cart Items: <textarea id="cart-items" name="items" readonly></textarea></label>
+        <p>Payment options will be sent after order: Venmo, CashApp, or Cash</p>
+        <button type="submit">Submit Order</button>
+      </form>
+    </div>
   </div>
-</div>
 
   <script src="script.js"></script>
 </body>
