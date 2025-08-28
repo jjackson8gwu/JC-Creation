@@ -14,7 +14,7 @@ body {
 header {
   background: #333;
   color: white;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,11 +22,20 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+  min-height: 60px;
 }
 
-.header-left,
+.header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .header-right {
   flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .header-center {
@@ -35,27 +44,10 @@ header {
   justify-content: center;
 }
 
-.logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.logo {
-  max-height: 70%;
-  max-width: 70%;
+.header-logo {
+  max-height: 45px;
   width: auto;
-  height: auto;
   display: none; /* Hidden by default, shown when loaded */
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  text-align: center;
-  display: none; /* Hide business name text */
 }
 
 .header-left nav {
@@ -64,9 +56,44 @@ header h1 {
   gap: 20px;
 }
 
-.header-right {
-  display: flex;
-  justify-content: flex-end;
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* === Hero Section === */
+.hero-section {
+  background: linear-gradient(135deg, #1a4054, #68a6aa);
+  padding: 60px 20px 40px 20px;
+  text-align: center;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-logo {
+  max-height: 150px;
+  max-width: 300px;
+  width: auto;
+  height: auto;
+  margin-bottom: 20px;
+  display: none; /* Hidden by default, shown when loaded */
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin: 20px 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  margin-bottom: 0;
 }
 
 header nav a {
@@ -182,7 +209,7 @@ header nav a:hover {
 /* === Welcome Section === */
 .welcome {
   text-align: center;
-  padding: 60px 20px 40px 20px;
+  padding: 40px 20px;
   color: white;
   max-width: 800px;
   margin: 0 auto;
@@ -433,7 +460,7 @@ header nav a:hover {
 
 /* === Button Styles === */
 .checkout-btn {
-  background: #1a4054;
+  background: #4CAF50;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -447,7 +474,7 @@ header nav a:hover {
 }
 
 .checkout-btn:hover {
-  background: #1a4054;
+  background: #45a049;
 }
 
 .close-btn-modal {
@@ -586,9 +613,10 @@ header nav a:hover {
 /* === Responsive Design === */
 @media (max-width: 768px) {
   header {
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    min-height: auto;
   }
   
   .header-left,
@@ -597,17 +625,34 @@ header nav a:hover {
     flex: none;
   }
   
+  .header-left {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
   .header-left nav {
     justify-content: center;
   }
   
-  header h1 {
-    font-size: 1.5rem;
+  .header-logo {
+    max-height: 35px;
   }
   
-  .logo {
-    max-height: 70%;
-    max-width: 70%;
+  .hero-logo {
+    max-height: 100px;
+    max-width: 250px;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  header h1 {
+    font-size: 1.3rem;
   }
   
   .carousel-window {
