@@ -65,6 +65,8 @@ header h1 {
 /* === Hero Section === */
 .hero-section {
   text-align: center; /* fallback centering for text */
+  background: linear-gradient(135deg, #1a4054, #68a6aa);
+  color: white;
 }
 
 .hero-content {
