@@ -343,7 +343,7 @@ document.addEventListener("click", (e) => {
 function handleLogoError() {
   const headerLogo = document.getElementById("header-logo");
   const headerLogoOrder = document.getElementById("header-logo-order");
-  const heroLogo = document.getElementById("hero-logo");
+  const welcomeLogo = document.getElementById("welcome-logo");
   
   // Handle header logo on home page
   if (headerLogo) {
@@ -365,13 +365,13 @@ function handleLogoError() {
     });
   }
   
-  // Handle hero logo on home page
-  if (heroLogo) {
-    heroLogo.addEventListener("error", () => {
-      heroLogo.style.display = "none";
+  // Handle welcome logo on home page
+  if (welcomeLogo) {
+    welcomeLogo.addEventListener("error", () => {
+      welcomeLogo.style.display = "none";
     });
-    heroLogo.addEventListener("load", () => {
-      heroLogo.style.display = "block";
+    welcomeLogo.addEventListener("load", () => {
+      welcomeLogo.style.display = "block";
     });
   }
 }
