@@ -117,11 +117,11 @@ header nav a:hover {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease-in-out;
-  width: 500%; /* Accommodate multiple images */
+  width: 400%; /* 4 images = 400% */
 }
 
 .carousel-image {
-  width: 20%;
+  width: 25%;
   height: 100%;
   object-fit: contain;
   flex-shrink: 0;
