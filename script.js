@@ -1,4 +1,13 @@
-let cart = [];
+// ---- CART STORAGE HELPERS ---- //
+function loadCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+let cart = loadCart(); // Initialize cart from localStorage
 let currentSlide = 0;
 
 // Initialize everything when DOM is loaded
@@ -133,6 +142,7 @@ function initializeEventListeners() {
       setTimeout(() => {
         alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
         cart = [];
+        saveCart(cart); // clear storage
         updateCartDisplay();
         closeOrderForm();
       }, 100);
@@ -180,7 +190,8 @@ function addToCart(itemName, price, buttonElement) {
   // Reset quantity input to 1
   quantityInput.value = 1;
   
-  // Update cart display
+  // Save cart + update UI
+  saveCart(cart);
   updateCartDisplay();
   
   // Show success message
@@ -251,6 +262,7 @@ function updateCartDisplay() {
 function removeFromCart(index) {
   const removedItem = cart[index];
   cart.splice(index, 1);
+  saveCart(cart);
   updateCartDisplay();
   showNotification(`${removedItem.name} removed from cart`);
 }
@@ -292,24 +304,20 @@ function closeOrderForm() {
 
 // Notification system
 function showNotification(message) {
-  // Remove any existing notifications
   const existingNotification = document.querySelector(".notification-popup");
   if (existingNotification) {
     existingNotification.remove();
   }
   
-  // Create new notification
   const notification = document.createElement("div");
   notification.className = "notification-popup";
   notification.textContent = message;
   document.body.appendChild(notification);
   
-  // Show notification
   setTimeout(() => {
     notification.classList.add("show");
   }, 10);
   
-  // Hide notification after 3 seconds
   setTimeout(() => {
     notification.classList.remove("show");
     setTimeout(() => {
@@ -345,33 +353,18 @@ function handleLogoError() {
   const headerLogoOrder = document.getElementById("header-logo-order");
   const welcomeLogo = document.getElementById("welcome-logo");
   
-  // Handle header logo on home page
   if (headerLogo) {
-    headerLogo.addEventListener("error", () => {
-      headerLogo.style.display = "none";
-    });
-    headerLogo.addEventListener("load", () => {
-      headerLogo.style.display = "block";
-    });
+    headerLogo.addEventListener("error", () => headerLogo.style.display = "none");
+    headerLogo.addEventListener("load", () => headerLogo.style.display = "block");
   }
   
-  // Handle header logo on order page
   if (headerLogoOrder) {
-    headerLogoOrder.addEventListener("error", () => {
-      headerLogoOrder.style.display = "none";
-    });
-    headerLogoOrder.addEventListener("load", () => {
-      headerLogoOrder.style.display = "block";
-    });
+    headerLogoOrder.addEventListener("error", () => headerLogoOrder.style.display = "none");
+    headerLogoOrder.addEventListener("load", () => headerLogoOrder.style.display = "block");
   }
   
-  // Handle welcome logo on home page
   if (welcomeLogo) {
-    welcomeLogo.addEventListener("error", () => {
-      welcomeLogo.style.display = "none";
-    });
-    welcomeLogo.addEventListener("load", () => {
-      welcomeLogo.style.display = "block";
-    });
+    welcomeLogo.addEventListener("error", () => welcomeLogo.style.display = "none");
+    welcomeLogo.addEventListener("load", () => welcomeLogo.style.display = "block");
   }
 }
