@@ -65,9 +65,9 @@ function updateCarousel() {
   const images = carousel.querySelectorAll(".carousel-image");
   if (images.length === 0) return;
   
-  // Use transform instead of scrollTo for better compatibility
-  const slideWidth = carousel.offsetWidth;
-  carousel.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
+  // Calculate the percentage to move based on current slide
+  const movePercentage = (100 / images.length) * currentSlide;
+  carousel.style.transform = `translateX(-${movePercentage}%)`;
   
   // Update dots
   dots.forEach((dot, index) => {
