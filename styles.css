@@ -80,8 +80,7 @@ header h1 {
   max-width: 300px;
   width: auto;
   height: auto;
-  align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px auto;
   display: block; /* Hidden by default, shown when loaded */
 }
 
