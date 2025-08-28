@@ -64,27 +64,20 @@ header h1 {
 
 /* === Hero Section === */
 .hero-section {
-  background: linear-gradient(135deg, #1a4054, #68a6aa);
-  padding: 60px 20px 40px 20px;
-  text-align: center;
-  color: white;
+  text-align: center; /* fallback centering for text */
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers logo + text horizontally */
+  justify-content: center; /* if you ever need vertical centering */
 }
 
 .hero-logo {
-  max-height: 150px;
-  max-width: 300px;
-  width: auto;
+  max-width: 300px;   /* keeps it from getting too large */
   height: auto;
-  position: relative;
-  left: 50%;              /* push to the middle */
-  transform: translateX(-50%);  /* pull back half its width */
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* space between logo and heading */
 }
 
 
