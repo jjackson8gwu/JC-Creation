@@ -43,7 +43,7 @@ header {
 }
 
 .logo {
-  max-height: 40px;
+  max-height: 60px;
   width: auto;
   display: none; /* Hidden by default, shown when loaded */
 }
