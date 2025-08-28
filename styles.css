@@ -433,7 +433,7 @@ header nav a:hover {
 
 /* === Button Styles === */
 .checkout-btn {
-  background: #4CAF50;
+  background: #1a4054;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -447,7 +447,7 @@ header nav a:hover {
 }
 
 .checkout-btn:hover {
-  background: #45a049;
+  background: #1a4054;
 }
 
 .close-btn-modal {
