@@ -43,7 +43,7 @@ header {
 }
 
 .logo {
-  max-height: 60px;
+  max-height: 40px;
   width: auto;
   display: none; /* Hidden by default, shown when loaded */
 }
@@ -121,9 +121,9 @@ header nav a:hover {
 }
 
 .carousel-image {
-  width: auto;
-  height: auto;
-  object-fit: cover;
+  width: 20%;
+  height: 100%;
+  object-fit: contain;
   flex-shrink: 0;
   display: block;
 }
