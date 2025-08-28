@@ -8,10 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let scrollIndex = 0;
     const totalImages = images.length;
 
-    // Ensure carousel container scrolls horizontally
-    carousel.style.display = "flex";
-    carousel.style.overflowX = "hidden";
-
     setInterval(() => {
       scrollIndex = (scrollIndex + 1) % totalImages;
       const offset = images[scrollIndex].offsetLeft;
@@ -32,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initialize cart count in header if cart exists
   updateCartCount();
 });
 
@@ -43,7 +38,7 @@ function addToCart(item) {
   updateCartCount();
 }
 
-// Update cart count display in header
+// Update cart count in header
 function updateCartCount() {
   const countElem = document.getElementById("cart-count");
   if (countElem) {
@@ -71,16 +66,4 @@ function openCheckout() {
 
 // Close checkout modal
 function closeCheckout() {
-  const modal = document.getElementById("checkout-modal");
-  if (modal) {
-    modal.style.display = "none";
-  }
-}
-
-// Close modal if user clicks outside the content
-window.addEventListener("click", (e) => {
-  const modal = document.getElementById("checkout-modal");
-  if (modal && e.target === modal) {
-    closeCheckout();
-  }
-});
+  const modal = document.get
