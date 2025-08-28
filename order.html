@@ -33,11 +33,19 @@
     </section>
   </main>
 
-  <!-- Checkout Modal -->
-  <div id="checkout-modal" class="modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeCheckout()">✖</button>
-      <h2>Checkout</h2>
+      <!-- Cart Icon -->
+    <a href="#" id="cart-icon">🛒</a>
+
+      <!-- Checkout Modal -->
+      <div id="checkout-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" onclick="closeCheckout()">&times;</span>
+        <h2>Checkout</h2>
+        <textarea id="cart-items" readonly></textarea>
+        <button onclick="closeCheckout()">Close</button>
+      </div>
+    </div>
+
       <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
         <label>Name: <input type="text" name="name" required></label>
         <label>Phone: <input type="tel" name="phone" required></label>
