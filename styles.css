@@ -3,8 +3,6 @@ body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #1a4054, #68a6aa);
   margin: 0;
-  background-attachment: fixed;
-  background-size: cover;
 }
 
 header {
@@ -41,14 +39,10 @@ header nav a:hover {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 
-  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #1a4054; /* matches page background */
 }
 
 .carousel img {
@@ -59,7 +53,7 @@ header nav a:hover {
 }
 
 /* === Product List === */
-.product-list {
+.products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -106,6 +100,7 @@ button:hover {
   height: 100%;
   overflow-y: auto;
   background-color: rgba(0,0,0,0.6);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,7 +141,7 @@ label {
   margin-top: 10px;
 }
 
-/* === Responsive Adjustments === */
+/* Responsive */
 @media (max-width: 600px) {
   .carousel-window {
     height: 250px;
