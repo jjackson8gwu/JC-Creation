@@ -80,9 +80,13 @@ header h1 {
   max-width: 300px;
   width: auto;
   height: auto;
-  margin-bottom: 20px auto;
-  display: block; /* Hidden by default, shown when loaded */
+  position: relative;
+  left: 50%;              /* push to the middle */
+  transform: translateX(-50%);  /* pull back half its width */
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
+
 
 .hero-section h1 {
   font-size: 3rem;
