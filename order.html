@@ -15,56 +15,145 @@
       <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
-
+  
   <main>
     <!-- Product Grid -->
     <section class="products">
       <div class="product">
         <img src="images/product1.jpg" alt="Flexi Dragon">
         <h3>Flexi Dragon</h3>
-        <button onclick="addToCart('Flexi Dragon')">Add to Cart</button>
+        <p class="price">$12.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Flexi Dragon', 12.99, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
+      
       <div class="product">
         <img src="images/product2.jpg" alt="Flexi Cat">
         <h3>Flexi Cat</h3>
-        <button onclick="addToCart('Flexi Cat')">Add to Cart</button>
+        <p class="price">$10.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Flexi Cat', 10.99, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
-      <!-- Add more products as needed -->
+      
+      <div class="product">
+        <img src="images/product3.jpg" alt="Fidget Cube">
+        <h3>Fidget Cube</h3>
+        <p class="price">$8.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Fidget Cube', 8.99, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/product4.jpg" alt="Keychain Holder">
+        <h3>Keychain Holder</h3>
+        <p class="price">$5.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Keychain Holder', 5.99, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/product5.jpg" alt="Phone Stand">
+        <h3>Phone Stand</h3>
+        <p class="price">$15.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Phone Stand', 15.99, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/product6.jpg" alt="Miniature Figure">
+        <h3>Miniature Figure</h3>
+        <p class="price">$18.99</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="99">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Miniature Figure', 18.99, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
     </section>
   </main>
 
-      <!-- Cart Icon -->
-    <a href="#" id="cart-icon">🛒</a>
-
-      <!-- Checkout Modal -->
-      <div id="checkout-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" onclick="closeCheckout()">&times;</span>
-        <h2>Checkout</h2>
-        <textarea id="cart-items" readonly></textarea>
-        <button onclick="closeCheckout()">Close</button>
-      </div>
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckout()">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-display"></div>
+      <div id="cart-total"></div>
+      <button id="proceed-checkout" class="checkout-btn">Proceed to Checkout</button>
+      <button onclick="closeCheckout()" class="close-btn-modal">Continue Shopping</button>
     </div>
+  </div>
 
+  <!-- Order Form Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content order-form">
+      <span class="close" onclick="closeOrderForm()">&times;</span>
+      <h2>Order Information</h2>
       <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
-        <label>Name: <input type="text" name="name" required></label>
-        <label>Phone: <input type="tel" name="phone" required></label>
-        <label>Email: <input type="email" name="email" required></label>
-        <label>Street Address: <input type="text" name="street"></label>
-        <label>City: <input type="text" name="city"></label>
-        <label>State: <input type="text" name="state"></label>
-        <label>Zip: <input type="text" name="zip"></label>
-        <label>
-          Local Pickup:
-          <select name="pickup" id="pickup" required>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <p id="shipping-note" class="hidden">Shipping will be calculated when invoice is sent.</p>
-        <label>Cart Items: <textarea id="cart-items" name="items" readonly></textarea></label>
-        <p>Payment options will be sent after order: Venmo, CashApp, or Cash</p>
-        <button type="submit">Submit Order</button>
+        <div class="form-group">
+          <label>Name: <input type="text" name="name" required></label>
+        </div>
+        <div class="form-group">
+          <label>Phone: <input type="tel" name="phone" required></label>
+        </div>
+        <div class="form-group">
+          <label>Email: <input type="email" name="email" required></label>
+        </div>
+        <div class="form-group">
+          <label>Street Address: <input type="text" name="street" required></label>
+        </div>
+        <div class="form-group">
+          <label>City: <input type="text" name="city" required></label>
+        </div>
+        <div class="form-group">
+          <label>State: <input type="text" name="state" required></label>
+        </div>
+        <div class="form-group">
+          <label>Zip: <input type="text" name="zip" required></label>
+        </div>
+        <div class="form-group">
+          <label>
+            Delivery Method:
+            <select name="pickup" id="pickup" required>
+              <option value="">Select delivery method</option>
+              <option value="pickup">Local Pickup</option>
+              <option value="shipping">Shipping</option>
+            </select>
+          </label>
+        </div>
+        <div id="shipping-note" class="hidden notification">
+          📦 Shipping costs will be calculated after order submission and included in your invoice.
+        </div>
+        <div class="form-group">
+          <label>Order Items: <textarea id="cart-items-form" name="items" readonly></textarea></label>
+        </div>
+        <div class="payment-info">
+          💳 <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
+          Payment details will be sent with your order confirmation.
+        </div>
+        <button type="submit" class="submit-order-btn">Submit Order</button>
+        <button type="button" onclick="closeOrderForm()" class="cancel-btn">Cancel</button>
       </form>
     </div>
   </div>
