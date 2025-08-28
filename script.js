@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeCarousel();
   initializeEventListeners();
   updateCartDisplay();
+  handleLogoError();
 });
 
 // Carousel functionality
@@ -64,11 +65,9 @@ function updateCarousel() {
   const images = carousel.querySelectorAll(".carousel-image");
   if (images.length === 0) return;
   
-  const slideWidth = images[0].offsetWidth;
-  carousel.scrollTo({ 
-    left: slideWidth * currentSlide, 
-    behavior: "smooth" 
-  });
+  // Use transform instead of scrollTo for better compatibility
+  const slideWidth = carousel.offsetWidth;
+  carousel.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
   
   // Update dots
   dots.forEach((dot, index) => {
@@ -339,3 +338,18 @@ document.addEventListener("click", (e) => {
     e.stopPropagation();
   }
 });
+
+// Handle logo error - hide if image doesn't exist
+function handleLogoError() {
+  const logo = document.getElementById("logo");
+  if (logo) {
+    logo.addEventListener("error", () => {
+      logo.style.display = "none";
+    });
+    
+    // Also check if logo loads successfully
+    logo.addEventListener("load", () => {
+      logo.style.display = "block";
+    });
+  }
+}
