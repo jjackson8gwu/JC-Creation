@@ -341,15 +341,37 @@ document.addEventListener("click", (e) => {
 
 // Handle logo error - hide if image doesn't exist
 function handleLogoError() {
-  const logo = document.getElementById("logo");
-  if (logo) {
-    logo.addEventListener("error", () => {
-      logo.style.display = "none";
+  const headerLogo = document.getElementById("header-logo");
+  const headerLogoOrder = document.getElementById("header-logo-order");
+  const heroLogo = document.getElementById("hero-logo");
+  
+  // Handle header logo on home page
+  if (headerLogo) {
+    headerLogo.addEventListener("error", () => {
+      headerLogo.style.display = "none";
     });
-    
-    // Also check if logo loads successfully
-    logo.addEventListener("load", () => {
-      logo.style.display = "block";
+    headerLogo.addEventListener("load", () => {
+      headerLogo.style.display = "block";
+    });
+  }
+  
+  // Handle header logo on order page
+  if (headerLogoOrder) {
+    headerLogoOrder.addEventListener("error", () => {
+      headerLogoOrder.style.display = "none";
+    });
+    headerLogoOrder.addEventListener("load", () => {
+      headerLogoOrder.style.display = "block";
+    });
+  }
+  
+  // Handle hero logo on home page
+  if (heroLogo) {
+    heroLogo.addEventListener("error", () => {
+      heroLogo.style.display = "none";
+    });
+    heroLogo.addEventListener("load", () => {
+      heroLogo.style.display = "block";
     });
   }
 }
