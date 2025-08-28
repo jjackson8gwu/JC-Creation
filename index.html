@@ -15,54 +15,93 @@
       <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
-
+  
   <main>
     <!-- Carousel Section -->
-    <section class="carousel">
-      <div class="carousel-window">
-        <div class="carousel" id="carousel">
-          <img src="images/carousel1.jpg" alt="3D Print 1">
-          <img src="images/carousel2.jpg" alt="3D Print 2">
-          <img src="images/carousel3.jpg" alt="3D Print 3">
-          <img src="images/carousel4.jpg" alt="3D Print 4">
+    <section class="carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-window">
+          <div class="carousel" id="carousel">
+            <img src="images/carousel1.jpg" alt="3D Print 1" class="carousel-image">
+            <img src="images/carousel2.jpg" alt="3D Print 2" class="carousel-image">
+            <img src="images/carousel3.jpg" alt="3D Print 3" class="carousel-image">
+            <img src="images/carousel4.jpg" alt="3D Print 4" class="carousel-image">
+          </div>
+          <button class="carousel-btn prev" id="prev-btn">‹</button>
+          <button class="carousel-btn next" id="next-btn">›</button>
         </div>
+        <div class="carousel-dots" id="carousel-dots"></div>
       </div>
+    </section>
+    
+    <!-- Welcome Section -->
+    <section class="welcome">
+      <h2>Welcome to J&C Creations</h2>
+      <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
     </section>
   </main>
 
   <!-- Checkout Modal -->
-  <!-- Cart Icon -->
-    <a href="#" id="cart-icon">🛒</a>
-
-  <!-- Checkout Modal -->
-    <div id="checkout-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" onclick="closeCheckout()">&times;</span>
-        <h2>Checkout</h2>
-        <textarea id="cart-items" readonly></textarea>
-        <button onclick="closeCheckout()">Close</button>
-      </div>
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckout()">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-display"></div>
+      <div id="cart-total"></div>
+      <button id="proceed-checkout" class="checkout-btn">Proceed to Checkout</button>
+      <button onclick="closeCheckout()" class="close-btn-modal">Continue Shopping</button>
     </div>
+  </div>
 
+  <!-- Order Form Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content order-form">
+      <span class="close" onclick="closeOrderForm()">&times;</span>
+      <h2>Order Information</h2>
       <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
-        <label>Name: <input type="text" name="name" required></label>
-        <label>Phone: <input type="tel" name="phone" required></label>
-        <label>Email: <input type="email" name="email" required></label>
-        <label>Street Address: <input type="text" name="street"></label>
-        <label>City: <input type="text" name="city"></label>
-        <label>State: <input type="text" name="state"></label>
-        <label>Zip: <input type="text" name="zip"></label>
-        <label>
-          Local Pickup:
-          <select name="pickup" id="pickup" required>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <p id="shipping-note" class="hidden">Shipping will be calculated when invoice is sent.</p>
-        <label>Cart Items: <textarea id="cart-items" name="items" readonly></textarea></label>
-        <p>Payment options will be sent after order: Venmo, CashApp, or Cash</p>
-        <button type="submit">Submit Order</button>
+        <div class="form-group">
+          <label>Name: <input type="text" name="name" required></label>
+        </div>
+        <div class="form-group">
+          <label>Phone: <input type="tel" name="phone" required></label>
+        </div>
+        <div class="form-group">
+          <label>Email: <input type="email" name="email" required></label>
+        </div>
+        <div class="form-group">
+          <label>Street Address: <input type="text" name="street" required></label>
+        </div>
+        <div class="form-group">
+          <label>City: <input type="text" name="city" required></label>
+        </div>
+        <div class="form-group">
+          <label>State: <input type="text" name="state" required></label>
+        </div>
+        <div class="form-group">
+          <label>Zip: <input type="text" name="zip" required></label>
+        </div>
+        <div class="form-group">
+          <label>
+            Delivery Method:
+            <select name="pickup" id="pickup" required>
+              <option value="">Select delivery method</option>
+              <option value="pickup">Local Pickup</option>
+              <option value="shipping">Shipping</option>
+            </select>
+          </label>
+        </div>
+        <div id="shipping-note" class="hidden notification">
+          📦 Shipping costs will be calculated after order submission and included in your invoice.
+        </div>
+        <div class="form-group">
+          <label>Order Items: <textarea id="cart-items-form" name="items" readonly></textarea></label>
+        </div>
+        <div class="payment-info">
+          💳 <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
+          Payment details will be sent with your order confirmation.
+        </div>
+        <button type="submit" class="submit-order-btn">Submit Order</button>
+        <button type="button" onclick="closeOrderForm()" class="cancel-btn">Cancel</button>
       </form>
     </div>
   </div>
