@@ -28,42 +28,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  updateCartCount();
+  // Cart icon opens checkout
+  const cartIcon = document.getElementById("cart-icon");
+  if (cartIcon) {
+    cartIcon.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCheckout();
+    });
+  }
 });
 
 // Add items to cart
 function addToCart(item) {
   cart.push(item);
   alert(item + " added to cart!");
-  updateCartCount();
-}
-
-// Update cart count in header
-function updateCartCount() {
-  const countElem = document.getElementById("cart-count");
-  if (countElem) {
-    countElem.textContent = cart.length;
-  }
 }
 
 // Open checkout modal
-const cartIcon = document.getElementById("cart-icon");
-if (cartIcon) {
-  cartIcon.addEventListener("click", (e) => {
-    e.preventDefault();
-    openCheckout();
-  });
-}
-
 function openCheckout() {
   const modal = document.getElementById("checkout-modal");
   const cartTextarea = document.getElementById("cart-items");
   if (modal && cartTextarea) {
     cartTextarea.value = cart.join(", ");
-    modal.style.display = "flex";
+    modal.classList.add("show");
   }
 }
 
 // Close checkout modal
 function closeCheckout() {
-  const modal = document.get
+  const modal = document.getElementById("checkout-modal");
+  if (modal) {
+    modal.classList.remove("show");
+  }
+}
+
+// Close modal if user clicks outside the content
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("checkout-modal");
+  if (modal && e.target === modal) {
+    closeCheckout();
+  }
+});
