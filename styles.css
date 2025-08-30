@@ -234,6 +234,33 @@ header nav a:hover {
   opacity: 0.9;
 }
 
+/* === Category Buttons === */
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.category-buttons button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 160px;
+}
+
+.category-buttons button:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
 /* === Product Grid === */
 .products {
   display: grid;
