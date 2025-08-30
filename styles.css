@@ -244,7 +244,7 @@ header nav a:hover {
 }
 
 .category-buttons button {
-  background: #4CAF50;
+  background: #eb9f3b;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -257,7 +257,7 @@ header nav a:hover {
 }
 
 .category-buttons button:hover {
-  background: #45a049;
+  background: #d2762b;
   transform: scale(1.05);
 }
 
