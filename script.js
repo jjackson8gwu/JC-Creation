@@ -150,20 +150,28 @@ function initializeEventListeners() {
   }
 }
 
-// Quantity control functions
+// ✅ Quantity control functions (fixed with min/max support)
 function increaseQuantity(button) {
   const input = button.parentNode.querySelector(".quantity-input");
-  const currentValue = parseInt(input.value);
-  if (currentValue < 99) {
-    input.value = currentValue + 1;
+  let value = parseInt(input.value, 10);
+  const max = parseInt(input.max, 10);
+
+  if (value < max) {
+    input.value = value + 1;
+  } else {
+    input.value = max; // prevent going over
   }
 }
 
 function decreaseQuantity(button) {
   const input = button.parentNode.querySelector(".quantity-input");
-  const currentValue = parseInt(input.value);
-  if (currentValue > 1) {
-    input.value = currentValue - 1;
+  let value = parseInt(input.value, 10);
+  const min = parseInt(input.min, 10);
+
+  if (value > min) {
+    input.value = value - 1;
+  } else {
+    input.value = min; // prevent going below
   }
 }
 
