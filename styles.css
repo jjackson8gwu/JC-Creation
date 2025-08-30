@@ -112,6 +112,7 @@ header nav a:hover {
   padding: 8px 12px;
   border-radius: 20px;
   font-weight: bold;
+  color: white;
 }
 
 #cart-icon:hover {
