@@ -108,14 +108,14 @@ header nav a:hover {
 }
 
 #cart-icon {
-  background: #eb9f3b;
+  background: #68a6aa;
   padding: 8px 12px;
   border-radius: 20px;
   font-weight: bold;
 }
 
 #cart-icon:hover {
-  background: #d2762b;
+  background: #1a4054;
 }
 
 /* === Carousel Styles === */
