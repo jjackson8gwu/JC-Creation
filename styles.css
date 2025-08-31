@@ -288,7 +288,8 @@ header nav a:hover {
 
 .product img {
   width: 100%;
-  height: 200px;
+  /*height: 200px; */
+  aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 5px;
