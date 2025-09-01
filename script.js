@@ -179,10 +179,19 @@ function decreaseQuantity(button) {
 let items = document.querySelectorAll("input[type=number]");
 for(let item of items){
     item.addEventListener("keyup", (e) => {
-        var max = item.getAttribute("max");
-        if(item.value > max){
+        var max = parseInt(item.getAttribute("max"), 10); // Convert to integer
+        var currentValue = parseInt(item.value, 10); // Convert to integer
+        
+        // Check if the input is a valid number and greater than max
+        if (!isNaN(currentValue) && currentValue > max) {
             item.value = max;
-            alert(`Only ${max} of this item available.`)
+            alert(`Only ${max} of this item available.`);
+        }
+        
+        // Optional: Also check for minimum value
+        var min = parseInt(item.getAttribute("min"), 10) || 1;
+        if (!isNaN(currentValue) && currentValue < min) {
+            item.value = min;
         }
     });
 }
