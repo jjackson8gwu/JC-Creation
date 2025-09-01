@@ -175,6 +175,18 @@ function decreaseQuantity(button) {
   }
 }
 
+// User quantity input
+let items = document.querySelectorAll("input[type=number]");
+for(let item of items){
+    item.addEventListener("keyup", (e) => {
+        var max = item.getAttribute("max");
+        if(item.value > max){
+            item.value = max;
+            alert(`Only ${max} of this item available.`)
+        }
+    });
+}
+
 // Enhanced add to cart function
 function addToCart(itemName, price, buttonElement) {
   const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
