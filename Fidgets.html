@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <title>Order - J&C Creations</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo-order">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="order.html">Order</a>
+      </nav>
+    </div>
+    <div class="header-center">
+      <h1>Fidgets</h1>
+    </div>
+    <div class="header-right">
+      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    </div>
+  </header>
+  
+  <main>
+    <!-- Product Grid -->
+    <h1>Colors on all fidgets can be changed on request</h1>
+    <section class="products">
+      <div class="product">
+        <img src="images/Fidget_Cube.JPG" alt="Fidget_Cube">
+        <h3>Fidget Cube</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Fidget Cube', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Flower_Fidget.JPG" alt="Flower_Fidget">
+        <h3>Flower Fidget</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="19">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Flower Fidget', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Gear_Ball_Opened.JPG" alt="Gear_Ball_Opened">
+        <h3>Gear Ball</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Gear Ball', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Hex_Fidget.JPG" alt="Hex_Fidget">
+        <h3>Hex Fidget</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="5">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Hex Fidget', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Icecream_Cone_Clicker.JPG" alt="Icecream_Cone_Clicker">
+        <h3>Icecream Cone Clicker</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Icecream Cone Clicker', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Jacobs_Ladder.JPG" alt="Jacobs_Ladder">
+        <h3>Jacobs Ladder</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="22">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Jacobs Ladder', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Large_Gear_Ring.JPG" alt="Large_Gear_Ring">
+        <h3>Large Gear Ring</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Large Gear Ring', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Large_Grid.JPG" alt="Large_Grid">
+        <h3>Large Grid</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Large Grid', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Morph_Ball.JPG" alt="Morph_Ball">
+        <h3>Morph Ball</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Morph Ball', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/SeaTurtle_Clicker.JPG" alt="SeaTurtle_Clicker">
+        <h3>SeaTurtle Clicker</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('SeaTurtle Clicker', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/SeaTurtle_Clicker.JPG" alt="SeaTurtle_Clicker">
+        <h3>SeaTurtle Clicker</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('SeaTurtle Clicker', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Small_Gear_Ring.JPG" alt="Small_Gear_Ring">
+        <h3>Small Gear Ring</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Small Gear Ring', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Small_Grid.JPG" alt="Small_Grid">
+        <h3>Small Grid</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Small Grid', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Starfish_Mesh.JPG" alt="Starfish_Mesh">
+        <h3>Starfish Mesh</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Starfish Mesh', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Stingray_Mesh.JPG" alt="Stingray_Mesh">
+        <h3>Stingray Mesh</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Stingray Mesh', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckout()">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-display"></div>
+      <div id="cart-total"></div>
+      <button id="proceed-checkout" class="checkout-btn">Proceed to Checkout</button>
+      <button onclick="closeCheckout()" class="close-btn-modal">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- Order Form Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content order-form">
+      <span class="close" onclick="closeOrderForm()">&times;</span>
+      <h2>Order Information</h2>
+      <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
+        <div class="form-group">
+          <label>Name: <input type="text" name="name" required></label>
+        </div>
+        <div class="form-group">
+          <label>Phone: <input type="tel" name="phone" required></label>
+        </div>
+        <div class="form-group">
+          <label>Email: <input type="email" name="email" required></label>
+        </div>
+        <div class="form-group">
+          <label>Street Address: <input type="text" name="street" required></label>
+        </div>
+        <div class="form-group">
+          <label>City: <input type="text" name="city" required></label>
+        </div>
+        <div class="form-group">
+          <label>State: <input type="text" name="state" required></label>
+        </div>
+        <div class="form-group">
+          <label>Zip: <input type="text" name="zip" required></label>
+        </div>
+        <div class="form-group">
+          <label>
+            Delivery Method:
+            <select name="pickup" id="pickup" required>
+              <option value="">Select delivery method</option>
+              <option value="pickup">Local Pickup</option>
+              <option value="shipping">Shipping</option>
+            </select>
+          </label>
+        </div>
+        <div id="shipping-note" class="hidden notification">
+          📦 Shipping costs will be calculated after order submission and included in your invoice.
+        </div>
+        <div class="form-group">
+          <label>Order Items: <textarea id="cart-items-form" name="items" readonly></textarea></label>
+        </div>
+        <div class="payment-info">
+          💳 <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
+          Payment details will be sent with your order confirmation.
+        </div>
+        <button type="submit" class="submit-order-btn">Submit Order</button>
+        <button type="button" onclick="closeOrderForm()" class="cancel-btn">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
