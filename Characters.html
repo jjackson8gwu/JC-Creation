@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <title>Order - J&C Creations</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo-order">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="order.html">Order</a>
+      </nav>
+    </div>
+    <div class="header-center">
+      <h1>$3 Mini's</h1>
+    </div>
+    <div class="header-right">
+      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    </div>
+  </header>
+  
+  <main>
+    <!-- Product Grid -->
+    <section class="products">
+      <div class="product">
+        <img src="images/Grinch_Mini.JPG" alt="Grinch_Mini">
+        <h3>Grinch Mini</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Grinch Mini', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Ironman.JPG" alt="Ironman">
+        <h3>Ironman</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="19">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Ironman', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Jack_Skellington.JPG" alt="Jack_Skellington">
+        <h3>Jack Skellington</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Jack Skellington', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Lilo.JPG" alt="Lilo">
+        <h3>Lilo</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="5">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Lilo', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Minecraft_Ender_Dragon.JPG" alt="Minecraft_Ender_Dragon">
+        <h3>Minecraft Ender Dragon</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="14">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Ender Dragon', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product">
+        <img src="images/Minecraft_Enderman.JPG" alt="Minecraft_Enderman">
+        <h3>Minecraft Enderman</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="22">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Enderman', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Minecraft_Skeleton.JPG" alt="Minecraft_Skeleton">
+        <h3>Minecraft Skeleton</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Skeleton', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Minecraft_Spider.JPG" alt="Minecraft_Spider">
+        <h3>Minecraft Spider</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Spider', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Minecraft_Steve.JPG" alt="Minecraft_Steve">
+        <h3>Minecraft Steve</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Steve', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Minecraft_Zombie.JPG" alt="Minecraft_Zombie">
+        <h3>Minecraft Zombie</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Minecraft Zombie', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Oogie_Boogie.JPG" alt="Oogie_Boogie">
+        <h3>Oogie Boogie</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('MOogie Boogie', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Sonic_Balance_Wheel.JPG" alt="Sonic_Balance_Wheel">
+        <h3>Sonic Balance Wheel</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Sonic Balance Wheel', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Spiderman_Flexi.JPG" alt="Spiderman_Flexi">
+        <h3>Spiderman Flexi</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Spiderman Flexi', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Stitch.JPG" alt="Stitch">
+        <h3>Stitch</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Stitch', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Storm_Trooper.JPG" alt="Storm_Trooper">
+        <h3>Storm Trooper</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Storm Trooper', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/TMNT_D.JPG" alt="TMNT_D">
+        <h3>TMNT D</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('TMNT D', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/TMNT_L.JPG" alt="TMNT_L">
+        <h3>TMNT L</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('TMNT L', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/TMNT_M.JPG" alt="TMNT_M">
+        <h3>TMNT M</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('TMNT M', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/TMNT_R.JPG" alt="TMNT_R">
+        <h3>TMNT R</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('TMNT R', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckout()">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-display"></div>
+      <div id="cart-total"></div>
+      <button id="proceed-checkout" class="checkout-btn">Proceed to Checkout</button>
+      <button onclick="closeCheckout()" class="close-btn-modal">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- Order Form Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content order-form">
+      <span class="close" onclick="closeOrderForm()">&times;</span>
+      <h2>Order Information</h2>
+      <form id="checkout-form" action="https://formspree.io/f/mdklkkga" method="POST">
+        <div class="form-group">
+          <label>Name: <input type="text" name="name" required></label>
+        </div>
+        <div class="form-group">
+          <label>Phone: <input type="tel" name="phone" required></label>
+        </div>
+        <div class="form-group">
+          <label>Email: <input type="email" name="email" required></label>
+        </div>
+        <div class="form-group">
+          <label>Street Address: <input type="text" name="street" required></label>
+        </div>
+        <div class="form-group">
+          <label>City: <input type="text" name="city" required></label>
+        </div>
+        <div class="form-group">
+          <label>State: <input type="text" name="state" required></label>
+        </div>
+        <div class="form-group">
+          <label>Zip: <input type="text" name="zip" required></label>
+        </div>
+        <div class="form-group">
+          <label>
+            Delivery Method:
+            <select name="pickup" id="pickup" required>
+              <option value="">Select delivery method</option>
+              <option value="pickup">Local Pickup</option>
+              <option value="shipping">Shipping</option>
+            </select>
+          </label>
+        </div>
+        <div id="shipping-note" class="hidden notification">
+          📦 Shipping costs will be calculated after order submission and included in your invoice.
+        </div>
+        <div class="form-group">
+          <label>Order Items: <textarea id="cart-items-form" name="items" readonly></textarea></label>
+        </div>
+        <div class="payment-info">
+          💳 <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
+          Payment details will be sent with your order confirmation.
+        </div>
+        <button type="submit" class="submit-order-btn">Submit Order</button>
+        <button type="button" onclick="closeOrderForm()" class="cancel-btn">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
