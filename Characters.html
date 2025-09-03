@@ -27,6 +27,31 @@
   <main>
     <!-- Product Grid -->
     <section class="products">
+
+      <div class="product">
+        <img src="images/Chewbacca.jpg" alt="Chewbacca">
+        <h3>Chewbacca</h3>
+        <p class="price">$2.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="7">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Chewbacca', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/DarthVader.jpg" alt="DarthVader">
+        <h3>Darth Vader</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Darth Vader', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
       <div class="product">
         <img src="images/Grinch_Mini.JPG" alt="Grinch_Mini">
         <h3>Grinch Mini</h3>
@@ -61,6 +86,18 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('Jack Skellington', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/KingKong.jpg" alt="KingKong">
+        <h3>King Kong</h3>
+        <p class="price">$6.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="4">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('King Kong', 6.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
       
       <div class="product">
@@ -253,6 +290,18 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('TMNT R', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Yoda.jpg" alt="Yoda">
+        <h3>Yoda</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="10">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Yoda', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
     </section>
