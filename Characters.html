@@ -42,6 +42,18 @@
       </div>
 
       <div class="product">
+        <img src="images/Boba_Fett.jpg" alt="Boba_Fett">
+        <h3>Boba Fett</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="7">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Boba Fett', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
         <img src="images/Chewbacca.jpg" alt="Chewbacca">
         <h3>Chewbacca</h3>
         <p class="price">$2.00</p>
@@ -63,6 +75,18 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('Darth Vader', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <img src="images/Deadpool.jpg" alt="Deadpool">
+        <h3>Deadpool</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="23">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Deadpool', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
       <div class="product">
