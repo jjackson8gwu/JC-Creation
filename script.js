@@ -1,6 +1,7 @@
 // ---- CART STORAGE HELPERS ---- //
 function loadCart() {
-  return JSON.parse(localStorage.getItem("cart")) || [];
+  const cartData = localStorage.getItem("cart");
+  return cartData ? JSON.parse(cartData) : [];
 }
 
 function saveCart(cart) {
@@ -9,6 +10,17 @@ function saveCart(cart) {
 
 let cart = loadCart(); // Initialize cart from localStorage
 let currentSlide = 0;
+
+// Color selection variables
+let pendingItem = null;
+
+// Available colors list
+const availableColors = [
+  'Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple', 'Pink', 
+  'Black', 'White', 'Gray', 'Silver', 'Gold', 'Clear/Transparent', 
+  'Glow in the Dark', 'Wood Fill', 'Metal Fill', 'Carbon Fiber', 
+  'Rainbow/Multi-color', 'Custom Color (specify in notes)'
+];
 
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -142,7 +154,7 @@ function initializeEventListeners() {
       setTimeout(() => {
         alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
         cart = [];
-        saveCart(cart); // clear storage
+        saveCart(cart);
         updateCartDisplay();
         closeOrderForm();
       }, 100);
@@ -159,7 +171,7 @@ function increaseQuantity(button) {
   if (value < max) {
     input.value = value + 1;
   } else {
-    input.value = max; // prevent going over
+    input.value = max;
   }
 }
 
@@ -171,24 +183,22 @@ function decreaseQuantity(button) {
   if (value > min) {
     input.value = value - 1;
   } else {
-    input.value = min; // prevent going below
+    input.value = min;
   }
 }
 
-// User quantity input
+// User quantity input validation
 let items = document.querySelectorAll("input[type=number]");
 for(let item of items){
     item.addEventListener("keyup", (e) => {
-        var max = parseInt(item.getAttribute("max"), 10); // Convert to integer
-        var currentValue = parseInt(item.value, 10); // Convert to integer
+        var max = parseInt(item.getAttribute("max"), 10);
+        var currentValue = parseInt(item.value, 10);
         
-        // Check if the input is a valid number and greater than max
         if (!isNaN(currentValue) && currentValue > max) {
             item.value = max;
             alert(`Only ${max} of this item available.`);
         }
         
-        // Optional: Also check for minimum value
         var min = parseInt(item.getAttribute("min"), 10) || 1;
         if (!isNaN(currentValue) && currentValue < min) {
             item.value = min;
@@ -196,35 +206,127 @@ for(let item of items){
     });
 }
 
-// Enhanced add to cart function
-function addToCart(itemName, price, buttonElement) {
+// Enhanced Color Selection Functions for Multi-Color Support
+function openColorSelection(itemName, price, buttonElement, colorCount = 1) {
   const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
   const quantity = parseInt(quantityInput.value) || 1;
   
-  // Check if item already exists in cart
-  const existingItemIndex = cart.findIndex(item => item.name === itemName);
+  // Store pending item data
+  pendingItem = {
+    name: itemName,
+    price: price,
+    quantity: quantity,
+    buttonElement: buttonElement,
+    colorCount: colorCount
+  };
+  
+  // Update modal content
+  document.getElementById('selected-product-name').textContent = itemName;
+  document.getElementById('selected-quantity').textContent = quantity;
+  document.getElementById('selected-total').textContent = (price * quantity).toFixed(2);
+  
+  // Reset color selections
+  document.getElementById('color-select-1').value = '';
+  document.getElementById('color-select-2').value = '';
+  
+  // Show/hide second color dropdown based on colorCount
+  const secondColorGroup = document.getElementById('second-color-group');
+  if (colorCount >= 2) {
+    secondColorGroup.style.display = 'block';
+    // Update labels for clarity
+    document.querySelector('label[for="color-select-1"]').textContent = 'Choose Primary Color:';
+    document.querySelector('label[for="color-select-2"]').textContent = 'Choose Secondary Color:';
+  } else {
+    secondColorGroup.style.display = 'none';
+    document.querySelector('label[for="color-select-1"]').textContent = 'Choose Color:';
+  }
+  
+  // Show modal
+  const modal = document.getElementById("color-selection-modal");
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeColorSelection() {
+  const modal = document.getElementById("color-selection-modal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "auto";
+  pendingItem = null;
+}
+
+function confirmAddToCart() {
+  if (!pendingItem) return;
+  
+  const colorSelect1 = document.getElementById('color-select-1');
+  const colorSelect2 = document.getElementById('color-select-2');
+  const primaryColor = colorSelect1.value;
+  const secondaryColor = colorSelect2.value;
+  
+  // Validate required color selections
+  if (!primaryColor) {
+    alert('Please select a primary color before adding to cart.');
+    return;
+  }
+  
+  if (pendingItem.colorCount >= 2 && !secondaryColor) {
+    alert('Please select a secondary color before adding to cart.');
+    return;
+  }
+  
+  // Create color information
+  let colorInfo;
+  if (pendingItem.colorCount >= 2) {
+    colorInfo = {
+      primary: primaryColor,
+      secondary: secondaryColor,
+      display: `${primaryColor} & ${secondaryColor}`
+    };
+  } else {
+    colorInfo = {
+      primary: primaryColor,
+      display: primaryColor
+    };
+  }
+  
+  // Check if item with same name and colors already exists
+  const existingItemIndex = cart.findIndex(item => {
+    if (item.name !== pendingItem.name) return false;
+    if (pendingItem.colorCount >= 2) {
+      return item.colors && 
+             item.colors.primary === colorInfo.primary && 
+             item.colors.secondary === colorInfo.secondary;
+    } else {
+      return item.colors && item.colors.primary === colorInfo.primary;
+    }
+  });
   
   if (existingItemIndex !== -1) {
     // Update existing item quantity
-    cart[existingItemIndex].quantity += quantity;
+    cart[existingItemIndex].quantity += pendingItem.quantity;
   } else {
     // Add new item to cart
     cart.push({
-      name: itemName,
-      price: price,
-      quantity: quantity
+      name: pendingItem.name,
+      price: pendingItem.price,
+      quantity: pendingItem.quantity,
+      colors: colorInfo,
+      colorCount: pendingItem.colorCount
     });
   }
   
   // Reset quantity input to 1
+  const quantityInput = pendingItem.buttonElement.parentNode.querySelector(".quantity-input");
   quantityInput.value = 1;
   
-  // Save cart + update UI
+  // Save cart and update UI
   saveCart(cart);
   updateCartDisplay();
   
   // Show success message
-  showNotification(`${quantity} x ${itemName} added to cart!`);
+  showNotification(`${pendingItem.quantity} x ${pendingItem.name} (${colorInfo.display}) added to cart!`);
+  
+  // Close modal
+  closeColorSelection();
 }
 
 // Update cart display and count
@@ -251,11 +353,23 @@ function updateCartDisplay() {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         
+        // Handle both old single-color format and new multi-color format
+        let colorDisplay = '';
+        if (item.colors) {
+          colorDisplay = item.colors.display;
+        } else if (item.color) {
+          // Legacy support for old format
+          colorDisplay = item.color;
+        }
+        
         cartHTML += `
           <div class="cart-item">
-            <span class="item-name">${item.name}</span>
-            <span class="item-details">$${item.price.toFixed(2)} x ${item.quantity}</span>
-            <span class="item-total">$${itemTotal.toFixed(2)}</span>
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              <div class="item-details">$${item.price.toFixed(2)} x ${item.quantity}</div>
+              <div class="item-color">Color${item.colorCount >= 2 ? 's' : ''}: ${colorDisplay}</div>
+            </div>
+            <div class="item-total">$${itemTotal.toFixed(2)}</div>
             <button class="remove-item" onclick="removeFromCart(${index})">×</button>
           </div>
         `;
@@ -279,7 +393,21 @@ function updateCartDisplay() {
     cart.forEach(item => {
       const itemTotal = item.price * item.quantity;
       total += itemTotal;
-      formText += `${item.name} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
+      
+      // Handle both old single-color format and new multi-color format
+      let colorDisplay = '';
+      if (item.colors) {
+        if (item.colorCount >= 2) {
+          colorDisplay = `Primary: ${item.colors.primary}, Secondary: ${item.colors.secondary}`;
+        } else {
+          colorDisplay = item.colors.primary;
+        }
+      } else if (item.color) {
+        // Legacy support for old format
+        colorDisplay = item.color;
+      }
+      
+      formText += `${item.name} - Color${item.colorCount >= 2 ? 's' : ''}: ${colorDisplay} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
     });
     
     formText += `\nTOTAL: $${total.toFixed(2)}`;
@@ -293,7 +421,15 @@ function removeFromCart(index) {
   cart.splice(index, 1);
   saveCart(cart);
   updateCartDisplay();
-  showNotification(`${removedItem.name} removed from cart`);
+  
+  let colorDisplay = '';
+  if (removedItem.colors) {
+    colorDisplay = removedItem.colors.display;
+  } else if (removedItem.color) {
+    colorDisplay = removedItem.color;
+  }
+  
+  showNotification(`${removedItem.name} (${colorDisplay}) removed from cart`);
 }
 
 // Modal functions
@@ -361,11 +497,14 @@ function showNotification(message) {
 window.addEventListener("click", (e) => {
   const checkoutModal = document.getElementById("checkout-modal");
   const orderModal = document.getElementById("order-modal");
+  const colorModal = document.getElementById("color-selection-modal");
   
   if (e.target === checkoutModal) {
     closeCheckout();
   } else if (e.target === orderModal) {
     closeOrderForm();
+  } else if (e.target === colorModal) {
+    closeColorSelection();
   }
 });
 
@@ -378,22 +517,10 @@ document.addEventListener("click", (e) => {
 
 // Handle logo error - hide if image doesn't exist
 function handleLogoError() {
-  const headerLogo = document.getElementById("header-logo");
   const headerLogoOrder = document.getElementById("header-logo-order");
-  const welcomeLogo = document.getElementById("welcome-logo");
-  
-  if (headerLogo) {
-    headerLogo.addEventListener("error", () => headerLogo.style.display = "none");
-    headerLogo.addEventListener("load", () => headerLogo.style.display = "block");
-  }
   
   if (headerLogoOrder) {
     headerLogoOrder.addEventListener("error", () => headerLogoOrder.style.display = "none");
     headerLogoOrder.addEventListener("load", () => headerLogoOrder.style.display = "block");
-  }
-  
-  if (welcomeLogo) {
-    welcomeLogo.addEventListener("error", () => welcomeLogo.style.display = "none");
-    welcomeLogo.addEventListener("load", () => welcomeLogo.style.display = "block");
   }
 }
