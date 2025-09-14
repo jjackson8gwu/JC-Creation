@@ -47,7 +47,7 @@ header {
 .header-logo {
   max-height: 45px;
   width: auto;
-  display: none; /* Hidden by default, shown when loaded */
+  display: block; /* Hidden by default, shown when loaded */
 }
 
 .header-left nav {
