@@ -5,24 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <title>J&C Creations</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./resources/styles.css">
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
+    <div id="logo"><img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
+    </div>
+    <div class="header-flex">
       <nav>
         <a href="index.html">Home</a>
-        <a href="order.html">Order</a>
-        <a href="colors.html">Colors</a>
+        <a href="./order">Order</a>
+        <a href="./colors">Colors</a>
       </nav>
+       <div><a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </div>
-    <div class="header-center">
-      <!-- Empty center for balanced layout -->
-    </div>
-    <div class="header-right">
-      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
-    </div>
+      </div>
   </header>
   
   <main>
@@ -56,7 +53,7 @@
     <!-- Hero Section with Large Logo -->
     <section class="hero-section">
       <div class="hero-content">
-        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">
+        <!--<img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">-->
          <h2>Welcome to J&C Creations</h2>
       <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
       </div>
