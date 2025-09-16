@@ -24,7 +24,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  min-height: 40px;
+  min-height: 60px;
 }
 
 .header-flex {
