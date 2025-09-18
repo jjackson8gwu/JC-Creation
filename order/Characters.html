@@ -123,6 +123,18 @@
       </div>
 
       <div class="product">
+        <img src="../images/Jason_Voorhees.jpg" alt="Jason_Voorhees">
+        <h3>Jason Voorhees</h3>
+        <p class="price">$2.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="4">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Jason Voorhees', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
         <img src="../images/KingKong.jpg" alt="KingKong">
         <h3>King Kong</h3>
         <p class="price">$6.00</p>

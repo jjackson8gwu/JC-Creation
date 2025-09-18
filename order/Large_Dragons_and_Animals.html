@@ -149,6 +149,18 @@
       </div>
 
       <div class="product">
+        <img src="../images/Mini_Zephyros_Dragon.jpg" alt="Mini_Zephyros_Dragon">
+        <h3>Mini_Zephyros_Dragon</h3>
+        <p class="price">$3.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="20">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="openColorSelection('Mini_Zephyros_Dragon', 3.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
         <img src="../images/Skeleton_Shark.JPG" alt="Skeleton_Shark">
         <h3>Skeleton Shark</h3>
         <p class="price">$10.00</p>
@@ -203,6 +215,7 @@
           <label for="color-select-1">Choose Primary Color:</label>
           <select id="color-select-1" class="color-dropdown">
             <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
             <option value="Bambu_Green">Bambu Green</option>
             <option value="Black">Black</option>
             <option value="Blue-Gray">Blue-Gray</option>
@@ -218,8 +231,10 @@
             <option value="Cyan">Cyan</option>
             <option value="Elegoo-Beige">Elegoo Beige</option>
             <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
             <option value="Gray">Gray</option>
             <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
             <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
             <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
             <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
@@ -234,7 +249,9 @@
             <option value="Matte-Grass-Green">Matte Grass Green</option>
             <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
             <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
             <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
             <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
             <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
             <option value="Orange">Orange</option>
@@ -242,6 +259,8 @@
             <option value="Red">Red</option> 
             <option value="Silver">Silver</option>
             <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
             <option value="Turquoise">Turquoise</option>
             <option value="White">White</option>
             <option value="Yellow">Yellow</option>
@@ -253,13 +272,14 @@
             <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
             <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
             <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
-            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>       
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>      
           </select>
         </div>
 
         <div class="color-selection-group" id="second-color-group" style="display: none;">
           <label for="color-select-2">Choose Secondary Color:</label>
           <select id="color-select-2" class="color-dropdown">
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
             <option value="Bambu_Green">Bambu Green</option>
             <option value="Black">Black</option>
             <option value="Blue-Gray">Blue-Gray</option>
@@ -275,8 +295,10 @@
             <option value="Cyan">Cyan</option>
             <option value="Elegoo-Beige">Elegoo Beige</option>
             <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
             <option value="Gray">Gray</option>
             <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
             <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
             <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
             <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
@@ -291,7 +313,9 @@
             <option value="Matte-Grass-Green">Matte Grass Green</option>
             <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
             <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
             <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
             <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
             <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
             <option value="Orange">Orange</option>
@@ -299,6 +323,8 @@
             <option value="Red">Red</option> 
             <option value="Silver">Silver</option>
             <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
             <option value="Turquoise">Turquoise</option>
             <option value="White">White</option>
             <option value="Yellow">Yellow</option>
