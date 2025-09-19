@@ -16,9 +16,6 @@ header {
   background: #333;
   color: white;
   padding: 0.8rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
@@ -27,15 +24,17 @@ header {
 }
 
 .header-flex {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
 }
 
 #logo {
-  flex: 0 0 auto;
+  justify-self: start;
 }
 
 .header-logo {
@@ -48,8 +47,7 @@ header {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1;
-  justify-content: center;
+  justify-self: center;
 }
 
 header h1 {
@@ -127,7 +125,7 @@ header nav a:hover {
   color: white;
   text-decoration: none;
   white-space: nowrap;
-  flex: 0 0 auto;
+  justify-self: end;
 }
 
 #cart-icon:hover {
@@ -825,21 +823,27 @@ header nav a:hover {
   }
   
   .header-flex {
+    display: flex;
     flex-direction: column;
     gap: 15px;
     align-items: center;
+    grid-template-columns: none;
+  }
+  
+  #logo {
+    justify-self: auto;
+    order: 1;
   }
   
   .header-flex nav {
     order: 2;
-    flex: none;
-    justify-content: center;
+    justify-self: auto;
     gap: 15px;
   }
   
   #cart-icon {
     order: 3;
-    align-self: center;
+    justify-self: auto;
     padding: 10px 16px;
     font-size: 16px;
   }
