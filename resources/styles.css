@@ -808,22 +808,20 @@ header nav a:hover {
 @media (max-width: 768px) {
   header {
     padding: 0.8rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
   }
   
   .header-flex {
+    display: flex;
     flex-direction: column;
     gap: 15px;
     width: 100%;
     align-items: center;
   }
   
+  /* Logo - should appear first */
   #logo {
     width: auto;
-    order: 1;
+    order: -1;
     align-self: center;
   }
   
@@ -832,15 +830,17 @@ header nav a:hover {
     margin: 0;
   }
   
+  /* Navigation - should appear second */
   .header-flex nav {
-    order: 2;
+    order: 0;
     justify-content: center;
     gap: 15px;
     align-self: center;
   }
   
+  /* Cart Icon - should appear last */
   #cart-icon {
-    order: 3;
+    order: 1;
     align-self: center;
     padding: 10px 16px;
     font-size: 16px;
