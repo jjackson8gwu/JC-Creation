@@ -826,6 +826,7 @@ header nav a:hover {
   }
   
   .header-logo {
+    align-self: center;
     max-height: 60px;
     margin: 0;
   }
