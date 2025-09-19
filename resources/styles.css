@@ -820,13 +820,13 @@ header nav a:hover {
   
   /* Logo - should appear first */
   #logo {
-    width: auto;
+    width: 100%;
     order: -1;
-    align-self: center;
+    display: flex;
+    justify-content: center;
   }
   
   .header-logo {
-    align-self: center;
     max-height: 60px;
     margin: 0;
   }
