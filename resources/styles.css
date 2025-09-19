@@ -823,7 +823,7 @@ header nav a:hover {
   
   #logo {
     width: auto;
-    order: 1;
+    order: 3;
   }
   
   .header-logo {
@@ -838,7 +838,7 @@ header nav a:hover {
   }
   
   #cart-icon {
-    order: 3;
+    order: 1;
     justify-self: auto;
     padding: 10px 16px;
     font-size: 16px;
