@@ -12,6 +12,7 @@ body {
   background-image: url("../images/black-thread-light.png")
 }
 
+/* DESKTOP - Your Original Header Layout */
 header {
   background: #333;
   color: white;
@@ -803,36 +804,47 @@ header nav a:hover {
   display: none !important;
 }
 
-/* === Responsive Design === */
+/* === MOBILE-ONLY RESPONSIVE CHANGES === */
 @media (max-width: 768px) {
   header {
     padding: 0.8rem 1rem;
+    display: flex;
     flex-direction: column;
-    gap: 10px;
-    min-height: auto;
+    align-items: center;
+    gap: 15px;
   }
   
-  .header-left,
-  .header-center,
-  .header-right {
-    flex: none;
-  }
-  
-  .header-left {
+  .header-flex {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
   }
   
-  .header-left nav {
-    justify-content: center;
+  #logo {
+    width: auto;
+    order: 1;
   }
   
   .header-logo {
-    max-height: 35px;
+    max-height: 60px;
+    margin: 0;
+  }
+  
+  .header-flex nav {
+    order: 2;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  #cart-icon {
+    order: 3;
+    justify-self: auto;
+    padding: 10px 16px;
+    font-size: 16px;
   }
   
   .hero-logo {
-    max-height: 100px;
     max-width: 250px;
   }
   
