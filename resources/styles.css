@@ -890,12 +890,18 @@ header nav a:hover {
   }
   
   .products {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     padding: 20px 15px;
   }
   
   .product {
+    display: flex;
+    background-color: white;
+    border-radius: 12px;
+    text-align: center;
+    flex-direction: column;
     padding: 15px;
     max-width: 350px;
     margin: 0 auto;
@@ -905,7 +911,7 @@ header nav a:hover {
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
     margin-bottom: 5px;
     background: #f5f5f5;
