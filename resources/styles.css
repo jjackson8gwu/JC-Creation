@@ -900,8 +900,10 @@ header nav a:hover {
     display: flex;
     background-color: white;
     border-radius: 12px;
+    padding: 6px;
     text-align: center;
     flex-direction: column;
+    justify-content: space-around;
     padding: 15px;
     max-width: 350px;
     margin: 0 auto;
