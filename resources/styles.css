@@ -905,7 +905,7 @@ header nav a:hover {
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 10px;
     margin-bottom: 5px;
     background: #f5f5f5;
