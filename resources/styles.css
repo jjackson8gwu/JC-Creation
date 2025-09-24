@@ -892,10 +892,9 @@ header nav a:hover {
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    justify-content: center;
     gap: 20px;
     padding: 20px 15px;
-    max-width: 400px;
+    margin: 0 auto;
   }
   
   .product {
