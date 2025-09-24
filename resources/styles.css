@@ -891,15 +891,13 @@ header nav a:hover {
   
   .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, 300px);
+    justify-content: center;
     gap: 20px;
     padding: 20px 15px;
-    margin: 0 auto;
   }
   
   .product {
-    display: flex;
-    background: white;
     width: 300px;
     padding: 15px;
     margin: 0;
@@ -907,8 +905,6 @@ header nav a:hover {
     text-align: center;
     flex-direction: column;
     justify-content: space-around;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .product img {
