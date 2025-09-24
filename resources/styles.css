@@ -901,6 +901,10 @@ header nav a:hover {
     width: 300px;
     padding: 15px;
     margin: 0;
+    border-radius: 12px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
   }
   
   .product img {
@@ -911,6 +915,12 @@ header nav a:hover {
     border-radius: 10px;
     margin-bottom: 5px;
     background: #f5f5f5;
+  }
+
+  .product h3 {
+    margin: 5px 0;
+    color: #333;
+    font-size: 1.3rem;
   }
   
   .cart-item {
