@@ -898,6 +898,8 @@ header nav a:hover {
   }
   
   .product {
+    display: flex;
+    background: white;
     width: 300px;
     padding: 15px;
     margin: 0;
@@ -905,13 +907,15 @@ header nav a:hover {
     text-align: center;
     flex-direction: column;
     justify-content: space-around;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .product img {
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 10px;
     margin-bottom: 5px;
     background: #f5f5f5;
