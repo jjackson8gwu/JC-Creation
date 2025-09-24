@@ -900,7 +900,7 @@ header nav a:hover {
   .product {
     display: flex;
     background: white;
-    width: 300px;
+    /*width: 300px;*/
     padding: 15px;
     margin: 0;
     border-radius: 12px;
@@ -915,7 +915,7 @@ header nav a:hover {
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
     margin-bottom: 5px;
     background: #f5f5f5;
