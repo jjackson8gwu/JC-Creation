@@ -804,6 +804,69 @@ header nav a:hover {
   display: none !important;
 }
 
+/* === Vendor Logo Strip === */
+.vendor-strip {
+  background: #2c2c2c;
+  padding: 20px 0;
+  overflow: hidden;
+  position: relative;
+  margin-top: auto;
+}
+
+.vendor-strip-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.vendor-logos {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  animation: scroll 30s linear infinite;
+  width: fit-content;
+}
+
+.vendor-logos img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(2);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.vendor-logos img:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause animation on hover */
+.vendor-strip:hover .vendor-logos {
+  animation-play-state: paused;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .vendor-logos {
+    gap: 40px;
+    animation: scroll 20s linear infinite;
+  }
+  
+  .vendor-logos img {
+    height: 40px;
+  }
+}
+
 /* === MOBILE-ONLY RESPONSIVE CHANGES === */
 @media (max-width: 768px) {
   header {
@@ -913,7 +976,7 @@ header nav a:hover {
   .product img {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
     margin-bottom: 10px;
   }
