@@ -99,6 +99,20 @@
       </div>
 
       <div class="product">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Kinetic_Fidget.mp4" type="video/mp4">
+        </video>
+        <h3>Kinetic Fidget</h3>
+        <p class="price">$5.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="5">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Kinetic Fidget', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
         <img src="../images/Large_Gear_Ring.JPG" alt="Large_Gear_Ring">
         <h3>Large Gear Ring</h3>
         <p class="price">$12.00</p>

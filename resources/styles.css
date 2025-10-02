@@ -299,6 +299,14 @@ header nav a:hover {
   margin-bottom: 5px;
 }
 
+.product video {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
 .product h3 {
   margin: 5px 0;
   color: #333;
