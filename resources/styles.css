@@ -979,7 +979,8 @@ header nav a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 350px;
     margin: 0 auto;
-    min-height: 450px;
+    height: 480px;
+    overflow: hidden;
   }
   
   .product img,
