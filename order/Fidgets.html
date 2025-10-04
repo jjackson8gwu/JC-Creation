@@ -27,7 +27,9 @@
     <h1>Colors on all fidgets can be changed on request</h1>
     <section class="products">
       <div class="product">
-        <img src="../images/Fidget_Cube.JPG" alt="Fidget_Cube">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Infinity_Cube.mp4" alt="Fidget_Cube">
+        </video>
         <h3>Fidget Cube</h3>
         <p class="price">$5.00</p>
         <div class="quantity-controls">
@@ -53,7 +55,9 @@
       </div>
       
       <div class="product">
-        <img src="../images/Gear_Ball_Opened.JPG" alt="Gear_Ball_Opened">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Gear_Ball.mp4" type="video/mp4">
+        </video>
         <h3>Gear Ball</h3>
         <p class="price">$10.00</p>
         <div class="quantity-controls">
@@ -65,7 +69,9 @@
       </div>
       
       <div class="product">
-        <img src="../images/Hex_Fidget.JPG" alt="Hex_Fidget">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Infinity_Hex.mp4" type="video/mp4">
+        </video>
         <h3>Hex Fidget</h3>
         <p class="price">$5.00</p>
         <div class="quantity-controls">
@@ -126,7 +132,7 @@
         <button onclick="addToCart('Large Gear Ring', 12.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
-      <div class="product">
+      <!---<div class="product">
         <img src="../images/Large_Grid.JPG" alt="Large_Grid">
         <h3>Large Grid</h3>
         <p class="price">$15.00</p>
@@ -136,10 +142,26 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('Large Grid', 15.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>--->
+
+      <div class="product">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Mario_Transforming_Cube.mp4" type="video/mp4">
+        </video>
+        <h3>Mario Transforming Cube</h3>
+        <p class="price">$5.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="2">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Mario Transforming Cube', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
       <div class="product">
-        <img src="../images/Morph_Ball.JPG" alt="Morph_Ball">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Morph_Ball.mp4" type="video/mp4">
+        </video>
         <h3>Morph Ball</h3>
         <p class="price">$8.00</p>
         <div class="quantity-controls">
@@ -151,7 +173,9 @@
       </div>
 
       <div class="product">
-        <img src="../images/SeaTurtle_Clicker.JPG" alt="SeaTurtle_Clicker">
+        <video autoplay loop muted playsinline>
+          <source src="../images/SeaTurtle_Clicker.mp4" type="video/mp4">
+        </video>
         <h3>SeaTurtle Clicker</h3>
         <p class="price">$8.00</p>
         <div class="quantity-controls">
@@ -163,7 +187,9 @@
       </div>
 
       <div class="product">
-        <img src="../images/Small_Gear_Ring.JPG" alt="Small_Gear_Ring">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Small_Gear_Ring.mp4" type="video/mp4">
+        </video>
         <h3>Small Gear Ring</h3>
         <p class="price">$6.00</p>
         <div class="quantity-controls">
@@ -174,7 +200,7 @@
         <button onclick="addToCart('Small Gear Ring', 6.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
-      <div class="product">
+      <!---<div class="product">
         <img src="../images/Small_Grid.JPG" alt="Small_Grid">
         <h3>Small Grid</h3>
         <p class="price">$6.00</p>
@@ -184,10 +210,12 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('Small Grid', 6.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
+      </div>--->
 
       <div class="product">
-        <img src="../images/Starfish_Mesh.JPG" alt="Starfish_Mesh">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Starfish_Mesh.mp4" type="video/mp4">
+        </video>
         <h3>Starfish Mesh</h3>
         <p class="price">$5.00</p>
         <div class="quantity-controls">
@@ -199,7 +227,9 @@
       </div>
 
       <div class="product">
-        <img src="../images/Stingray_Mesh.JPG" alt="Stingray_Mesh">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Stingray_Mesh.mp4" type="video/mp4">
+        </video>
         <h3>Stingray Mesh</h3>
         <p class="price">$5.00</p>
         <div class="quantity-controls">
@@ -208,6 +238,20 @@
           <button onclick="increaseQuantity(this)">+</button>
         </div>
         <button onclick="addToCart('Stingray Mesh', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
+        <video autoplay loop muted playsinline>
+          <source src="../images/Transforming_Cube.mp4" type="video/mp4">
+        </video>
+        <h3>Transforming Cube</h3>
+        <p class="price">$5.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="2">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Transforming Cube', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
       </div>
 
     </section>
