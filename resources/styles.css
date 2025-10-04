@@ -999,6 +999,14 @@ header nav a:hover {
     flex-grow: 0;
     word-wrap: break-word;
     hyphens: auto;
+    min-height: 3.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product .add-to-cart-btn {
+    margin-top: auto;
   }
   
   .cart-item {
