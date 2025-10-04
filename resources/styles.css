@@ -962,7 +962,7 @@ header nav a:hover {
   
   .products {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    justify-content: center;
+    /*justify-content: center;*/
     gap: 20px;
     padding: 20px 15px;
   }
@@ -974,6 +974,7 @@ header nav a:hover {
     padding: 15px;
     text-align: center;
     flex-direction: column;
+    justify-content: space-around;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 350px;
