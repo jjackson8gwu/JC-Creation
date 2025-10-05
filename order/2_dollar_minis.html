@@ -98,6 +98,18 @@
       </div>
 
       <div class="product">
+        <img src="../images/Brown_Bear.JPG" alt="Brown_Bear">
+        <h3>Brown Bear</h3>
+        <p class="price">$2.00</p>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(this)">-</button>
+          <input type="number" class="quantity-input" value="1" min="1" max="20">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button onclick="addToCart('Brown Bear', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+      <div class="product">
         <img src="../images/Bubble_Dragon.JPG" alt="Bubble_Dragon">
         <h3>Bubble Dragon</h3>
         <p class="price">$2.00</p>
