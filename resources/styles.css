@@ -58,11 +58,13 @@ header h1 {
 
 /* Hamburger Menu Styles */
     .hamburger {
-      display: none;
+      display: flex;
       flex-direction: column;
       cursor: pointer;
       padding: 10px;
       z-index: 1001;
+      background-color: transparent;
+      border: none;
     }
     
     .hamburger span {
@@ -95,7 +97,7 @@ header h1 {
       max-width: 300px;
       height: 100vh;
       background-color: white;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
       transition: left 0.3s ease;
       z-index: 1000;
       padding-top: 60px;
@@ -116,12 +118,14 @@ header h1 {
       text-decoration: none;
       color: #333;
       font-size: 18px;
-      border-bottom: 1px solid #eee;
+      font-weight: 500;
+      border-bottom: 1px solid #e0e0e0;
       transition: background-color 0.2s;
     }
     
     .mobile-menu nav a:hover {
-      background-color: #f5f5f5;
+      background-color: #f0f0f0;
+      color: #000;
     }
     
     .menu-overlay {
@@ -139,30 +143,9 @@ header h1 {
       display: block;
     }
     
-    /* Show hamburger on mobile, hide regular nav */
-    @media (max-width: 768px) {
-      .hamburger {
-        display: flex;
-      }
-      
-      .header-flex > nav {
-        display: none;
-      }
-    }
-    
-    /* Desktop - hide hamburger and mobile menu */
-    @media (min-width: 769px) {
-      .hamburger {
-        display: none !important;
-      }
-      
-      .mobile-menu {
-        display: none !important;
-      }
-      
-      .menu-overlay {
-        display: none !important;
-      }
+    /* Hide the regular desktop nav since we're using hamburger everywhere */
+    .header-flex > nav {
+      display: none;
     }
 
 /* === Main Section === */
