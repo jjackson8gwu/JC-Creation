@@ -206,6 +206,37 @@ for(let item of items){
     });
 }
 
+// ✅ NEW: Simple addToCart function for items without color selection
+function addToCart(itemName, price, buttonElement) {
+  const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
+  const quantity = parseInt(quantityInput.value) || 1;
+  
+  // Check if item already exists in cart
+  const existingItemIndex = cart.findIndex(item => item.name === itemName && !item.colors);
+  
+  if (existingItemIndex !== -1) {
+    // Update existing item quantity
+    cart[existingItemIndex].quantity += quantity;
+  } else {
+    // Add new item to cart
+    cart.push({
+      name: itemName,
+      price: price,
+      quantity: quantity
+    });
+  }
+  
+  // Reset quantity input to 1
+  quantityInput.value = 1;
+  
+  // Save cart and update UI
+  saveCart(cart);
+  updateCartDisplay();
+  
+  // Show success message
+  showNotification(`${quantity} x ${itemName} added to cart!`);
+}
+
 // Enhanced Color Selection Functions for Multi-Color Support
 function openColorSelection(itemName, price, buttonElement, colorCount = 1) {
   const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
@@ -356,10 +387,10 @@ function updateCartDisplay() {
         // Handle both old single-color format and new multi-color format
         let colorDisplay = '';
         if (item.colors) {
-          colorDisplay = item.colors.display;
+          colorDisplay = `<div class="item-color">Color${item.colorCount >= 2 ? 's' : ''}: ${item.colors.display}</div>`;
         } else if (item.color) {
           // Legacy support for old format
-          colorDisplay = item.color;
+          colorDisplay = `<div class="item-color">Color: ${item.color}</div>`;
         }
         
         cartHTML += `
@@ -367,7 +398,7 @@ function updateCartDisplay() {
             <div class="item-info">
               <div class="item-name">${item.name}</div>
               <div class="item-details">$${item.price.toFixed(2)} x ${item.quantity}</div>
-              <div class="item-color">Color${item.colorCount >= 2 ? 's' : ''}: ${colorDisplay}</div>
+              ${colorDisplay}
             </div>
             <div class="item-total">$${itemTotal.toFixed(2)}</div>
             <button class="remove-item" onclick="removeFromCart(${index})">×</button>
@@ -394,20 +425,20 @@ function updateCartDisplay() {
       const itemTotal = item.price * item.quantity;
       total += itemTotal;
       
-      // Handle both old single-color format and new multi-color format
-      let colorDisplay = '';
+      // Handle both items with and without colors
+      let colorInfo = '';
       if (item.colors) {
         if (item.colorCount >= 2) {
-          colorDisplay = `Primary: ${item.colors.primary}, Secondary: ${item.colors.secondary}`;
+          colorInfo = ` - Colors: Primary: ${item.colors.primary}, Secondary: ${item.colors.secondary}`;
         } else {
-          colorDisplay = item.colors.primary;
+          colorInfo = ` - Color: ${item.colors.primary}`;
         }
       } else if (item.color) {
         // Legacy support for old format
-        colorDisplay = item.color;
+        colorInfo = ` - Color: ${item.color}`;
       }
       
-      formText += `${item.name} - Color${item.colorCount >= 2 ? 's' : ''}: ${colorDisplay} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
+      formText += `${item.name}${colorInfo} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
     });
     
     formText += `\nTOTAL: $${total.toFixed(2)}`;
@@ -424,12 +455,12 @@ function removeFromCart(index) {
   
   let colorDisplay = '';
   if (removedItem.colors) {
-    colorDisplay = removedItem.colors.display;
+    colorDisplay = ` (${removedItem.colors.display})`;
   } else if (removedItem.color) {
-    colorDisplay = removedItem.color;
+    colorDisplay = ` (${removedItem.color})`;
   }
   
-  showNotification(`${removedItem.name} (${colorDisplay}) removed from cart`);
+  showNotification(`${removedItem.name}${colorDisplay} removed from cart`);
 }
 
 // Modal functions
