@@ -59,6 +59,7 @@ header h1 {
 /* Hamburger Menu Styles */
     .hamburger {
       display: flex;
+      background-color: white;
       flex-direction: column;
       cursor: pointer;
       padding: 10px;
