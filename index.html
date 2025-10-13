@@ -9,18 +9,56 @@
 </head>
 <body>
   <header>
-    <div id="logo"><img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
+  <div id="logo">
+    <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
+  </div>
+  <div class="header-flex">
+    <!-- Hamburger Icon -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    <div class="header-flex">
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="./order">Order</a>
-        <a href="./colors">Colors</a>
-      </nav>
-       <div><a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    
+    <!-- Desktop Navigation -->
+    <nav>
+      <a href="/index.html">🏠 Home</a>
+      <a href="../order/1_dollar_minis.html">$1 Minis</a>
+      <a href="../order/2_dollar_minis.html">$2 Minis</a>
+      <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/Characters.html">Fan Art</a>
+      <a href="../order/Custom_Designs.html">Custom Designs</a>
+      <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+      <a href="../order/Fidgets.html">Fidgets</a>
+      <a href="../order/Pokeballs.html">Pokeballs</a>
+      <a href="../colors/index.html">🎨 Colors</a>
+    </nav>
+    
+    <div>
+      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </div>
-      </div>
-  </header>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- Mobile Menu Sidebar -->
+<div class="mobile-menu" id="mobile-menu">
+  <nav>
+    <a href="../index.html">🏠 Home</a>
+    <a href="../order/1_dollar_minis.html">$1 Minis</a>
+    <a href="../order/2_dollar_minis.html">$2 Minis</a>
+    <a href="../order/3_dollar_minis.html">$3 Minis</a>
+    <a href="../order/Characters.html">Fan Art</a>
+    <a href="../order/Custom_Designs.html">Custom Designs</a>
+    <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+    <a href="../order/Fidgets.html">Fidgets</a>
+    <a href="../order/Pokeballs.html">Pokeballs</a>
+    <a href="../colors/index.html">🎨 Colors</a>
+    <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
+  </nav>
+</div>
   
   <main>
     <!-- Hero Section with Large Logo -->
