@@ -609,3 +609,32 @@ function updateMobileCartCount() {
 // Modify your existing updateCartDisplay function to include mobile cart update
 // Find your updateCartDisplay function and add this line at the end:
 // updateMobileCartCount();
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all video elements in product cards
+  const productVideos = document.querySelectorAll('.product video');
+  
+  productVideos.forEach(video => {
+    // Pause video initially and reset to start
+    video.pause();
+    video.currentTime = 0;
+    
+    // Get the parent product div
+    const productCard = video.closest('.product');
+    
+    // Play video when mouse enters the product card
+    productCard.addEventListener('mouseenter', function() {
+      video.play().catch(err => {
+        // Handle any autoplay errors silently
+        console.log('Video play failed:', err);
+      });
+    });
+    
+    // Pause and reset video when mouse leaves
+    productCard.addEventListener('mouseleave', function() {
+      video.pause();
+      video.currentTime = 0; // Reset to beginning
+    });
+  });
+});
