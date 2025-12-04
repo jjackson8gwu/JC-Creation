@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Load products from JSON
 async function loadProducts() {
   try {
-    const response = await fetch('../products.json');
+    const response = await fetch('../resources/products.json');
     productsData = await response.json();
     
     // Get current page category from the URL
