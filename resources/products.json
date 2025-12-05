@@ -402,6 +402,196 @@
       "image": "../images/HippoGriff.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
+    },
+    {
+      "id": "Butterfly",
+      "name": "Butterfly",
+      "description": "Butterfly",
+      "price": 2.00,
+      "quantity": 15,
+      "image": "../images/Butterfly_Purple.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Grinch",
+      "name": "Grinch",
+      "description": "Grinch",
+      "price": 2.00,
+      "quantity": 22,
+      "image": "../images/Grinch_Mini.JPG",
+      "category": "Characters",
+      "requiresColor": false
+    },
+    {
+      "id": "Rudolph Reindeer",
+      "name": "Rudolph Reindeer",
+      "description": "Rudolph Reindeer",
+      "price": 2.00,
+      "quantity": 8,
+      "image": "../images/Reindeer_Flexi.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Pufferfish",
+      "name": "Pufferfish",
+      "description": "Pufferfish",
+      "price": 2.00,
+      "quantity": 10,
+      "image": "../images/Pufferfish.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Loch Ness",
+      "name": "Loch Ness",
+      "description": "Loch Ness",
+      "price": 2.00,
+      "quantity": 6,
+      "image": "../images/Loch_Ness.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Gorilla",
+      "name": "Gorilla",
+      "description": "Gorilla",
+      "price": 2.00,
+      "quantity": 14,
+      "image": "../images/Gorilla.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Chef Mouse",
+      "name": "Chef Mouse",
+      "description": "Chef Mouse",
+      "price": 2.00,
+      "quantity": 7,
+      "image": "../images/Chef Mouse.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Godzilla",
+      "name": "Godzilla",
+      "description": "Godzilla",
+      "price": 2.00,
+      "quantity": 5,
+      "image": "../images/Godzilla.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Pig w/ Ribs",
+      "name": "Pig w/ Ribs",
+      "description": "Pig w/ Ribs",
+      "price": 2.00,
+      "quantity": 8,
+      "image": "../images/Pig w ribs.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Cow w/ Ribs",
+      "name": "Cow w/ Ribs",
+      "description": "Cow w/ Ribs",
+      "price": 2.00,
+      "quantity": 1,
+      "image": "../images/Cow w ribs.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Poison Dart Frog",
+      "name": "Poison Dart Frog",
+      "description": "Poison Dart Frog",
+      "price": 2.00,
+      "quantity": 7,
+      "image": "../images/Poison_Dart_Frog.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Sea Turtle",
+      "name": "Sea Turtle",
+      "description": "Sea Turtle",
+      "price": 2.00,
+      "quantity": 11,
+      "image": "../images/SeaTurtle_Flexi.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Santa",
+      "name": "Santa",
+      "description": "Santa",
+      "price": 2.00,
+      "quantity": 20,
+      "image": "../images/Santa.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Cat",
+      "name": "Cat",
+      "description": "Cat",
+      "price": 2.00,
+      "quantity": 20,
+      "image": "../images/Cat.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Owl",
+      "name": "Owl",
+      "description": "Owl",
+      "price": 2.00,
+      "quantity": 3,
+      "image": "../images/Barn_Owl.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Small Axolotl",
+      "name": "Small Axolotl",
+      "description": "Small Axolotl",
+      "price": 2.00,
+      "quantity": 2,
+      "image": "../images/Small_Axolotl.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Werewolf",
+      "name": "Werewolf",
+      "description": "Werewolf",
+      "price": 2.00,
+      "quantity": 5,
+      "image": "../images/Werewolf.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Shelf Sitting Snowman",
+      "name": "Shelf Sitting Snowman",
+      "description": "Shelf Sitting Snowman",
+      "price": 2.00,
+      "quantity": 13,
+      "image": "../images/Snowman_Shelf_Buddy.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Jackalope",
+      "name": "Jackalope",
+      "description": "Jackalope",
+      "price": 2.00,
+      "quantity": 7,
+      "image": "../images/Jackalope.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
     }
     
   ]
