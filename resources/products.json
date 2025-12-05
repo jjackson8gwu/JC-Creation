@@ -334,6 +334,16 @@
       "requiresColor": false
     },
     {
+      "id": "Dobermann ",
+      "name": "Dobermann ",
+      "description": "Dobermann ",
+      "price": 3.00,
+      "quantity": 9,
+      "image": "../images/Dobberman.JPG",
+      "category": "3_dollar_minis",
+      "requiresColor": false
+    },
+    {
       "id": "Parasaurolophus",
       "name": "Parasaurolophus",
       "description": "Parasaurolophus",
@@ -342,6 +352,27 @@
       "image": "../images/Parasaurolophus.JPG",
       "category": "3_dollar_minis",
       "requiresColor": false
+    },
+    {
+      "id": "Gingerbread Dragon Tadlings",
+      "name": "Gingerbread Dragon Tadlings",
+      "description": "Gingerbread Dragon Tadlings",
+      "price": 3.00,
+      "quantity": 5,
+      "image": "../images/Gingerbread_Dragon.JPG",
+      "category": "3_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Gingerbread Dragon Tadlings",
+      "name": "Gingerbread Dragon Tadlings",
+      "description": "Gingerbread Dragon Tadlings",
+      "price": 3.00,
+      "quantity": 5,
+      "image": "../images/Gingerbread_Dragon.JPG",
+      "category": "3_dollar_minis",
+      "requiresColor": false
     }
+    
   ]
 }
