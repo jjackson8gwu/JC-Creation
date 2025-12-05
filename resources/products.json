@@ -258,7 +258,7 @@
       "name": "Tiny Flappy Air Dino",
       "description": "Small flying dinosaur",
       "price": 1.00,
-      "quantity": 4,
+      "quantity": 3,
       "image": "../images/Tiny_Flappy_Air_Dino.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -268,7 +268,7 @@
       "name": "Tiny Frog",
       "description": "Miniature frog figure",
       "price": 1.00,
-      "quantity": 3,
+      "quantity": 2,
       "image": "../images/Tiny_Frog.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -278,7 +278,7 @@
       "name": "Tiny Manta Ray",
       "description": "Small manta ray",
       "price": 1.00,
-      "quantity": 5,
+      "quantity": 3,
       "image": "../images/Tiny_Manta_Ray.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -288,7 +288,7 @@
       "name": "Tiny Octopus",
       "description": "Miniature octopus",
       "price": 1.00,
-      "quantity": 3,
+      "quantity": 0,
       "image": "../images/Tiny_Octopus.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -298,7 +298,7 @@
       "name": "Tiny Purrmaid",
       "description": "Cat mermaid hybrid",
       "price": 1.00,
-      "quantity": 3,
+      "quantity": 0,
       "image": "../images/Tiny_Purrmaid.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -308,7 +308,7 @@
       "name": "Tiny Seal",
       "description": "Adorable small seal",
       "price": 1.00,
-      "quantity": 10,
+      "quantity": 8,
       "image": "../images/Tiny_Seal.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -318,7 +318,7 @@
       "name": "Tiny Squirrel",
       "description": "Small squirrel figure",
       "price": 1.00,
-      "quantity": 4,
+      "quantity": 2,
       "image": "../images/Tiny_Squirrel.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
@@ -358,19 +358,49 @@
       "name": "Gingerbread Dragon Tadlings",
       "description": "Gingerbread Dragon Tadlings",
       "price": 3.00,
-      "quantity": 5,
+      "quantity": 10,
       "image": "../images/Gingerbread_Dragon.JPG",
       "category": "3_dollar_minis",
       "requiresColor": false
     },
     {
-      "id": "Gingerbread Dragon Tadlings",
-      "name": "Gingerbread Dragon Tadlings",
-      "description": "Gingerbread Dragon Tadlings",
-      "price": 3.00,
-      "quantity": 5,
-      "image": "../images/Gingerbread_Dragon.JPG",
-      "category": "3_dollar_minis",
+      "id": "Fox Hatchling",
+      "name": "Fox Hatchling",
+      "description": "Fox Hatchling",
+      "price": 1.00,
+      "quantity": 30,
+      "image": "../images/Fox_Hatchling.JPG",
+      "category": "1_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Wolf Hatchling",
+      "name": "Wolf Hatchling",
+      "description": "Wolf Hatchling",
+      "price": 1.00,
+      "quantity": 26,
+      "image": "../images/Wolf_Hatchling.JPG",
+      "category": "1_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "T-Rex Flexi",
+      "name": "T-Rex Flexi",
+      "description": "T-Rex Flexi",
+      "price": 1.00,
+      "quantity": 17,
+      "image": "../images/T-Rex_Small.JPG",
+      "category": "1_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "HippoGriff",
+      "name": "HippoGriff",
+      "description": "HippoGriff",
+      "price": 1.00,
+      "quantity": 14,
+      "image": "../images/HippoGriff.JPG",
+      "category": "1_dollar_minis",
       "requiresColor": false
     }
     
