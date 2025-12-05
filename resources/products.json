@@ -322,6 +322,16 @@
       "image": "../images/Tiny_Squirrel.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
+    },
+    {
+      "id": "Polar-Bear-Hatchling",
+      "name": "Polar Bear Hatchling",
+      "description": "Polar Bear Hatchling",
+      "price": 1.00,
+      "quantity": 34,
+      "image": "../images/Polar_Bear.JPG",
+      "category": "1_dollar_minis",
+      "requiresColor": false
     }
   ]
 }
