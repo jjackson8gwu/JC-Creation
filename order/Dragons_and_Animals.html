@@ -10,338 +10,64 @@
 <body>
   <header>
     <div id="logo">
-    <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
-  </div>
-  <div class="header-flex">
-    <!-- Hamburger Icon -->
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
     </div>
-    
-    <!-- Desktop Navigation -->
-    <nav>
-      <a href="../../index.html">🏠 Home</a>
-      <a href="../../order/1_dollar_minis.html">$1 Minis</a>
-      <a href="../../order/2_dollar_minis.html">$2 Minis</a>
-      <a href="../../order/3_dollar_minis.html">$3 Minis</a>
-      <a href="../../order/Characters.html">Fan Art</a>
-      <a href="../../order/Custom_Designs.html">Custom Designs</a>
-      <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
-      <a href="../../order/Fidgets.html">Fidgets</a>
-      <a href="../../order/Pokeballs.html">Pokeballs</a>
-      <a href="../../colors/index.html">🎨 Colors</a>
-    </nav>
-    
-    <div>
-      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    <div class="header-flex">
+      <!-- Hamburger Icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav>
+        <a href="../../index.html">🏠 Home</a>
+        <a href="../../order/1_dollar_minis.html">$1 Minis</a>
+        <a href="../../order/2_dollar_minis.html">$2 Minis</a>
+        <a href="../../order/3_dollar_minis.html">$3 Minis</a>
+        <a href="../../order/Characters.html">Fan Art</a>
+        <a href="../../order/Custom_Designs.html">Custom Designs</a>
+        <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
+        <a href="../../order/Fidgets.html">Fidgets</a>
+        <a href="../../order/Pokeballs.html">Pokeballs</a>
+        <a href="../../colors/index.html">🎨 Colors</a>
+      </nav>
+      
+      <div>
+        <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+      </div>
     </div>
-  </div>
   </header>
 
   <!-- Mobile Menu Overlay -->
-<div class="menu-overlay" id="menu-overlay"></div>
+  <div class="menu-overlay" id="menu-overlay"></div>
 
-<!-- Mobile Menu Sidebar -->
-<div class="mobile-menu" id="mobile-menu">
-  <nav>
-    <a href="../index.html">🏠 Home</a>
-    <a href="../order/1_dollar_minis.html">$1 Minis</a>
-    <a href="../order/2_dollar_minis.html">$2 Minis</a>
-    <a href="../order/3_dollar_minis.html">$3 Minis</a>
-    <a href="../order/Characters.html">Fan Art</a>
-    <a href="../order/Custom_Designs.html">Custom Designs</a>
-    <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
-    <a href="../order/Fidgets.html">Fidgets</a>
-    <a href="../order/Pokeballs.html">Pokeballs</a>
-    <a href="../colors/index.html">🎨 Colors</a>
-    <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
-  </nav>
-</div>
+  <!-- Mobile Menu Sidebar -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav>
+      <a href="../index.html">🏠 Home</a>
+      <a href="../order/1_dollar_minis.html">$1 Minis</a>
+      <a href="../order/2_dollar_minis.html">$2 Minis</a>
+      <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/Characters.html">Fan Art</a>
+      <a href="../order/Custom_Designs.html">Custom Designs</a>
+      <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+      <a href="../order/Fidgets.html">Fidgets</a>
+      <a href="../order/Pokeballs.html">Pokeballs</a>
+      <a href="../colors/index.html">🎨 Colors</a>
+      <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
+    </nav>
+  </div>
   
   <main>
-    <!-- Product Grid -->
+    <!-- Page Title (Optional - can be customized per page) -->
     <h1>Colors on all items can be changed on request</h1>
     <h1>Items will be printed as ordered</h1>
+    
+    <!-- Product Grid - Will be populated dynamically from JSON -->
     <section class="products">
-
-      <div class="product">
-        <img src="../images/1-Color_Crystal_Dragon.JPG" alt="1-Color_Crystal_Dragon">
-        <h3>1-Color Crystal Dragon</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('1-Color Crystal Dragon', 10.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/2-Color_Crystal_Dragon.JPG" alt="2-Color_Crystal_Dragon">
-        <h3>2-Color Crystal Dragon</h3>
-        <p class="price">$20.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('2-Color Crystal Dragon', 20.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-        
-      <div class="product">
-        <img src="../images/3-Headed_Dragon.JPG" alt="3-Headed_Dragon">
-        <h3>3-Headed Dragon</h3>
-        <p class="price">$8.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('3-Headed Dragon', 8.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Aquatic_Dragon.JPG" alt="Aquatic_Dragon">
-        <h3>Aquatic Dragon</h3>
-        <p class="price">$15.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Aquatic Dragon', 15.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Ashbone_Dragon_Glow-in-Dark.JPG" alt="Ashbone_Dragon_Glow-in-Dark">
-        <h3>Ashbone Dragon <br> Glow-in-Dark</h3>
-        <p class="price">$8.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Ashbone Dragon Glow-in-Dark', 8.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Axolotl.JPG" alt="Axolotl">
-        <h3>Axolotl</h3>
-        <p class="price">$6.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Axolotl', 6.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Baby_Fire_Dragon.JPG" alt="Baby_Fire_Dragon">
-        <h3>Baby Fire Dragon</h3>
-        <p class="price">$6.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Baby Fire Dragon', 6.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-          
-      <div class="product">
-        <img src="../images/Crystal_Snake.JPG" alt="Crystal_Snake">
-        <h3>Crystal Snake</h3>
-        <p class="price">$20.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Crystal Snake', 20.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Crystal_Winged_Dragon.JPG" alt="Crystal_Winged_Dragon">
-        <h3>Crystal Winged Dragon</h3>
-        <p class="price">$25.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Crystal Winged Dragon', 25.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Cute_Dragon.JPG" alt="Cute_Dragon">
-        <h3>Cute Dragon</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Cute Dragon', 10.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Dino_Egg.JPG" alt="Dino_Egg">
-        <h3>Dino Egg</h3>
-        <p class="price">$4.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Dino Egg', 4.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Draconic_Dragon.JPG" alt="Draconic_Dragon">
-        <h3>Draconic Dragon</h3>
-        <p class="price">$20.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Draconic Dragon', 20.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Emberling_Dragon.JPG" alt="Emberling_Dragon">
-        <h3>Emberling Dragon</h3>
-        <p class="price">$15.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Emberling Dragon', 15.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Flexi_Octopus.JPG" alt="Flexi_Octopus">
-        <h3>Flexi Octopus</h3>
-        <p class="price">$4.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Flexi Octopus', 4.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Flexi_Spider.JPG" alt="Flexi_Spider">
-        <h3>Flexi Spider</h3>
-        <p class="price">$4.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Flexi Spider', 4.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Magnetic_Frog.JPG" alt="Magnetic_Frog">
-        <h3>Magnetic Frog</h3>
-        <p class="price">$5.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Magnetic Frog', 5.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mini_Zephyros_Dragon.jpg" alt="Mini_Zephyros_Dragon">
-        <h3>Mini Zephyros Dragon</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Mini Zephyros Dragon', 3.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mini_Zephyros_Dragon_Glow-in-Dark.JPG" alt="Mini_Zephyros_Dragon_Glow-in-Dark">
-        <h3>Mini Zephyros Dragon <br> Glow-in-Dark</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Mini Zephyros Dragon Glow-in-Dark', 3.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Shadowcoil_Dragon.JPG" alt="Shadowcoil_Dragon">
-        <h3>Shadowcoil Dragon</h3>
-        <p class="price">$15.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Shadowcoil Dragon', 15.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Skeleton_Shark.JPG" alt="Skeleton_Shark">
-        <h3>Skeleton Shark</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Skeleton Shark', 10.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Tri_Black_Crystal_Dragon.JPG" alt="Tri_Black_Crystal_Dragon">
-        <h3>Tri-Black Crystal Dragon</h3>
-        <p class="price">$20.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Tri-Black Crystal Dragon', 20.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Wyren.JPG" alt="Wyren">
-        <h3>Wyren</h3>
-        <p class="price">$5.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Wyren', 5.00, this, 2)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Zephyros_Dragon.JPG" alt="Zephyros_Dragon">
-        <h3>Zephyros Dragon</h3>
-        <p class="price">$15.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="openColorSelection('Zephyros Dragon', 15.00, this, 1)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
+      <!-- Products will be loaded here by JavaScript -->
     </section>
   </main>
 
@@ -425,6 +151,7 @@
         <div class="color-selection-group" id="second-color-group" style="display: none;">
           <label for="color-select-2">Choose Secondary Color:</label>
           <select id="color-select-2" class="color-dropdown">
+            <option value="">Select a color...</option>
             <option value="Amolen-Black-Red">Amolen-Black-Red</option>
             <option value="Bambu_Green">Bambu Green</option>
             <option value="Black">Black</option>
