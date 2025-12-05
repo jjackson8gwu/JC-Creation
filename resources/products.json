@@ -332,6 +332,16 @@
       "image": "../images/Polarbear_Hatchling.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
+    },
+    {
+      "id": "Parasaurolophus",
+      "name": "Parasaurolophus",
+      "description": "Parasaurolophus",
+      "price": 3.00,
+      "quantity": 5,
+      "image": "../images/Parasaurolophus.JPG",
+      "category": "3_dollar_minis",
+      "requiresColor": false
     }
   ]
 }
