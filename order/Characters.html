@@ -10,650 +10,216 @@
 <body>
   <header>
     <div id="logo">
-    <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
-  </div>
-  <div class="header-flex">
-    <!-- Hamburger Icon -->
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
     </div>
-    
-    <!-- Desktop Navigation -->
-    <nav>
-      <a href="../../index.html">🏠 Home</a>
-      <a href="../../order/1_dollar_minis.html">$1 Minis</a>
-      <a href="../../order/2_dollar_minis.html">$2 Minis</a>
-      <a href="../../order/3_dollar_minis.html">$3 Minis</a>
-      <a href="../../order/Characters.html">Fan Art</a>
-      <a href="../../order/Custom_Designs.html">Custom Designs</a>
-      <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
-      <a href="../../order/Fidgets.html">Fidgets</a>
-      <a href="../../order/Pokeballs.html">Pokeballs</a>
-      <a href="../../colors/index.html">🎨 Colors</a>
-    </nav>
-    
-    <div>
-      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    <div class="header-flex">
+      <!-- Hamburger Icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav>
+        <a href="../../index.html">🏠 Home</a>
+        <a href="../../order/1_dollar_minis.html">$1 Minis</a>
+        <a href="../../order/2_dollar_minis.html">$2 Minis</a>
+        <a href="../../order/3_dollar_minis.html">$3 Minis</a>
+        <a href="../../order/Characters.html">Fan Art</a>
+        <a href="../../order/Custom_Designs.html">Custom Designs</a>
+        <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
+        <a href="../../order/Fidgets.html">Fidgets</a>
+        <a href="../../order/Pokeballs.html">Pokeballs</a>
+        <a href="../../colors/index.html">🎨 Colors</a>
+      </nav>
+      
+      <div>
+        <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+      </div>
     </div>
-  </div>
   </header>
 
   <!-- Mobile Menu Overlay -->
-<div class="menu-overlay" id="menu-overlay"></div>
+  <div class="menu-overlay" id="menu-overlay"></div>
 
-<!-- Mobile Menu Sidebar -->
-<div class="mobile-menu" id="mobile-menu">
-  <nav>
-    <a href="../index.html">🏠 Home</a>
-    <a href="../order/1_dollar_minis.html">$1 Minis</a>
-    <a href="../order/2_dollar_minis.html">$2 Minis</a>
-    <a href="../order/3_dollar_minis.html">$3 Minis</a>
-    <a href="../order/Characters.html">Fan Art</a>
-    <a href="../order/Custom_Designs.html">Custom Designs</a>
-    <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
-    <a href="../order/Fidgets.html">Fidgets</a>
-    <a href="../order/Pokeballs.html">Pokeballs</a>
-    <a href="../colors/index.html">🎨 Colors</a>
-    <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
-  </nav>
-</div>
+  <!-- Mobile Menu Sidebar -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav>
+      <a href="../index.html">🏠 Home</a>
+      <a href="../order/1_dollar_minis.html">$1 Minis</a>
+      <a href="../order/2_dollar_minis.html">$2 Minis</a>
+      <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/Characters.html">Fan Art</a>
+      <a href="../order/Custom_Designs.html">Custom Designs</a>
+      <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+      <a href="../order/Fidgets.html">Fidgets</a>
+      <a href="../order/Pokeballs.html">Pokeballs</a>
+      <a href="../colors/index.html">🎨 Colors</a>
+      <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
+    </nav>
+  </div>
   
   <main>
-    <!-- Product Grid -->
+    <!-- Page Title (Optional - can be customized per page) -->
+    <h1>Colors on all items can be changed on request</h1>
+    <h1>Items will be printed as ordered</h1>
+    
+    <!-- Product Grid - Will be populated dynamically from JSON -->
     <section class="products">
-
-      <div class="product">
-        <img src="../images/Baby_Yoda.jpg" alt="Baby_Yoda">
-        <h3>Baby Yoda</h3>
-        <p class="price">$1.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="1">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Baby Yoda', 1.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/BeetleJuice.JPG" alt="BeetleJuice">
-        <h3>BeetleJuice</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="11">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('BeetleJuice', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Boba Fett.jpg" alt="Boba_Fett">
-        <h3>Boba Fett</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="9">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Boba Fett', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/C3PO.JPG" alt="C3PO">
-        <h3>C3PO</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="3">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('C3PO', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Charizard_Flexi.JPG" alt="Charizard_Flexi">
-        <h3>Charizard Flexi</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="13">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Charizard Flexi', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Chewbacca.jpg" alt="Chewbacca">
-        <h3>Chewbacca</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="16">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Chewbacca', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Chucky.JPG" alt="Chucky">
-        <h3>Chucky</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="7">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Chucky', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/DarthVader.jpg" alt="DarthVader">
-        <h3>Darth Vader</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Darth Vader', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/Deadpool.jpg" alt="Deadpool">
-        <h3>Deadpool</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Deadpool', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Freddy.JPG" alt="Freddy">
-        <h3>Freddy</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Freddy', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Ghostface.JPG" alt="Ghostface">
-        <h3>Ghostface</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Ghostface', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Grinch_Mini.JPG" alt="Grinch_Mini">
-        <h3>Grinch Mini</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="3">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Grinch Mini', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Hulk.JPG" alt="Hulk">
-        <h3>Hulk</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Hulk', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Ironman.JPG" alt="Ironman">
-        <h3>Ironman</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Ironman', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Jack_Skellington.JPG" alt="Jack_Skellington">
-        <h3>Jack Skellington</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="12">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Jack Skellington', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Jason_Voorhees.jpg" alt="Jason_Voorhees">
-        <h3>Jason Voorhees</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="3">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Jason Voorhees', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/KingKong.jpg" alt="KingKong">
-        <h3>King Kong</h3>
-        <p class="price">$6.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="1">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('King Kong', 6.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/K-Pop_Rumi.JPG" alt="K-Pop_Rumi">
-        <h3>K-Pop_Rumi</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="8">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('K-K-Pop_Rumi', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Light Fury.JPG" alt="Light Fury">
-        <h3>Lightfury</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Lightfury', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/Lilo.JPG" alt="Lilo">
-        <h3>Lilo</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Lilo', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/Luke_Skywalker.jpg" alt="Luke_Skywalker">
-        <h3>Luke Skywalker</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="8">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Luke Skywalker', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mary Sanderson.jpg" alt="Mary Sanderson">
-        <h3>Mary Sanderson</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="11">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Mary Sanderson', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mewtwo_Flexi.JPG" alt="Mewtwo_Flexi">
-        <h3>Mewtwo Flexi</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="8">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Mewtwo Flexi', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Michael_Myers.JPG" alt="Michael_Myers">
-        <h3>Michael Myers</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Michael Myers', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Minecraft_Ender_Dragon.JPG" alt="Minecraft_Ender_Dragon">
-        <h3>Minecraft Ender Dragon</h3>
-        <p class="price">$5.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Ender Dragon', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Minecraft_Enderman.JPG" alt="Minecraft_Enderman">
-        <h3>Minecraft Enderman</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Enderman', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Minecraft_Skeleton.JPG" alt="Minecraft_Skeleton">
-        <h3>Minecraft Skeleton</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="11">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Skeleton', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Minecraft_Spider.JPG" alt="Minecraft_Spider">
-        <h3>Minecraft Spider</h3>
-        <p class="price">$4.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Spider', 4.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Minecraft_Steve.JPG" alt="Minecraft_Steve">
-        <h3>Minecraft Steve</h3>
-        <p class="price">$7.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Steve', 7.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Minecraft_Zombie.JPG" alt="Minecraft_Zombie">
-        <h3>Minecraft Zombie</h3>
-        <p class="price">$7.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Minecraft Zombie', 7.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Oogie_Boogie.JPG" alt="Oogie_Boogie">
-        <h3>Oogie Boogie</h3>
-        <p class="price">$1.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Oogie Boogie', 1.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Pennywise.JPG" alt="Pennywise">
-        <h3>Pennywise</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Pennywise', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/R2D2.jpg" alt="R2D2">
-        <h3>R2D2</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="1">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('R2D2', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Sally.JPG" alt="Sally">
-        <h3>Sally</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Sally', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Sarah Sanderson.JPG" alt="Sarah_Sanderson">
-        <h3>Sarah Sanderson</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="11">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Sarah Sanderson', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/Sonic_Balance_Wheel.JPG" alt="Sonic_Balance_Wheel">
-        <h3>Sonic Balance Wheel</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Sonic Balance Wheel', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>-->
-
-      <!---<div class="product">
-        <img src="../images/Spiderman_Flexi.JPG" alt="Spiderman_Flexi">
-        <h3>Spiderman Flexi</h3>
-        <p class="price">$5.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="1">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Spiderman Flexi', 5.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/Spider-Man.JPG" alt="Spider-Man">
-        <h3>Spiderman Mini</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="12">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Spiderman Mini', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/Stitch.JPG" alt="Stitch">
-        <h3>Stitch</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Stitch', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <!---<div class="product">
-        <img src="../images/Storm_Trooper.JPG" alt="Storm_Trooper">
-        <h3>Storm Trooper</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Storm Trooper', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/TMNT_D.JPG" alt="TMNT_D">
-        <h3>TMNT D</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('TMNT D', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/TMNT_L.JPG" alt="TMNT_L">
-        <h3>TMNT L</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('TMNT L', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/TMNT_M.JPG" alt="TMNT_M">
-        <h3>TMNT M</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('TMNT M', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/TMNT_R.JPG" alt="TMNT_R">
-        <h3>TMNT R</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="4">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('TMNT R', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Toothless.JPG" alt="Toothless">
-        <h3>Toothless</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="9">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Toothless', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Winifred Sanderson.JPG" alt="Winifred_Sanderson">
-        <h3>Winifred Sanderson</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="9">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Winifred Sanderson', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Wolverine.JPG" alt="Wolverine">
-        <h3>Wolverine</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="10">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Wolverine', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <!---<div class="product">
-        <img src="../images/Yoda.jpg" alt="Yoda">
-        <h3>Yoda</h3>
-        <p class="price">$3.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="2">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Yoda', 3.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>--->
-
-      <div class="product">
-        <img src="../images/Zero.jpg" alt="Zero">
-        <h3>Zero</h3>
-        <p class="price">$2.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="5">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Zero', 2.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
+      <!-- Products will be loaded here by JavaScript -->
     </section>
   </main>
+
+  <!-- Color Selection Modal -->
+  <div id="color-selection-modal" class="modal">
+    <div class="modal-content color-selection-modal">
+      <span class="close" onclick="closeColorSelection()">&times;</span>
+      <h2>Select Color(s)</h2>
+      <div class="color-selection-content">
+        <div class="product-info">
+          <h3 id="selected-product-name"></h3>
+          <div class="quantity-display">Quantity: <span id="selected-quantity"></span></div>
+          <div class="price-display">Total: $<span id="selected-total"></span></div>
+        </div>
+        
+        <div class="color-selection-group">
+          <label for="color-select-1">Choose Primary Color:</label>
+          <select id="color-select-1" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option> 
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>      
+          </select>
+        </div>
+
+        <div class="color-selection-group" id="second-color-group" style="display: none;">
+          <label for="color-select-2">Choose Secondary Color:</label>
+          <select id="color-select-2" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option> 
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>
+          </select>
+        </div>
+        
+        <div class="color-buttons">
+          <button class="confirm-add-btn" onclick="confirmAddToCart()">Add to Cart</button>
+          <button class="cancel-color-btn" onclick="closeColorSelection()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Checkout Modal -->
   <div id="checkout-modal" class="modal">
