@@ -10,218 +10,216 @@
 <body>
   <header>
     <div id="logo">
-    <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
-  </div>
-  <div class="header-flex">
-    <!-- Hamburger Icon -->
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
     </div>
-    
-    <!-- Desktop Navigation -->
-    <nav>
-      <a href="../../index.html">🏠 Home</a>
-      <a href="../../order/1_dollar_minis.html">$1 Minis</a>
-      <a href="../../order/2_dollar_minis.html">$2 Minis</a>
-      <a href="../../order/3_dollar_minis.html">$3 Minis</a>
-      <a href="../../order/Characters.html">Fan Art</a>
-      <a href="../../order/Custom_Designs.html">Custom Designs</a>
-      <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
-      <a href="../../order/Fidgets.html">Fidgets</a>
-      <a href="../../order/Pokeballs.html">Pokeballs</a>
-      <a href="../../colors/index.html">🎨 Colors</a>
-    </nav>
-    
-    <div>
-      <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+    <div class="header-flex">
+      <!-- Hamburger Icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav>
+        <a href="../../index.html">🏠 Home</a>
+        <a href="../../order/1_dollar_minis.html">$1 Minis</a>
+        <a href="../../order/2_dollar_minis.html">$2 Minis</a>
+        <a href="../../order/3_dollar_minis.html">$3 Minis</a>
+        <a href="../../order/Characters.html">Fan Art</a>
+        <a href="../../order/Custom_Designs.html">Custom Designs</a>
+        <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
+        <a href="../../order/Fidgets.html">Fidgets</a>
+        <a href="../../order/Pokeballs.html">Pokeballs</a>
+        <a href="../../colors/index.html">🎨 Colors</a>
+      </nav>
+      
+      <div>
+        <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+      </div>
     </div>
-  </div>
   </header>
 
   <!-- Mobile Menu Overlay -->
-<div class="menu-overlay" id="menu-overlay"></div>
+  <div class="menu-overlay" id="menu-overlay"></div>
 
-<!-- Mobile Menu Sidebar -->
-<div class="mobile-menu" id="mobile-menu">
-  <nav>
-    <a href="../index.html">🏠 Home</a>
-    <a href="../order/1_dollar_minis.html">$1 Minis</a>
-    <a href="../order/2_dollar_minis.html">$2 Minis</a>
-    <a href="../order/3_dollar_minis.html">$3 Minis</a>
-    <a href="../order/Characters.html">Fan Art</a>
-    <a href="../order/Custom_Designs.html">Custom Designs</a>
-    <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
-    <a href="../order/Fidgets.html">Fidgets</a>
-    <a href="../order/Pokeballs.html">Pokeballs</a>
-    <a href="../colors/index.html">🎨 Colors</a>
-    <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
-  </nav>
-</div>
+  <!-- Mobile Menu Sidebar -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav>
+      <a href="../index.html">🏠 Home</a>
+      <a href="../order/1_dollar_minis.html">$1 Minis</a>
+      <a href="../order/2_dollar_minis.html">$2 Minis</a>
+      <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/Characters.html">Fan Art</a>
+      <a href="../order/Custom_Designs.html">Custom Designs</a>
+      <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+      <a href="../order/Fidgets.html">Fidgets</a>
+      <a href="../order/Pokeballs.html">Pokeballs</a>
+      <a href="../colors/index.html">🎨 Colors</a>
+      <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
+    </nav>
+  </div>
   
   <main>
-    <!-- Product Grid -->
-    <h1>Items will be printed as ordered.</h1>
+    <!-- Page Title (Optional - can be customized per page) -->
+    <h1>Colors on all items can be changed on request</h1>
+    <h1>Items will be printed as ordered</h1>
+    
+    <!-- Product Grid - Will be populated dynamically from JSON -->
     <section class="products">
-      <div class="product">
-        <img src="../images/Charmander.JPG" alt="Charmander">
-        <h3>Charmander</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Charmander', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Darkrai.JPG" alt="Darkrai">
-        <h3>Darkrai</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Darkrai', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-        
-      <div class="product">
-        <img src="../images/Greninja.JPG" alt="Greninja">
-        <h3>Greninja</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Greninja', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Growlithe.JPG" alt="Growlithe">
-        <h3>Growlithe</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Growlithe', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Leafeon.JPG" alt="Leafeon">
-        <h3>Leafeon</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Leafeon', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Lucario.JPG" alt="Lucario">
-        <h3>Lucario</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Lucario', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-      
-      <div class="product">
-        <img src="../images/Lugia.JPG" alt="Lugia">
-        <h3>Lugia</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Lugia', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mega_Charizard.JPG" alt="Mega_Charizard">
-        <h3>Mega Charizard</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Mega Charizard', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Mega_Gengar.JPG" alt="Mega_Gengar">
-        <h3>Mega Gengar</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Mega Gengar', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-          
-      <div class="product">
-        <img src="../images/Mewtwo.JPG" alt="Mewtwo">
-        <h3>Mewtwo</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Mewtwo', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Pikachu.JPG" alt="Pikachu">
-        <h3>Pikachu</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Pikachu', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Rayquaza.JPG" alt="Rayquaza">
-        <h3>Rayquaza</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Rayquaza', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
-      <div class="product">
-        <img src="../images/Squirtle.JPG" alt="Squirtle">
-        <h3>Squirtle</h3>
-        <p class="price">$10.00</p>
-        <div class="quantity-controls">
-          <button onclick="decreaseQuantity(this)">-</button>
-          <input type="number" class="quantity-input" value="1" min="1" max="20">
-          <button onclick="increaseQuantity(this)">+</button>
-        </div>
-        <button onclick="addToCart('Squirtle', 10.00, this)" class="add-to-cart-btn">Add to Cart</button>
-      </div>
-
+      <!-- Products will be loaded here by JavaScript -->
     </section>
   </main>
+
+  <!-- Color Selection Modal -->
+  <div id="color-selection-modal" class="modal">
+    <div class="modal-content color-selection-modal">
+      <span class="close" onclick="closeColorSelection()">&times;</span>
+      <h2>Select Color(s)</h2>
+      <div class="color-selection-content">
+        <div class="product-info">
+          <h3 id="selected-product-name"></h3>
+          <div class="quantity-display">Quantity: <span id="selected-quantity"></span></div>
+          <div class="price-display">Total: $<span id="selected-total"></span></div>
+        </div>
+        
+        <div class="color-selection-group">
+          <label for="color-select-1">Choose Primary Color:</label>
+          <select id="color-select-1" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option> 
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>      
+          </select>
+        </div>
+
+        <div class="color-selection-group" id="second-color-group" style="display: none;">
+          <label for="color-select-2">Choose Secondary Color:</label>
+          <select id="color-select-2" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option> 
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option> 
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option> 
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option> 
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option> 
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>
+          </select>
+        </div>
+        
+        <div class="color-buttons">
+          <button class="confirm-add-btn" onclick="confirmAddToCart()">Add to Cart</button>
+          <button class="cancel-color-btn" onclick="closeColorSelection()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Checkout Modal -->
   <div id="checkout-modal" class="modal">
