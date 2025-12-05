@@ -329,7 +329,7 @@
       "description": "Polar Bear Hatchling",
       "price": 1.00,
       "quantity": 34,
-      "image": "../images/Polar_Bear.JPG",
+      "image": "../images/PolarBear_Hatchling.JPG",
       "category": "1_dollar_minis",
       "requiresColor": false
     }
