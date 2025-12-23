@@ -592,6 +592,156 @@
       "image": "../images/Jackalope.JPG",
       "category": "2_dollar_minis",
       "requiresColor": false
+    },
+    {
+      "id": "Reindeer Dragon",
+      "name": "Reindeer Dragon",
+      "description": "Reindeer Dragon",
+      "price": 2.00,
+      "quantity": 10,
+      "image": "../images/Reindeer_Dragon.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Bear",
+      "name": "Bear",
+      "description": "Bear",
+      "price": 2.00,
+      "quantity": 7,
+      "image": "../images/Brown_Bear.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Dragonfruit Dragon",
+      "name": "Dragonfruit Dragon",
+      "description": "Dragonfruit Dragon",
+      "price": 2.00,
+      "quantity": 5,
+      "image": "../images/Dragonfruit_Dragon.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Gingerbread Man",
+      "name": "Gingerbread Man",
+      "description": "Gingerbread Man",
+      "price": 2.00,
+      "quantity": 9,
+      "image": "../images/Gingerbread_Man.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Stygimoloch Dino",
+      "name": "Stygimoloch Dino",
+      "description": "Stygimoloch Dino",
+      "price": 2.00,
+      "quantity": 10,
+      "image": "../images/Stygimoloch_Dino.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Nemo",
+      "name": "Nemo",
+      "description": "Nemo",
+      "price": 2.00,
+      "quantity": 6,
+      "image": "../images/Nemo.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Dory",
+      "name": "Dory",
+      "description": "Dory",
+      "price": 2.00,
+      "quantity": 4,
+      "image": "../images/Dory.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Horse Flexi Appaloosa",
+      "name": "Horse Flexi Appaloosa",
+      "description": "Horse Flexi Appaloosa",
+      "price": 2.00,
+      "quantity": 7,
+      "image": "../images/Horse_Flexi_Appaloosa.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Hammerhead Shark",
+      "name": "Hammerhead Shark",
+      "description": "Hammerhead Shark",
+      "price": 2.00,
+      "quantity": 2,
+      "image": "../images/Hammerhead_Shark.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Gecko",
+      "name": "Gecko",
+      "description": "Gecko",
+      "price": 2.00,
+      "quantity": 6,
+      "image": "../images/Gecko.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Bats",
+      "name": "Bats",
+      "description": "Bats",
+      "price": 2.00,
+      "quantity": 11,
+      "image": "../images/Bats.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Yeti",
+      "name": "Yeti",
+      "description": "Yeti",
+      "price": 2.00,
+      "quantity": 3,
+      "image": "../images/Yeti.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Racoon",
+      "name": "Racoon",
+      "description": "Racoon",
+      "price": 2.00,
+      "quantity": 2,
+      "image": "../images/Racoon.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Bigfoot",
+      "name": "Bigfoot",
+      "description": "Bigfoot",
+      "price": 2.00,
+      "quantity": 1,
+      "image": "../images/Bigfoot.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
+    },
+    {
+      "id": "Baby Brach Dino",
+      "name": "Baby Brach Dino",
+      "description": "Baby Brach Dino",
+      "price": 2.00,
+      "quantity": 1,
+      "image": "../images/Baby_Brach_Dino.JPG",
+      "category": "2_dollar_minis",
+      "requiresColor": false
     }
     
   ]
