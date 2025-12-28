@@ -784,9 +784,48 @@
       "quantity": 5,
       "image": "../images/Twirl_Octopus.JPG",
       "category": "Dragons_and_Animals",
-      "requiresColor": true,
-      "colorCount": 1
+      "requiresColor": false,
     },
-    
+    {
+      "id": "Morph_Ball",
+      "name": "Morph Ball",
+      "description": "Morph Ball",
+      "price": 10.00,
+      "quantity": 3,
+      "image": "../images/Morph_Ball.JPG",
+      "category": "Fidgets",
+      "requiresColor": false,
+    },
+    {
+      "id": "Sea_Urchin",
+      "name": "Sea Urchin",
+      "description": "Sea Urchin",
+      "price": 5.00,
+      "quantity": 2,
+      "image": "../images/Sea_Urchin.JPG",
+      "category": "Fidgets",
+      "requiresColor": false,
+    },
+    {
+      "id": "Large_Gear_Ring",
+      "name": "Large Gear Ring",
+      "description": "Large Gear Ring",
+      "price": 12.00,
+      "quantity": 1,
+      "image": "../images/Large_Gear_Ring.JPG",
+      "category": "Fidgets",
+      "requiresColor": false,
+    },
+    {
+      "id": "Jacobs_Ladder",
+      "name": "Jacobs Ladder",
+      "description": "Jacobs Ladder",
+      "price": 5.00,
+      "quantity": 2,
+      "image": "../images/Jacobs_Ladder.JPG",
+      "category": "Fidgets",
+      "requiresColor": false,
+    },
+
   ]
 }
