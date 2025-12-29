@@ -784,7 +784,7 @@
       "quantity": 5,
       "image": "../images/Twirl_Octopus.JPG",
       "category": "Dragons_and_Animals",
-      "requiresColor": false,
+      "requiresColor": false
     },
     {
       "id": "Morph_Ball",
@@ -794,7 +794,7 @@
       "quantity": 3,
       "image": "../images/Morph_Ball.JPG",
       "category": "Fidgets",
-      "requiresColor": false,
+      "requiresColor": false
     },
     {
       "id": "Sea_Urchin",
@@ -804,7 +804,7 @@
       "quantity": 2,
       "image": "../images/Sea_Urchin.JPG",
       "category": "Fidgets",
-      "requiresColor": false,
+      "requiresColor": false
     },
     {
       "id": "Large_Gear_Ring",
@@ -814,7 +814,7 @@
       "quantity": 1,
       "image": "../images/Large_Gear_Ring.JPG",
       "category": "Fidgets",
-      "requiresColor": false,
+      "requiresColor": false
     },
     {
       "id": "Jacobs_Ladder",
@@ -824,8 +824,8 @@
       "quantity": 2,
       "image": "../images/Jacobs_Ladder.JPG",
       "category": "Fidgets",
-      "requiresColor": false,
-    },
+      "requiresColor": false
+    }
 
   ]
 }
