@@ -699,7 +699,7 @@
       "description": "Bats",
       "price": 2.00,
       "quantity": 11,
-      "image": "../images/Bats.JPG",
+      "image": "../images/Bat.JPG",
       "category": "2_dollar_minis",
       "requiresColor": false
     },
