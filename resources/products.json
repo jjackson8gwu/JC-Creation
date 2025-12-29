@@ -719,7 +719,7 @@
       "description": "Racoon",
       "price": 2.00,
       "quantity": 2,
-      "image": "../images/Racoon.JPG",
+      "image": "../images/Racoon_Flexi.JPG",
       "category": "2_dollar_minis",
       "requiresColor": false
     },
