@@ -825,6 +825,266 @@
       "image": "../images/Jacobs_Ladder.JPG",
       "category": "Fidgets",
       "requiresColor": false
+    },
+    {
+      "id": "Kinetic_Fidget",
+      "name": "Kinetic Fidget",
+      "description": "Kinetic Fidget",
+      "price": 5.00,
+      "quantity": 5,
+      "image": "../images/Kinetic_Fidget.mp4",
+      "category": "Fidgets",
+      "requiresColor": false
+    },
+    {
+      "id": "Micro_Vase",
+      "name": "Micro Vase",
+      "description": "Micro Vase",
+      "price": 4.00,
+      "quantity": 4,
+      "image": "../images/Micro_Vase.JPG",
+      "category": "Fidgets",
+      "requiresColor": false
+    },
+    {
+      "id": "Mini_Vase",
+      "name": "Mini Vase",
+      "description": "Mini Vase",
+      "price": 7.00,
+      "quantity": 1,
+      "image": "../images/Mini_Vase.JPG",
+      "category": "Fidgets",
+      "requiresColor": false
+    },
+    {
+      "id": "Small_Pyramid_Passthrough",
+      "name": "Small Pyramid Passthrough",
+      "description": "Small Pyramid Passthrough",
+      "price": 4.00,
+      "quantity": 8,
+      "image": "../images/Small_Pyramid.JPG",
+      "category": "Fidgets",
+      "requiresColor": false
+    },
+    {
+      "id": "Passthrough_Cone",
+      "name": "Passthrough Cone",
+      "description": "Passthrough Cone",
+      "price": 3.00,
+      "quantity": 3,
+      "image": "../images/Passthrough_Cone.JPG",
+      "category": "Fidgets",
+      "requiresColor": false
+    },
+    {
+      "id": "Mega_Charizard",
+      "name": "Mega Charizard",
+      "description": "Mega Charizard",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Mega_Charizard.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Typholosion",
+      "name": "Typholosion",
+      "description": "Typholosion",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Typholosion.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Latios",
+      "name": "Latios",
+      "description": "Latios",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Latios_Pokeball.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Greninja",
+      "name": "Greninja",
+      "description": "Greninja",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Greninja.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Mega_Lucario",
+      "name": "Mega Lucario",
+      "description": "Mega Lucario",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Mega_Lucario.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Mega_Gengar",
+      "name": "Mega Gengar",
+      "description": "Mega Gengar",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Mega_Gengar.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Mewtwo",
+      "name": "Mewtwo",
+      "description": "Mewtwo",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Mewtwo.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Leafeon",
+      "name": "Leafeon",
+      "description": "Leafeon",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Leafeon.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Charmander",
+      "name": "Charmander",
+      "description": "Charmander",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Charmander.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Darkrai",
+      "name": "Darkrai",
+      "description": "Darkrai",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Darkrai.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Dragapult",
+      "name": "Dragapult",
+      "description": "Dragapult",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Dragapult_Pokeball.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Eevee",
+      "name": "Eevee",
+      "description": "Eevee",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Evee_Pokeball.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Growlithe",
+      "name": "Growlithe",
+      "description": "Growlithe",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Growlithe.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Lucario",
+      "name": "Lucario",
+      "description": "Lucario",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Lucario.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Lugia",
+      "name": "Lugia",
+      "description": "Lugia",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Lugia.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Pikachu",
+      "name": "Pikachu",
+      "description": "Pikachu",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Pikachu.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Rayquaza",
+      "name": "Rayquaza",
+      "description": "Rayquaza",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Rayquaza.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Squirtle",
+      "name": "Squirtle",
+      "description": "Squirtle",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Squirtle.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Umbreon",
+      "name": "Umbreon",
+      "description": "Umbreon",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Umbreon.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Tyranitar",
+      "name": "Tyranitar",
+      "description": "Tyranitar",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Tyranitar.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
+    },
+    {
+      "id": "Gengar",
+      "name": "Gengar",
+      "description": "Gengar",
+      "price": 10.00,
+      "quantity": 1,
+      "image": "../images/Gengar.JPG",
+      "category": "Pokeballs",
+      "requiresColor": false
     }
 
   ]
