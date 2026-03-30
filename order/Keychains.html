@@ -4,75 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/favicon.png">
-  <title>Custom Designs - J&C Creations</title>
+  <title>Keychains - J&C Creations</title>
   <link rel="stylesheet" href="../resources/styles.css">
-  <style>
-    .custom-request-section {
-      max-width: 700px;
-      margin: 30px auto;
-      background: white;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-    .custom-request-section h2 {
-      color: #1a4054;
-      text-align: center;
-      margin-top: 0;
-      font-size: 1.6rem;
-      border-bottom: 2px solid #D2762B;
-      padding-bottom: 12px;
-    }
-    .custom-request-section p.intro {
-      color: #555;
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .custom-request-section .form-group { margin-bottom: 18px; }
-    .custom-request-section label {
-      display: block;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 6px;
-    }
-    .custom-request-section input,
-    .custom-request-section textarea,
-    .custom-request-section select {
-      width: 100%;
-      padding: 11px 14px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: Arial, sans-serif;
-      transition: border-color 0.3s;
-      box-sizing: border-box;
-    }
-    .custom-request-section input:focus,
-    .custom-request-section textarea:focus { outline: none; border-color: #D2762B; }
-    .custom-request-section textarea { height: 110px; resize: vertical; }
-    .submit-custom-btn {
-      background: #D2762B;
-      color: white;
-      border: none;
-      padding: 14px 30px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      width: 100%;
-      margin-top: 8px;
-      transition: background 0.3s;
-    }
-    .submit-custom-btn:hover { background: #b8641f; }
-    .section-divider {
-      text-align: center;
-      color: white;
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin: 20px 0 10px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -84,7 +17,7 @@
         <span></span><span></span><span></span>
       </div>
       <nav>
-        <a href="../../index.html">&#127968; Home</a>
+        <a href="../../index.html">🏠 Home</a>
         <a href="../../order/1_dollar_minis.html">$1 Minis</a>
         <a href="../../order/2_dollar_minis.html">$2 Minis</a>
         <a href="../../order/3_dollar_minis.html">$3 Minis</a>
@@ -97,10 +30,10 @@
         <a href="../../order/Keychains.html">Keychains</a>
         <a href="../../order/Mystery_Bag.html">Mystery Bag</a>
         <a href="../../order/Seasonal.html">Seasonal</a>
-        <a href="../../colors/index.html">&#127912; Colors</a>
+        <a href="../../colors/index.html">🎨 Colors</a>
       </nav>
       <div>
-        <a href="#" id="cart-icon">&#128722; Cart (<span id="cart-count">0</span>)</a>
+        <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
       </div>
     </div>
   </header>
@@ -108,7 +41,7 @@
   <div class="menu-overlay" id="menu-overlay"></div>
   <div class="mobile-menu" id="mobile-menu">
     <nav>
-      <a href="../index.html">&#127968; Home</a>
+      <a href="../index.html">🏠 Home</a>
       <a href="../order/1_dollar_minis.html">$1 Minis</a>
       <a href="../order/2_dollar_minis.html">$2 Minis</a>
       <a href="../order/3_dollar_minis.html">$3 Minis</a>
@@ -121,63 +54,13 @@
       <a href="../order/Keychains.html">Keychains</a>
       <a href="../order/Mystery_Bag.html">Mystery Bag</a>
       <a href="../order/Seasonal.html">Seasonal</a>
-      <a href="../colors/index.html">&#127912; Colors</a>
-      <a href="#" id="mobile-cart-link">&#128722; Cart (<span id="mobile-cart-count">0</span>)</a>
+      <a href="../colors/index.html">🎨 Colors</a>
+      <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
     </nav>
   </div>
 
   <main>
-    <!-- Custom Design Request Form -->
-    <div class="custom-request-section">
-      <h2>&#9999;&#65039; Request a Custom Design</h2>
-      <p class="intro">
-        Don't see exactly what you want? Tell us what you're looking for and we'll make it happen!
-        Fill out the form below and we'll get back to you within 1-2 business days.
-      </p>
-      <form action="https://formspree.io/f/mpwonlbb" method="POST">
-        <div class="form-group">
-          <label for="cr-name">Your Name *</label>
-          <input type="text" id="cr-name" name="name" required placeholder="First and last name">
-        </div>
-        <div class="form-group">
-          <label for="cr-email">Email Address *</label>
-          <input type="email" id="cr-email" name="email" required placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label for="cr-phone">Phone Number</label>
-          <input type="tel" id="cr-phone" name="phone" placeholder="(555) 000-0000">
-        </div>
-        <div class="form-group">
-          <label for="cr-description">What would you like custom printed? *</label>
-          <textarea id="cr-description" name="description" required
-            placeholder="Describe your idea - dimensions, style, theme, what it's for, etc."></textarea>
-        </div>
-        <div class="form-group">
-          <label for="cr-colors">Preferred Color(s)</label>
-          <input type="text" id="cr-colors" name="colors" placeholder="e.g. Blue and silver, or any color is fine">
-        </div>
-        <div class="form-group">
-          <label for="cr-quantity">Quantity Needed</label>
-          <input type="number" id="cr-quantity" name="quantity" min="1" value="1">
-        </div>
-        <div class="form-group">
-          <label for="cr-budget">Approximate Budget (optional)</label>
-          <input type="text" id="cr-budget" name="budget" placeholder="e.g. $20-$50">
-        </div>
-        <div class="form-group">
-          <label for="cr-timeline">Timeline / Deadline (optional)</label>
-          <input type="text" id="cr-timeline" name="timeline" placeholder="e.g. Need by Dec 1st">
-        </div>
-        <div class="payment-info">
-          &#128236; We'll review your request and reach out with pricing and availability within 1-2 business days.
-        </div>
-        <button type="submit" class="submit-custom-btn">Submit Custom Request</button>
-      </form>
-    </div>
-
-    <!-- Browse existing custom design products from JSON -->
-    <p class="section-divider">- Browse Our Ready-Made Custom Designs -</p>
-    <h1>Colors on all custom items can be changed on request</h1>
+    <h1>Colors on all keychains can be changed on request</h1>
     <section class="products">
       <!-- Products loaded dynamically from products.json -->
     </section>
@@ -206,6 +89,11 @@
             <option value="BrightGreen">Bright Green</option>
             <option value="Brown">Brown</option>
             <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
             <option value="Cyan">Cyan</option>
             <option value="Elegoo-Beige">Elegoo Beige</option>
             <option value="Gold">Gold</option>
@@ -213,35 +101,65 @@
             <option value="Gray">Gray</option>
             <option value="HotPink">Hot Pink</option>
             <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
             <option value="Light_Gray">Light Gray</option>
             <option value="Magenta">Magenta</option>
             <option value="MaroonRed">Maroon Red</option>
             <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
             <option value="Matte-Dark-Blue">Matte Dark Blue</option>
             <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option>
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option>
+            <option value="Matte-Lemon-Yellow">Matte Lemon Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte Plum</option>
             <option value="Matte-Sakura-Pink">Matte Sakura Pink</option>
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option>
             <option value="Orange">Orange</option>
             <option value="Purple">Purple</option>
             <option value="Red">Red</option>
             <option value="Silver">Silver</option>
             <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu Purple-Green Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu Yellow-Cyan Matte</option>
             <option value="Turquoise">Turquoise</option>
             <option value="White">White</option>
             <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>
           </select>
         </div>
         <div class="color-selection-group" id="second-color-group" style="display:none;">
           <label for="color-select-2">Choose Secondary Color:</label>
           <select id="color-select-2" class="color-dropdown">
             <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen Black-Red</option>
             <option value="Black">Black</option>
             <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="Cyan">Cyan</option>
             <option value="Gold">Gold</option>
             <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
             <option value="Orange">Orange</option>
             <option value="Purple">Purple</option>
             <option value="Red">Red</option>
             <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Turquoise">Turquoise</option>
             <option value="White">White</option>
             <option value="Yellow">Yellow</option>
           </select>
@@ -289,11 +207,11 @@
           </label>
         </div>
         <div id="shipping-note" class="hidden notification">
-          &#128230; Shipping costs will be calculated after order submission and included in your invoice.
+          📦 Shipping costs will be calculated after order submission and included in your invoice.
         </div>
         <div class="form-group"><label>Order Items: <textarea id="cart-items-form" name="items" readonly></textarea></label></div>
         <div class="payment-info">
-          &#128179; <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
+          💳 <strong>Payment Options:</strong> Venmo, CashApp, ApplePay, or Cash<br>
           Payment details will be sent with your order confirmation.
         </div>
         <button type="submit" class="submit-order-btn">Submit Order</button>
