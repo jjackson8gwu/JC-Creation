@@ -466,6 +466,84 @@ header nav a:hover {
   background: #45a049;
 }
 
+/* === Product Image Gallery (multi-image per product card) === */
+.product-gallery {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  background: #f0f0f0;
+}
+
+.gallery-slide {
+  display: none;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery-slide.active {
+  display: block;
+}
+
+.gallery-prev,
+.gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s;
+}
+.gallery-prev:hover,
+.gallery-next:hover { background: rgba(0,0,0,0.8); }
+.gallery-prev { left: 5px; }
+.gallery-next { right: 5px; }
+
+.gallery-dots {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 5;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.gallery-dot.active { background: white; }
+
+/* Out of stock / made to order label */
+.out-of-stock {
+  font-size: 0.85rem;
+  color: #D2762B;
+  font-style: italic;
+  margin: 2px 0;
+}
+
 /* === Filament Styles === */
 .filaments {
   display: grid;

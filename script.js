@@ -62,7 +62,7 @@ async function loadProducts() {
 // Get current page category from URL
 function getCurrentPageCategory() {
   const path = window.location.pathname;
-  
+
   if (path.includes('1_dollar_minis.html')) return '1_dollar_minis';
   if (path.includes('2_dollar_minis.html')) return '2_dollar_minis';
   if (path.includes('3_dollar_minis.html')) return '3_dollar_minis';
@@ -71,7 +71,11 @@ function getCurrentPageCategory() {
   if (path.includes('Custom_Designs.html')) return 'Custom_Designs';
   if (path.includes('Fidgets.html')) return 'Fidgets';
   if (path.includes('Pokeballs.html')) return 'Pokeballs';
-  
+  if (path.includes('Clickers.html')) return 'Clickers';
+  if (path.includes('Keychains.html')) return 'Keychains';
+  if (path.includes('Mystery_Bag.html')) return 'Mystery_Bag';
+  if (path.includes('Seasonal.html')) return 'Seasonal';
+
   return null;
 }
 
@@ -99,34 +103,93 @@ function displayProducts(category) {
   attachProductEventListeners();
 }
 
-// Create HTML for a single product
+// Create HTML for a single product (supports multiple images via gallery)
 function createProductHTML(product) {
-  const isVideo = product.image.toLowerCase().endsWith('.mp4') || 
-                  product.image.toLowerCase().endsWith('.webm');
-  
-  const mediaHTML = isVideo 
-    ? `<video muted loop playsinline>
-         <source src="${product.image}" type="video/mp4">
-       </video>`
-    : `<img src="${product.image}" alt="${product.name}">`;
-  
+  // Support both 'images' array (multi) and legacy 'image' string (single)
+  const imageList = (product.images && product.images.length > 0)
+    ? product.images
+    : (product.image ? [product.image] : []);
+
+  let mediaHTML = '';
+
+  if (imageList.length > 1) {
+    // ── Multi-image gallery ──────────────────────────────────────────────
+    const slides = imageList.map((src, i) => {
+      const isVid = /\.(mp4|webm)$/i.test(src);
+      const cls = `gallery-slide${i === 0 ? ' active' : ''}`;
+      return isVid
+        ? `<video class="${cls}" muted loop playsinline><source src="${src}" type="video/mp4"></video>`
+        : `<img class="${cls}" src="${src}" alt="${product.name}">`;
+    }).join('\n        ');
+
+    const dots = imageList.map((_, i) =>
+      `<button class="gallery-dot${i === 0 ? ' active' : ''}" onclick="galleryGoTo(this,${i})"></button>`
+    ).join('');
+
+    mediaHTML = `
+      <div class="product-gallery" data-current="0" data-total="${imageList.length}">
+        ${slides}
+        <button class="gallery-prev" onclick="galleryPrev(this)">&#8249;</button>
+        <button class="gallery-next" onclick="galleryNext(this)">&#8250;</button>
+        <div class="gallery-dots">${dots}</div>
+      </div>`;
+  } else if (imageList.length === 1) {
+    // ── Single image / video (legacy) ────────────────────────────────────
+    const isVideo = /\.(mp4|webm)$/i.test(imageList[0]);
+    mediaHTML = isVideo
+      ? `<video muted loop playsinline><source src="${imageList[0]}" type="video/mp4"></video>`
+      : `<img src="${imageList[0]}" alt="${product.name}">`;
+  }
+
   const addToCartFunction = product.requiresColor
-    ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount})`
+    ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1})`
     : `addToCart('${product.name}', ${product.price}, this)`;
-  
+
+  const stockLabel = product.quantity === 0
+    ? '<p class="out-of-stock">Made to Order</p>'
+    : '';
+
   return `
     <div class="product" data-product-id="${product.id}">
       ${mediaHTML}
       <h3>${product.name}</h3>
       <p class="price">$${product.price.toFixed(2)}</p>
+      ${stockLabel}
       <div class="quantity-controls">
         <button onclick="decreaseQuantity(this)">-</button>
-        <input type="number" class="quantity-input" value="1" min="1" max="${product.quantity}">
+        <input type="number" class="quantity-input" value="1" min="1" max="${product.quantity > 0 ? product.quantity : 99}">
         <button onclick="increaseQuantity(this)">+</button>
       </div>
       <button onclick="${addToCartFunction}" class="add-to-cart-btn">Add to Cart</button>
     </div>
   `;
+}
+
+// ── Gallery navigation functions ─────────────────────────────────────────────
+function galleryPrev(btn) {
+  navigateGallery(btn.closest('.product-gallery'), -1);
+}
+function galleryNext(btn) {
+  navigateGallery(btn.closest('.product-gallery'), 1);
+}
+function galleryGoTo(dot, index) {
+  setGallerySlide(dot.closest('.product-gallery'), index);
+}
+function navigateGallery(gallery, dir) {
+  const total = parseInt(gallery.dataset.total);
+  const current = parseInt(gallery.dataset.current) || 0;
+  setGallerySlide(gallery, (current + dir + total) % total);
+}
+function setGallerySlide(gallery, index) {
+  gallery.querySelectorAll('.gallery-slide').forEach((s, i) => {
+    s.classList.toggle('active', i === index);
+    // Pause/play videos
+    if (s.tagName === 'VIDEO') { i === index ? s.play().catch(()=>{}) : s.pause(); }
+  });
+  gallery.querySelectorAll('.gallery-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+  });
+  gallery.dataset.current = index;
 }
 
 // Attach event listeners to products after they're added to DOM
