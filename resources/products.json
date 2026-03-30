@@ -74,8 +74,7 @@
       "quantity": 4,
       "image": "../images/Baby_Fire_Dragon.JPG",
       "category": "Dragons_and_Animals",
-      "requiresColor": true,
-      "colorCount": 1
+      "requiresColor": false
     },
     {
       "id": "crystal-snake",
@@ -334,9 +333,9 @@
       "requiresColor": false
     },
     {
-      "id": "Dobermann ",
-      "name": "Dobermann ",
-      "description": "Dobermann ",
+      "id": "Dobermann",
+      "name": "Dobermann",
+      "description": "Dobermann",
       "price": 3.00,
       "quantity": 9,
       "image": "../images/Dobberman.JPG",
