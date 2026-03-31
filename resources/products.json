@@ -879,10 +879,10 @@
       "id": "Mega_Charizard",
       "name": "Mega Charizard",
       "description": "Mega Charizard",
-      "price": 10.0,
+      "price": 5.00,
       "quantity": 1,
       "image": "../images/Mystery Bag Items/Mega_Charizard_X.JPG",
-      "category": "Pokeballs",
+      "category": "Mystery Bags",
       "requiresColor": false
     },
     {
