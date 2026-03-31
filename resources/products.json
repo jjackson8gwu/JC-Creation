@@ -882,7 +882,7 @@
       "price": 5.00,
       "quantity": 1,
       "image": "../images/Mystery Bag Items/Mega_Charizard_X.JPG",
-      "category": "Mystery Bags",
+      "category": "Mystery_Bags",
       "requiresColor": false
     },
     {
