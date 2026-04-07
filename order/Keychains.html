@@ -77,72 +77,165 @@
 </div>
   
   <main>
-    <!-- Hero Section with Large Logo -->
-    <!--<section class="hero-section">
-      <div class="hero-content">
-        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">
-        <h1>J&C Creations</h1>
-        <p class="hero-subtitle">Custom 3D Printed Creations</p>
-      </div>
-  </section -->
+    <h1>Keychains</h1>
+    <h2 style="text-align:center; color:#555; font-size:1rem; font-weight:normal;">Colors on all items can be changed on request</h2>
     
-    <!-- Carousel Section -->
-    <section class="carousel-section">
-      <div class="carousel-container">
-        <div class="carousel-window">
-          <div class="carousel" id="carousel">
-            <img src="images/Pokeballs/Greninja_1.JPG" alt="Greninja Pokeball" class="carousel-image">
-            <img src="images/Dragons and Animals/Crystal_Winged_Dragon.JPG" alt="Crystal Winged Dragon" class="carousel-image">
-            <img src="images/Dragons and Animals/1_Color_Crystal_Dragon.JPG" alt="1-Color Crystal Dragon" class="carousel-image">
-            <img src="images/Custom Designs/Door_Corner_1.JPG" alt="Door Corner" class="carousel-image">
-            <img src="images/Pen Holders/Pen_Holder_1.JPG" alt="Pen Holder" class="carousel-image">
-          </div>
-          <button class="carousel-btn prev" id="prev-btn">‹</button>
-          <button class="carousel-btn next" id="next-btn">›</button>
-        </div>
-        <div class="carousel-dots" id="carousel-dots"></div>
-      </div>
-    </section>
-
-    <!-- Hero Section with Large Logo -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <!--<img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">-->
-         <h2>Welcome to J&C Creations</h2>
-      <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
-      </div>
-    </section>
-
-    <!-- Vendor Logo Strip -->
-    <section class="vendor-strip">
-     <div class="vendor-strip-container">
-        <div class="vendor-logos">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <!-- Duplicate the logos for seamless loop -->
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-        </div>
-      </div>
+    <!-- Product Grid - Will be populated dynamically from JSON -->
+    <section class="products">
+      <!-- Products will be loaded here by JavaScript -->
     </section>
   </main>
 
+
+  <!-- Color Selection Modal -->
+  <div id="color-selection-modal" class="modal">
+    <div class="modal-content color-selection-modal">
+      <span class="close" onclick="closeColorSelection()">&times;</span>
+      <h2>Select Color(s)</h2>
+      <div class="color-selection-content">
+        <div class="product-info">
+          <h3 id="selected-product-name"></h3>
+          <div class="quantity-display">Quantity: <span id="selected-quantity"></span></div>
+          <div class="price-display">Total: $<span id="selected-total"></span></div>
+        </div>
+        
+        <div class="color-selection-group">
+          <label for="color-select-1">Choose Primary Color:</label>
+          <select id="color-select-1" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option>
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option>
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option>
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option>
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option>
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>      
+          </select>
+        </div>
+
+        <div class="color-selection-group" id="second-color-group" style="display: none;">
+          <label for="color-select-2">Choose Secondary Color:</label>
+          <select id="color-select-2" class="color-dropdown">
+            <option value="">Select a color...</option>
+            <option value="Amolen-Black-Red">Amolen-Black-Red</option>
+            <option value="Bambu_Green">Bambu Green</option>
+            <option value="Black">Black</option>
+            <option value="Blue-Gray">Blue-Gray</option>
+            <option value="Blue">Blue</option>
+            <option value="BrightGreen">Bright Green</option>
+            <option value="Brown">Brown</option>
+            <option value="CocoaBrown">Cocoa Brown</option>
+            <option value="Cookiecad-DarkMagic">Cookiecad Dark Magic</option>
+            <option value="Cookiecad-Fairy-Floss">Cookiecad Fairy Floss</option>
+            <option value="Cookiecad-Green-Apple">Cookiecad Green Apple</option>
+            <option value="Cookiecad-Mint-Green-Elixir">Cookiecad Mint Green Elixir</option>
+            <option value="Cookiecad-Pastel-Rainbow">Cookiecad Pastel Rainbow</option>
+            <option value="Cyan">Cyan</option>
+            <option value="Elegoo-Beige">Elegoo Beige</option>
+            <option value="Gold">Gold</option>
+            <option value="Glow-Green">Glow Green</option>
+            <option value="Gray">Gray</option>
+            <option value="HotPink">Hot Pink</option>
+            <option value="IndigoPurple">Indigo Purple</option>
+            <option value="iSANMATE-Blue-Green-Pink">iSANMATE Blue-Green-Pink</option>
+            <option value="iSANMATE-Bluish-Green-Purple">iSANMATE Bluish-Green-Purple</option>
+            <option value="iSANMATE-Gradient_Red-Orange">iSANMATE Gradient Red-Orange</option>
+            <option value="Light_Gray">Light Gray</option>
+            <option value="Magenta">Magenta</option>
+            <option value="MaroonRed">MaroonRed</option>
+            <option value="Matte-Apple-Green">Matte Apple Green</option>
+            <option value="Matte-Caramel">Matte Caramel</option>
+            <option value="Matte-Dark-Blue">Matte Dark Blue</option>
+            <option value="Matte-Dark-Green">Matte Dark Green</option>
+            <option value="Matte-Desert-Tan">Matte Desert Tan</option>
+            <option value="Matte-Grass-Green">Matte Grass Green</option>
+            <option value="Matte-Ice-Blue">Matte Ice Blue</option>
+            <option value="Matte-Latte-Brown">Matte Latte Brown</option>
+            <option value="Matte-Lemon-Yellow">Matte-Lemon-Yellow</option>
+            <option value="Matte-Lilac-Purple">Matte Lilac Purple</option>
+            <option value="Matte-Plum">Matte-Plum</option>
+            <option value="Matte-Sakura-Pink">Matte Sakura Pink</option>
+            <option value="Matte-Sky-Blue">Matte Sky Blue</option>
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option>
+            <option value="Silver">Silver</option>
+            <option value="SunflowerYellow">Sunflower Yellow</option>
+            <option value="Sunlu-Purple-Green-Matte">Sunlu-Purple-Green-Matte</option>
+            <option value="Sunlu-Yellow-Cyan-Matte">Sunlu-Yellow-Cyan-Matte</option>
+            <option value="Turquoise">Turquoise</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Ziro-Colorful_Mist-Matte">Ziro Colorful Mist Matte</option>
+            <option value="Ziro-Matcha-Matte">Ziro Matcha Matte</option>
+            <option value="Ziro-Meadow_Mirage-Matte">Ziro Meadow Mirage Matte</option>
+            <option value="Ziro-Neon-Matte">Ziro Neon Matte</option>
+            <option value="Ziro-Northern_Lights-Matte">Ziro Northern Lights Matte</option>
+            <option value="Ziro-Rainbow_Blaze-Matte">Ziro Rainbow Blaze Matte</option>
+            <option value="Ziro-Rosy-Cloud-Matte">Ziro Rosy Cloud Matte</option>
+            <option value="Ziro-Rusted_Jungle-Matte">Ziro Rusted Jungle Matte</option>
+            <option value="Ziro-Vibrant_Coral-Matte">Ziro Vibrant Coral Matte</option>
+          </select>
+        </div>
+        
+        <div class="color-buttons">
+          <button class="confirm-add-btn" onclick="confirmAddToCart()">Add to Cart</button>
+          <button class="cancel-color-btn" onclick="closeColorSelection()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Checkout Modal -->
   <div id="checkout-modal" class="modal">
     <div class="modal-content">
