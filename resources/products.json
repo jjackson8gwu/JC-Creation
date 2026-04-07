@@ -3373,9 +3373,9 @@
       "image": "../images/Custom Designs/Breast_Cancer_Ribbon.JPG"
     },
     {
-      "id": "c-130-plan",
-      "name": "C-130 Plan",
-      "description": "Custom 3D printed C-130 Plan",
+      "id": "c-130-plane",
+      "name": "C-130 Plane",
+      "description": "Custom 3D printed C-130 Plane",
       "price": 12.0,
       "quantity": 0,
       "category": "Custom_Designs",
