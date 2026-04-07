@@ -419,7 +419,7 @@
       "price": 2.0,
       "quantity": 22,
       "image": "../images/Fan Art/Grinch.JPG",
-      "category": "Characters",
+      "category": "Fan_Art",
       "requiresColor": false
     },
     {
@@ -879,7 +879,7 @@
       "id": "Mega_Charizard",
       "name": "Mega Charizard",
       "description": "Mega Charizard",
-      "price": 5.00,
+      "price": 5.0,
       "quantity": 1,
       "image": "../images/Mystery Bag Items/Mega_Charizard_X.JPG",
       "category": "Mystery_Bag",

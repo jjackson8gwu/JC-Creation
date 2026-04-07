@@ -545,6 +545,80 @@ header nav a:hover {
   margin: 2px 0;
 }
 
+/* Price varies (Custom Designs) */
+.price-varies {
+  color: #68a6aa;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Request a Quote button */
+.request-quote-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #68a6aa;
+  text-align: center;
+}
+.request-quote-btn:hover {
+  background: #1a4054;
+}
+
+/* Mystery Bag preview items — image-only cards, no action buttons */
+.mystery-preview-item {
+  cursor: default;
+}
+.mystery-preview-item h3 {
+  font-size: 0.9rem;
+  margin: 6px 0 0;
+}
+
+/* Mystery Bag hero section */
+.mystery-hero {
+  text-align: center;
+  background: linear-gradient(135deg, #1a4054, #68a6aa);
+  color: white;
+  border-radius: 16px;
+  padding: 28px 24px 20px;
+  margin: 0 auto 30px;
+  max-width: 700px;
+}
+.mystery-hero img, .mystery-hero video {
+  max-width: 320px;
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.mystery-hero h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+}
+.mystery-hero p {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+.mystery-buy-btn {
+  background: #D2762B;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.mystery-buy-btn:hover { background: #b8641f; }
+
+.mystery-contents-label {
+  text-align: center;
+  color: #555;
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 0 auto 16px;
+}
+
 /* === Filament Styles === */
 .filaments {
   display: grid;

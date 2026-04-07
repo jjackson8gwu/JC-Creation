@@ -164,6 +164,34 @@
     .badge-out { background: #fff3e0; color: #e65100; }
     .badge-low { background: #fff8e1; color: #f57f17; }
 
+    /* Made-to-Order toggle */
+    .mto-toggle {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .mto-toggle input { opacity: 0; width: 0; height: 0; }
+    .mto-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      transition: background 0.2s;
+    }
+    .mto-slider:before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .mto-toggle input:checked + .mto-slider { background: #D2762B; }
+    .mto-toggle input:checked + .mto-slider:before { transform: translateX(20px); }
+
     .category-tag {
       display: inline-block;
       padding: 2px 8px;
@@ -250,10 +278,11 @@
         <th onclick="sortBy('price')">Price &#8597;</th>
         <th>Stock</th>
         <th onclick="sortBy('quantity')">Status &#8597;</th>
+        <th title="Made to Order: show item on site even when quantity = 0">Made to Order</th>
       </tr>
     </thead>
     <tbody id="table-body">
-      <tr><td colspan="5" class="empty-state">Loading products...</td></tr>
+      <tr><td colspan="6" class="empty-state">Loading products...</td></tr>
     </tbody>
   </table>
 
@@ -276,7 +305,8 @@ const JSON_PATH = 'resources/products.json';
 
 // ── State ────────────────────────────────────────────────────────────────────
 let products = [];
-let changes  = {};   // { id: newQty }
+// changes stores per-product overrides: { id: { qty?: number, madeToOrder?: boolean } }
+let changes  = {};
 let sortKey  = 'name';
 let sortAsc  = true;
 
@@ -340,7 +370,7 @@ function renderTable() {
   let filtered = products.filter(p => {
     if (cat    && p.category !== cat) return false;
     if (search && !p.name.toLowerCase().includes(search)) return false;
-    const qty = changes[p.id] !== undefined ? changes[p.id] : p.quantity;
+    const qty = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
     if (lowOnly && qty > 3) return false;
     return true;
   });
@@ -348,39 +378,53 @@ function renderTable() {
   filtered.sort((a, b) => {
     let va = a[sortKey], vb = b[sortKey];
     if (sortKey === 'name' || sortKey === 'category') {
-      va = va.toLowerCase(); vb = vb.toLowerCase();
+      va = (va||'').toLowerCase(); vb = (vb||'').toLowerCase();
     }
     return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
   });
 
   const tbody = document.getElementById('table-body');
   if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No products match your filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No products match your filters.</td></tr>';
     return;
   }
 
   tbody.innerHTML = filtered.map(p => {
-    const qty = changes[p.id] !== undefined ? changes[p.id] : p.quantity;
-    const isChanged = changes[p.id] !== undefined;
+    const qty       = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
+    const mto       = changes[p.id]?.madeToOrder !== undefined ? changes[p.id].madeToOrder : (p.madeToOrder || false);
+    const qtyChanged = changes[p.id]?.qty !== undefined;
+
     let badge = '';
-    if (qty === 0)      badge = '<span class="badge badge-out">Out / Made to Order</span>';
-    else if (qty <= 3)  badge = `<span class="badge badge-low">Low (${qty})</span>`;
-    else                badge = `<span class="badge badge-in">In Stock (${qty})</span>`;
+    if (qty === 0 && mto) badge = '<span class="badge badge-out">Out &mdash; Made to Order</span>';
+    else if (qty === 0)   badge = '<span class="badge badge-out">Out of Stock (hidden)</span>';
+    else if (qty <= 3)    badge = `<span class="badge badge-low">Low (${qty})</span>`;
+    else                  badge = `<span class="badge badge-in">In Stock (${qty})</span>`;
+
+    const priceDisplay = (p.priceVaries || p.category === 'Custom_Designs')
+      ? '<em style="color:#68a6aa">Varies</em>'
+      : `$${(p.price||0).toFixed(2)}`;
 
     return `<tr>
       <td><strong>${p.name}</strong></td>
       <td><span class="category-tag">${(p.category||'').replace(/_/g,' ')}</span></td>
-      <td>$${(p.price||0).toFixed(2)}</td>
+      <td>${priceDisplay}</td>
       <td>
         <div class="qty-cell">
           <button class="qty-btn" onclick="adjustQty('${p.id}', -1)">&#8722;</button>
-          <input class="qty-input${isChanged?' changed':''}" type="number"
+          <input class="qty-input${qtyChanged?' changed':''}" type="number"
             id="qty-${p.id}" value="${qty}" min="0"
             onchange="setQty('${p.id}', this.value)">
           <button class="qty-btn" onclick="adjustQty('${p.id}', 1)">+</button>
         </div>
       </td>
       <td>${badge}</td>
+      <td style="text-align:center">
+        <label class="mto-toggle" title="When ON: item shows on site even at 0 stock with 'Made to Order' label">
+          <input type="checkbox" ${mto ? 'checked' : ''}
+            onchange="setMadeToOrder('${p.id}', this.checked)">
+          <span class="mto-slider"></span>
+        </label>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -389,7 +433,7 @@ function renderTable() {
 function adjustQty(id, delta) {
   const prod = products.find(p => p.id === id);
   if (!prod) return;
-  const current = changes[id] !== undefined ? changes[id] : prod.quantity;
+  const current = changes[id]?.qty !== undefined ? changes[id].qty : prod.quantity;
   setQty(id, current + delta);
 }
 
@@ -397,11 +441,28 @@ function setQty(id, val) {
   const prod = products.find(p => p.id === id);
   if (!prod) return;
   const newQty = Math.max(0, parseInt(val) || 0);
+  if (!changes[id]) changes[id] = {};
   if (newQty === prod.quantity) {
-    delete changes[id];
+    delete changes[id].qty;
   } else {
-    changes[id] = newQty;
+    changes[id].qty = newQty;
   }
+  // Clean up empty change objects
+  if (Object.keys(changes[id]).length === 0) delete changes[id];
+  renderTable();
+  updateChangesBar();
+}
+
+function setMadeToOrder(id, value) {
+  const prod = products.find(p => p.id === id);
+  if (!prod) return;
+  if (!changes[id]) changes[id] = {};
+  if (value === (prod.madeToOrder || false)) {
+    delete changes[id].madeToOrder;
+  } else {
+    changes[id].madeToOrder = value;
+  }
+  if (Object.keys(changes[id]).length === 0) delete changes[id];
   renderTable();
   updateChangesBar();
 }
@@ -429,10 +490,10 @@ function sortBy(key) {
 
 // ── Download updated products.json ───────────────────────────────────────────
 function downloadJSON() {
-  // Apply all pending changes to a copy of the products array
   const updated = products.map(p => {
     const copy = { ...p };
-    if (changes[p.id] !== undefined) copy.quantity = changes[p.id];
+    if (changes[p.id]?.qty !== undefined)         copy.quantity    = changes[p.id].qty;
+    if (changes[p.id]?.madeToOrder !== undefined) copy.madeToOrder = changes[p.id].madeToOrder;
     return copy;
   });
 
@@ -447,7 +508,6 @@ function downloadJSON() {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 
-  // After download, clear pending changes
   changes = {};
   renderTable();
   updateChangesBar();

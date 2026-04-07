@@ -12,6 +12,11 @@ let cart = loadCart();
 let currentSlide = 0;
 let productsData = null;
 
+// ── Google Sheets Inventory Sync ─────────────────────────────────────────────
+// Paste your deployed Apps Script Web App URL here after setup.
+// Leave blank to use only the quantities already in products.json.
+const INVENTORY_SHEET_URL = '';   // e.g. 'https://script.google.com/macros/s/ABC123.../exec'
+
 // Color selection variables
 let pendingItem = null;
 
@@ -42,15 +47,35 @@ document.addEventListener("DOMContentLoaded", () => {
   loadProducts();
 });
 
-// Load products from JSON
+// Load products from JSON, then optionally overlay live quantities from Google Sheets
 async function loadProducts() {
   try {
     const response = await fetch('../resources/products.json');
     productsData = await response.json();
-    
-    // Get current page category from the URL
+
+    // If a Google Sheets URL is configured, fetch live inventory and merge it in
+    if (INVENTORY_SHEET_URL) {
+      try {
+        const sheetRes = await fetch(INVENTORY_SHEET_URL);
+        const sheetData = await sheetRes.json();
+        if (sheetData.ok && sheetData.inventory) {
+          productsData.products.forEach(p => {
+            // Try matching by product ID first, then by name
+            const liveQty = sheetData.inventory[p.id] !== undefined
+              ? sheetData.inventory[p.id]
+              : sheetData.inventory[p.name];
+            if (liveQty !== undefined) {
+              p.quantity = parseInt(liveQty) || 0;
+            }
+          });
+        }
+      } catch (sheetErr) {
+        console.warn('Could not fetch live inventory from Google Sheets:', sheetErr);
+        // Fall back gracefully to products.json quantities
+      }
+    }
+
     const currentPage = getCurrentPageCategory();
-    
     if (currentPage) {
       displayProducts(currentPage);
     }
@@ -67,7 +92,7 @@ function getCurrentPageCategory() {
   if (path.includes('2_dollar_minis.html')) return '2_dollar_minis';
   if (path.includes('3_dollar_minis.html')) return '3_dollar_minis';
   if (path.includes('Dragons_and_Animals.html')) return 'Dragons_and_Animals';
-  if (path.includes('Characters.html')) return 'Characters';
+  if (path.includes('Fan_Art.html')) return 'Fan_Art';
   if (path.includes('Custom_Designs.html')) return 'Custom_Designs';
   if (path.includes('Fidgets.html')) return 'Fidgets';
   if (path.includes('Pokeballs.html')) return 'Pokeballs';
@@ -83,28 +108,37 @@ function getCurrentPageCategory() {
 function displayProducts(category) {
   const productsSection = document.querySelector('.products');
   if (!productsSection || !productsData) return;
-  
-  // Filter products by category
-  const categoryProducts = productsData.products.filter(p => p.category === category);
-  
+
+  // Filter products by category, respecting madeToOrder / visibility rules
+  const categoryProducts = productsData.products.filter(p => {
+    if (p.category !== category) return false;
+    // Mystery Bag items are always shown (informational preview, not purchasable individually)
+    if (category === 'Mystery_Bag') return true;
+    // Custom Designs are always shown (price varies / made to order)
+    if (category === 'Custom_Designs' || p.priceVaries) return true;
+    // Hide out-of-stock items unless explicitly marked as made-to-order
+    if (p.quantity === 0 && !p.madeToOrder) return false;
+    return true;
+  });
+
   // Sort alphabetically by name
   categoryProducts.sort((a, b) => a.name.localeCompare(b.name));
-  
+
   // Clear existing products
   productsSection.innerHTML = '';
-  
+
   // Generate HTML for each product
   categoryProducts.forEach(product => {
-    const productHTML = createProductHTML(product);
+    const productHTML = createProductHTML(product, category);
     productsSection.innerHTML += productHTML;
   });
-  
+
   // Re-attach event listeners after products are added
   attachProductEventListeners();
 }
 
 // Create HTML for a single product (supports multiple images via gallery)
-function createProductHTML(product) {
+function createProductHTML(product, category) {
   // Support both 'images' array (multi) and legacy 'image' string (single)
   const imageList = (product.images && product.images.length > 0)
     ? product.images
@@ -136,31 +170,60 @@ function createProductHTML(product) {
   } else if (imageList.length === 1) {
     // ── Single image / video (legacy) ────────────────────────────────────
     const isVideo = /\.(mp4|webm)$/i.test(imageList[0]);
+    const isGif   = /\.gif$/i.test(imageList[0]);
     mediaHTML = isVideo
       ? `<video muted loop playsinline><source src="${imageList[0]}" type="video/mp4"></video>`
       : `<img src="${imageList[0]}" alt="${product.name}">`;
   }
 
-  const addToCartFunction = product.requiresColor
-    ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1})`
-    : `addToCart('${product.name}', ${product.price}, this)`;
+  // ── Determine display category (fall back to product's own field) ─────────
+  const cat = category || product.category || '';
+  const isMysteryBag    = cat === 'Mystery_Bag';
+  const isCustomDesign  = cat === 'Custom_Designs' || product.priceVaries;
 
-  const stockLabel = product.quantity === 0
-    ? '<p class="out-of-stock">Made to Order</p>'
-    : '';
+  // ── Price block ───────────────────────────────────────────────────────────
+  let priceHTML = '';
+  if (isCustomDesign) {
+    priceHTML = '<p class="price price-varies">Price Varies by Order</p>';
+  } else if (!isMysteryBag) {
+    priceHTML = `<p class="price">$${(product.price || 0).toFixed(2)}</p>`;
+  }
 
-  return `
-    <div class="product" data-product-id="${product.id}">
-      ${mediaHTML}
-      <h3>${product.name}</h3>
-      <p class="price">$${product.price.toFixed(2)}</p>
-      ${stockLabel}
+  // ── Stock / Made-to-Order label ───────────────────────────────────────────
+  let stockLabel = '';
+  if (product.quantity === 0 && product.madeToOrder) {
+    stockLabel = '<p class="out-of-stock">Made to Order</p>';
+  }
+
+  // ── Action section (qty + button) ────────────────────────────────────────
+  let actionHTML = '';
+  if (isMysteryBag) {
+    // Mystery Bag items are display-only — no price, no cart button
+    actionHTML = '';
+  } else if (isCustomDesign) {
+    // Custom Designs: link to the quote/request form instead of cart
+    actionHTML = `<a href="Custom_Designs.html" class="add-to-cart-btn request-quote-btn">Request a Quote</a>`;
+  } else {
+    const maxQty = product.quantity > 0 ? product.quantity : 99;
+    const addFn  = product.requiresColor
+      ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1})`
+      : `addToCart('${product.name}', ${product.price}, this)`;
+    actionHTML = `
       <div class="quantity-controls">
         <button onclick="decreaseQuantity(this)">-</button>
-        <input type="number" class="quantity-input" value="1" min="1" max="${product.quantity > 0 ? product.quantity : 99}">
+        <input type="number" class="quantity-input" value="1" min="1" max="${maxQty}">
         <button onclick="increaseQuantity(this)">+</button>
       </div>
-      <button onclick="${addToCartFunction}" class="add-to-cart-btn">Add to Cart</button>
+      <button onclick="${addFn}" class="add-to-cart-btn">Add to Cart</button>`;
+  }
+
+  return `
+    <div class="product${isMysteryBag ? ' mystery-preview-item' : ''}" data-product-id="${product.id}">
+      ${mediaHTML}
+      <h3>${product.name}</h3>
+      ${priceHTML}
+      ${stockLabel}
+      ${actionHTML}
     </div>
   `;
 }
@@ -344,7 +407,21 @@ function initializeEventListeners() {
         alert("Please select a delivery method.");
         return;
       }
-      
+
+      // After Formspree receives the email, also update Google Sheets inventory
+      if (INVENTORY_SHEET_URL) {
+        const orderItems = cart.map(item => ({
+          name: item.name,
+          id:   item.id || '',
+          quantity: item.quantity
+        }));
+        fetch(INVENTORY_SHEET_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: orderItems })
+        }).catch(err => console.warn('Inventory update failed:', err));
+      }
+
       setTimeout(() => {
         alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
         cart = [];
@@ -379,6 +456,19 @@ function decreaseQuantity(button) {
   } else {
     input.value = min;
   }
+}
+
+// Mystery Bag add-to-cart (fixed $5, no color selection needed)
+function addMysteryBagToCart(buttonElement) {
+  const existingIndex = cart.findIndex(item => item.name === 'Mystery Bag');
+  if (existingIndex !== -1) {
+    cart[existingIndex].quantity += 1;
+  } else {
+    cart.push({ name: 'Mystery Bag', price: 5.00, quantity: 1 });
+  }
+  saveCart(cart);
+  updateCartDisplay();
+  showNotification('Mystery Bag added to cart!');
 }
 
 // Simple addToCart function for items without color selection

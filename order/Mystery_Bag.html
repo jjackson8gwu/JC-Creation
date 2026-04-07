@@ -21,7 +21,7 @@
         <a href="../../order/1_dollar_minis.html">$1 Minis</a>
         <a href="../../order/2_dollar_minis.html">$2 Minis</a>
         <a href="../../order/3_dollar_minis.html">$3 Minis</a>
-        <a href="../../order/Characters.html">Fan Art</a>
+        <a href="../../order/Fan_Art.html">Fan Art</a>
         <a href="../../order/Custom_Designs.html">Custom Designs</a>
         <a href="../../order/Dragons_and_Animals.html">Dragons &amp; Animals</a>
         <a href="../../order/Fidgets.html">Fidgets</a>
@@ -45,7 +45,7 @@
       <a href="../order/1_dollar_minis.html">$1 Minis</a>
       <a href="../order/2_dollar_minis.html">$2 Minis</a>
       <a href="../order/3_dollar_minis.html">$3 Minis</a>
-      <a href="../order/Characters.html">Fan Art</a>
+      <a href="../order/Fan_Art.html">Fan Art</a>
       <a href="../order/Custom_Designs.html">Custom Designs</a>
       <a href="../order/Dragons_and_Animals.html">Dragons &amp; Animals</a>
       <a href="../order/Fidgets.html">Fidgets</a>
@@ -60,9 +60,26 @@
   </div>
 
   <main>
-    <h1>Mystery Bag — Surprise 3D prints at a great price!</h1>
+    <h1>Mystery Bags</h1>
+
+    <!-- Hero / purchase section -->
+    <div class="mystery-hero">
+      <!-- Upload your mystery bag gif to images/Mystery Bag Items/Mystery_Bag.gif to show it here -->
+      <img src="../images/Mystery Bag Items/Mystery_Bag.gif"
+           alt="Mystery Bag Preview"
+           onerror="this.style.display='none'">
+      <h2>What's inside? Only one way to find out!</h2>
+      <p>All bags will include one of the items below and will have $5 worth of value in it.</p>
+      <button class="mystery-buy-btn" onclick="addMysteryBagToCart(this)">
+        Add Mystery Bag to Cart &mdash; $5.00
+      </button>
+      <input type="number" class="quantity-input" value="1" min="1" max="99" style="display:none">
+    </div>
+
+    <p class="mystery-contents-label">&#128064; Possible bag contents &mdash; your bag will contain one surprise item:</p>
+
     <section class="products">
-      <!-- Products loaded dynamically from products.json -->
+      <!-- Products loaded dynamically from products.json (display only, no individual prices) -->
     </section>
   </main>
 
