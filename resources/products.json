@@ -687,7 +687,7 @@
       "category": "2_dollar_minis",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/$1 Minis/Chameleon.JPG"
+      "image": "../images/$2 Minis/Chameleon.JPG"
     },
     {
       "id": "candycorn-dragon",
@@ -1055,7 +1055,7 @@
       "category": "2_dollar_minis",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/$2 Minis/Jackalope.JPG"
+      "image": "../images/$2 Minis/Jackalope.jpg"
     },
     {
       "id": "kangaroo",
@@ -1250,7 +1250,7 @@
       "category": "2_dollar_minis",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/$2 Minis/Poison_Dart_Frog.JPG"
+      "image": "../images/$2 Minis/Poison_Dart_Frog.jpg"
     },
     {
       "id": "pufferfish",
@@ -2891,7 +2891,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Charmander_1.JPG"
+      "image": "../images/Fan Art/PK_Charmander.JPG"
     },
     {
       "id": "pk-gengar",
@@ -2916,15 +2916,15 @@
       "image": "../images/Fan Art/PK_Mewtwo.JPG"
     },
     {
-      "id": "pk-pickachu",
-      "name": "PK - Pickachu",
-      "description": "Custom 3D printed PK - Pickachu",
+      "id": "pk-pikachu",
+      "name": "PK - Pikachu",
+      "description": "Custom 3D printed PK - Pikachu",
       "price": 3.0,
       "quantity": 18,
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/PK_Pickachu.JPG"
+      "image": "../images/Fan Art/PK_Pikachu.JPG"
     },
     {
       "id": "patrick-star",
@@ -2968,7 +2968,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_Boba_Fett.jpg"
+      "image": "../images/Fan Art/SW_Boba_Fett.JPG"
     },
     {
       "id": "sw-c3po",
@@ -2990,7 +2990,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_Chewbacca.jpg"
+      "image": "../images/Fan Art/SW_Chewbacca.JPG"
     },
     {
       "id": "sw-darth-maul",
@@ -3012,7 +3012,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_Darth_Vader.jpg"
+      "image": "../images/Fan Art/SW_Darth_Vader.JPG"
     },
     {
       "id": "sw-luke-skywalker",
@@ -3023,7 +3023,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_Luke_Skywalker.jpg"
+      "image": "../images/Fan Art/SW_Luke_Skywalker.JPG"
     },
     {
       "id": "sw-r2d2",
@@ -3034,7 +3034,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_R2D2.jpg"
+      "image": "../images/Fan Art/SW_R2D2.JPG"
     },
     {
       "id": "sw-stormtrooper",
@@ -3056,7 +3056,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/SW_Yoda.jpg"
+      "image": "../images/Fan Art/SW_Yoda.JPG"
     },
     {
       "id": "sonic-balance-wheel",
@@ -3342,7 +3342,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Angel_Statue.JPG"
     },
@@ -3355,7 +3355,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Batman_Lightbox.JPG"
     },
@@ -3368,7 +3368,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Breast_Cancer_Ribbon.JPG"
     },
@@ -3381,7 +3381,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/C-130_Plane.JPG"
     },
@@ -3394,7 +3394,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 2,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Can_Toboggan.JPG"
     },
@@ -3407,7 +3407,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Candle_Earrings.JPG"
     },
@@ -3420,7 +3420,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Chewy_Duck.JPG"
     },
@@ -3571,7 +3571,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Nintendo_Switch_Game_Holder.JPG"
     },
@@ -3595,7 +3595,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Ozzy_Duck.JPG"
     },
@@ -3655,7 +3655,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Post-It_Note_Stencil_Holder.JPG"
     },
@@ -3711,7 +3711,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/WCU_Lightbox.JPG"
     },
@@ -3724,7 +3724,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/GWU_Lightbox.gif"
     },
@@ -3737,7 +3737,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "image": "../images/Custom Designs/Mickey_Pay_Wand.JPG"
     },
@@ -3750,7 +3750,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "images": [
         "../images/Custom Designs/Star_Pay_Wand_1.JPG",
@@ -3778,7 +3778,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "images": [
         "../images/Custom Designs/Scrub_Daddy_1.JPG",
@@ -3797,7 +3797,7 @@
       "category": "Custom_Designs",
       "requiresColor": false,
       "colorCount": 1,
-      "priceVaries": true,
+      "priceVaries": false,
       "madeToOrder": true,
       "images": [
         "../images/Custom Designs/Turtle_Drink_Holder.JPG",
