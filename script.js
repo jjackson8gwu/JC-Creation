@@ -99,6 +99,8 @@ function getCurrentPageCategory() {
   if (path.includes('Clickers.html')) return 'Clickers';
   if (path.includes('Keychains.html')) return 'Keychains';
   if (path.includes('Mystery_Bag.html')) return 'Mystery_Bag';
+  if (path.includes('4_dollar_minis.html')) return '4_dollar_minis';
+  if (path.includes('Pen_Holders.html')) return 'Pen_Holders';
   if (path.includes('Seasonal.html')) return 'Seasonal';
 
   return null;

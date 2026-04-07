@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/favicon.png">
-  <title>Order - J&C Creations</title>
-  <link rel="stylesheet" href="../resources/styles.css">
+  <title>J&C Creations</title>
+  <link rel="stylesheet" href="./resources/styles.css">
 </head>
 <body>
   <header>
-    <div id="logo">
+  <div id="logo">
     <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
   </div>
   <div class="header-flex">
@@ -26,6 +26,8 @@
       <a href="../../order/1_dollar_minis.html">$1 Minis</a>
       <a href="../../order/2_dollar_minis.html">$2 Minis</a>
       <a href="../../order/3_dollar_minis.html">$3 Minis</a>
+        <a href="../../order/4_dollar_minis.html">$4 Minis</a>
+        <a href="../../order/Pen_Holders.html">Pen Holders</a>
       <a href="../../order/Fan_Art.html">Fan Art</a>
       <a href="../../order/Custom_Designs.html">Custom Designs</a>
       <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
@@ -42,9 +44,9 @@
       <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </div>
   </div>
-  </header>
+</header>
 
-  <!-- Mobile Menu Overlay -->
+<!-- Mobile Menu Overlay -->
 <div class="menu-overlay" id="menu-overlay"></div>
 
 <!-- Mobile Menu Sidebar -->
@@ -54,6 +56,8 @@
     <a href="../order/1_dollar_minis.html">$1 Minis</a>
     <a href="../order/2_dollar_minis.html">$2 Minis</a>
     <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/4_dollar_minis.html">$4 Minis</a>
+      <a href="../order/Pen_Holders.html">Pen Holders</a>
     <a href="../order/Fan_Art.html">Fan Art</a>
     <a href="../order/Custom_Designs.html">Custom Designs</a>
     <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
@@ -73,19 +77,70 @@
 </div>
   
   <main>
-    <!-- Product Grid -->
-    <section class="products">
-      <div class="category-buttons">
-  <button onclick="window.location.href='1_dollar_minis.html'">$1 Mini's</button>
-  <button onclick="window.location.href='2_dollar_minis.html'">$2 Mini's</button>
-  <button onclick="window.location.href='3_dollar_minis.html'">$3 Mini's</button>
-  <button onclick="window.location.href='Custom_Designs.html'">Custom Designs</button>
-  <button onclick="window.location.href='Characters.html'">Fan Art</button>
-  <button onclick="window.location.href='Fidgets.html'">Fidgets</button>
-  <button onclick="window.location.href='Dragons_and_Animals'">Dragons and Animals</button>
-  <button onclick="window.location.href='Pokeballs.html'">Pokeballs</button>
-    </section>
+    <!-- Hero Section with Large Logo -->
+    <!--<section class="hero-section">
+      <div class="hero-content">
+        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">
+        <h1>J&C Creations</h1>
+        <p class="hero-subtitle">Custom 3D Printed Creations</p>
+      </div>
+  </section -->
     
+    <!-- Carousel Section -->
+    <section class="carousel-section">
+      <div class="carousel-container">
+        <div class="carousel-window">
+          <div class="carousel" id="carousel">
+            <img src="images/Pokeballs/Greninja_1.JPG" alt="Greninja Pokeball" class="carousel-image">
+            <img src="images/Dragons and Animals/Crystal_Winged_Dragon.JPG" alt="Crystal Winged Dragon" class="carousel-image">
+            <img src="images/Dragons and Animals/1_Color_Crystal_Dragon.JPG" alt="1-Color Crystal Dragon" class="carousel-image">
+            <img src="images/Custom Designs/Door_Corner_1.JPG" alt="Door Corner" class="carousel-image">
+            <img src="images/Pen Holders/Pen_Holder_1.JPG" alt="Pen Holder" class="carousel-image">
+          </div>
+          <button class="carousel-btn prev" id="prev-btn">‹</button>
+          <button class="carousel-btn next" id="next-btn">›</button>
+        </div>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+    </section>
+
+    <!-- Hero Section with Large Logo -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <!--<img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">-->
+         <h2>Welcome to J&C Creations</h2>
+      <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
+      </div>
+    </section>
+
+    <!-- Vendor Logo Strip -->
+    <section class="vendor-strip">
+     <div class="vendor-strip-container">
+        <div class="vendor-logos">
+          <img src="images/creators/Artflex.png" alt="Vendor 1">
+          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
+          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
+          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
+          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
+          <!-- Duplicate the logos for seamless loop -->
+          <img src="images/creators/Artflex.png" alt="Vendor 1">
+          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
+          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
+          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
+          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
+          <img src="images/creators/Artflex.png" alt="Vendor 1">
+          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
+          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
+          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
+          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
+          <img src="images/creators/Artflex.png" alt="Vendor 1">
+          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
+          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
+          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
+          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Checkout Modal -->
