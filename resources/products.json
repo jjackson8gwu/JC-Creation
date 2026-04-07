@@ -687,7 +687,7 @@
       "category": "2_dollar_minis",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/$2 Minis/Chameleon_2.JPG"
+      "image": "../images/$1 Minis/Chameleon.JPG"
     },
     {
       "id": "candycorn-dragon",
@@ -996,7 +996,7 @@
       "category": "2_dollar_minis",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/$2 Minis/Heart_Tadling.JPG"
+      "image": "../images/$2 Minis/Heart Tadling.JPG"
     },
     {
       "id": "hedgehog",
@@ -1317,11 +1317,9 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/$2 Minis/SeaTurtle_Flexi_1.JPG",
-        "../images/$2 Minis/SeaTurtle_Flexi_2.JPG",
-        "../images/$2 Minis/SeaTurtle_Flexi_3.JPG"
+        "../images/$2 Minis/Sea_Turtle_1.JPG"
       ],
-      "image": "../images/$2 Minis/SeaTurtle_Flexi_1.JPG"
+      "image": "../images/$2 Minis/Sea_Turtle_1.JPG"
     },
     {
       "id": "small-horse",
@@ -1557,10 +1555,10 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/$3 Minis/Dobberman_1.JPG",
-        "../images/$3 Minis/Dobberman_2.JPG"
+        "../images/$3 Minis/Dobberman.JPG",
+        "../images/$3 Minis/Dobberman.JPG"
       ],
-      "image": "../images/$3 Minis/Dobberman_1.JPG"
+      "image": "../images/$3 Minis/Dobberman.JPG"
     },
     {
       "id": "elephant",
@@ -1672,7 +1670,7 @@
       "colorCount": 1,
       "images": [
         "../images/$3 Minis/Twirl_Octopus.JPG",
-        "../images/$3 Minis/Twirl_Octopus.mp4"
+        "../images/$3 Minis/Twirl_Octopus.JPG"
       ],
       "image": "../images/$3 Minis/Twirl_Octopus.JPG"
     },
@@ -1697,12 +1695,12 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/1_Color_Crystal_Dragon.JPG",
-        "../images/Animals and Dragons/1_Color_Crystal_Dragon_1.JPG",
-        "../images/Animals and Dragons/1_Color_Crystal_Dragon_2.JPG",
-        "../images/Animals and Dragons/1_Color_Crystal_Dragon_3.JPG"
+        "../images/Dragons and Animals/1_Color_Crystal_Dragon_1.JPG",
+        "../images/Dragons and Animals/1_Color_Crystal_Dragon_1.JPG",
+        "../images/Dragons and Animals/1_Color_Crystal_Dragon_2.JPG",
+        "../images/Dragons and Animals/1_Color_Crystal_Dragon_3.JPG"
       ],
-      "image": "../images/Animals and Dragons/1_Color_Crystal_Dragon.JPG"
+      "image": "../images/Dragons and Animals/1_Color_Crystal_Dragon_1.JPG"
     },
     {
       "id": "2-color-crystal-dragon",
@@ -1714,12 +1712,12 @@
       "requiresColor": true,
       "colorCount": 2,
       "images": [
-        "../images/Animals and Dragons/2_Color_Crystal_Dragon_1.JPG",
-        "../images/Animals and Dragons/2_Color_Crystal_Dragon_2.JPG",
-        "../images/Animals and Dragons/2_Color_Crystal_Dragon_3.JPG",
-        "../images/Animals and Dragons/2_Color_Crystal_Dragon_4.JPG"
+        "../images/Dragons and Animals/2_Color_Crystal_Dragon_1.JPG",
+        "../images/Dragons and Animals/2_Color_Crystal_Dragon_2.JPG",
+        "../images/Dragons and Animals/2_Color_Crystal_Dragon_3.JPG",
+        "../images/Dragons and Animals/2_Color_Crystal_Dragon_4.JPG"
       ],
-      "image": "../images/Animals and Dragons/2_Color_Crystal_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/2_Color_Crystal_Dragon_1.JPG"
     },
     {
       "id": "3-headed-dragon",
@@ -1730,7 +1728,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/3-Headed_Dragon.JPG"
+      "image": "../images/Dragons and Animals/3-Headed_Dragon.JPG"
     },
     {
       "id": "aquatic-dragon",
@@ -1742,11 +1740,11 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Aquatic_Dragon_1.JPG",
-        "../images/Animals and Dragons/Aquatic_Dragon_2.JPG",
-        "../images/Animals and Dragons/Aquatic_Dragon_3.JPG"
+        "../images/Dragons and Animals/Aquatic_Dragon_1.JPG",
+        "../images/Dragons and Animals/Aquatic_Dragon_2.JPG",
+        "../images/Dragons and Animals/Aquatic_Dragon_3.JPG"
       ],
-      "image": "../images/Animals and Dragons/Aquatic_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Aquatic_Dragon_1.JPG"
     },
     {
       "id": "axolotl-small",
@@ -1758,11 +1756,11 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Axolotl_Small_1.JPG",
-        "../images/Animals and Dragons/Axolotl_Small_2.JPG",
-        "../images/Animals and Dragons/Axolotl_Small_3.JPG"
+        "../images/Dragons and Animals/Axolotl_Small_1.JPG",
+        "../images/Dragons and Animals/Axolotl_Small_2.JPG",
+        "../images/Dragons and Animals/Axolotl_Small_3.JPG"
       ],
-      "image": "../images/Animals and Dragons/Axolotl_Small_1.JPG"
+      "image": "../images/Dragons and Animals/Axolotl_Small_1.JPG"
     },
     {
       "id": "axolotl-medium",
@@ -1784,7 +1782,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Axolotl_Large.JPG"
+      "image": "../images/Dragons and Animals/Axolotl_Large.JPG"
     },
     {
       "id": "baby-fire-dragon",
@@ -1796,10 +1794,10 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Baby_Fire_Dragon_1.JPG",
-        "../images/Animals and Dragons/Baby_Fire_Dragon_2.JPG"
+        "../images/Dragons and Animals/Baby_Fire_Dragon_1.JPG",
+        "../images/Dragons and Animals/Baby_Fire_Dragon_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Baby_Fire_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Baby_Fire_Dragon_1.JPG"
     },
     {
       "id": "crystal-snake",
@@ -1811,10 +1809,10 @@
       "requiresColor": true,
       "colorCount": 2,
       "images": [
-        "../images/Animals and Dragons/Crystal_Snake_1.JPG",
-        "../images/Animals and Dragons/Crystal_Snake_2.JPG"
+        "../images/Dragons and Animals/Crystal_Snake_1.JPG",
+        "../images/Dragons and Animals/Crystal_Snake_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Crystal_Snake_1.JPG"
+      "image": "../images/Dragons and Animals/Crystal_Snake_1.JPG"
     },
     {
       "id": "crystal-winged-dragon",
@@ -1825,7 +1823,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Animals and Dragons/Crystal_Winged_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Crystal_Winged_Dragon.JPG"
     },
     {
       "id": "cute-dragon",
@@ -1836,7 +1834,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Cute_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Cute_Dragon.JPG"
     },
     {
       "id": "dino-egg",
@@ -1847,7 +1845,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Dino_Egg.JPG"
+      "image": "../images/Dragons and Animals/Dino_Egg.JPG"
     },
     {
       "id": "dragonic-winged-dragon",
@@ -1859,11 +1857,11 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Dragonic_Winged_Dragon_1.JPG",
-        "../images/Animals and Dragons/Dragonic_Winged_Dragon_2.JPG",
-        "../images/Animals and Dragons/Dragonic_Winged_Dragon_3.JPG"
+        "../images/Dragons and Animals/Dragonic_Winged_Dragon_1.JPG",
+        "../images/Dragons and Animals/Dragonic_Winged_Dragon_2.JPG",
+        "../images/Dragons and Animals/Dragonic_Winged_Dragon_3.jpeg"
       ],
-      "image": "../images/Animals and Dragons/Dragonic_Winged_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Dragonic_Winged_Dragon_1.JPG"
     },
     {
       "id": "duskscale-snake",
@@ -1875,10 +1873,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Duskscale_Snake_1.JPG",
-        "../images/Animals and Dragons/Duskscale_Snake_2.JPG"
+        "../images/Dragons and Animals/Duskscale_Snake_1.JPG",
+        "../images/Dragons and Animals/Duskscale_Snake_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Duskscale_Snake_1.JPG"
+      "image": "../images/Dragons and Animals/Duskscale_Snake_1.JPG"
     },
     {
       "id": "emberling-dragon",
@@ -1890,12 +1888,12 @@
       "requiresColor": true,
       "colorCount": 2,
       "images": [
-        "../images/Animals and Dragons/Emberling_Dragon_1.JPG",
-        "../images/Animals and Dragons/Emberling_Dragon_2.JPG",
-        "../images/Animals and Dragons/Emberling_Dragon_3.JPG",
+        "../images/Dragons and Animals/Emberling_Dragon_1.JPG",
+        "../images/Dragons and Animals/Emberling_Dragon_2.JPG",
+        "../images/Dragons and Animals/Emberling_Dragon_3.JPG",
         "../images/Animals and Dragons/Emberling_Dragon_4JPG"
       ],
-      "image": "../images/Animals and Dragons/Emberling_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Emberling_Dragon_1.JPG"
     },
     {
       "id": "flexi-octopus",
@@ -1907,10 +1905,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Flexi_Octopus_1.JPG",
-        "../images/Animals and Dragons/Flexi_Octopus_2.JPG"
+        "../images/Dragons and Animals/Flexi_Octopus_1.JPG",
+        "../images/Dragons and Animals/Flexi_Octopus_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Flexi_Octopus_1.JPG"
+      "image": "../images/Dragons and Animals/Flexi_Octopus_1.JPG"
     },
     {
       "id": "flexi-spider",
@@ -1921,7 +1919,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Animals and Dragons/Flexi_Spider.JPG"
+      "image": "../images/Dragons and Animals/Flexi_Spider.JPG"
     },
     {
       "id": "glow-ashbone-dragon",
@@ -1933,10 +1931,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Glow_Ashbone_Dragon_1.JPG",
-        "../images/Animals and Dragons/Glow_Ashbone_Dragon_2.JPG"
+        "../images/Dragons and Animals/Glow_Ashbone_Dragon_1.JPG",
+        "../images/Dragons and Animals/Glow_Ashbone_Dragon_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Glow_Ashbone_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Glow_Ashbone_Dragon_1.JPG"
     },
     {
       "id": "glow-mini-zephyros-dragon",
@@ -1948,11 +1946,11 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Glow_Mini_Zephyros_Dragon_1.JPG",
-        "../images/Animals and Dragons/Glow_Mini_Zephyros_Dragon_2.JPG",
-        "../images/Animals and Dragons/Glow_Mini_Zephyros_Dragon_3.JPG"
+        "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_1.JPG",
+        "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_2.JPG",
+        "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_3.JPG"
       ],
-      "image": "../images/Animals and Dragons/Glow_Mini_Zephyros_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_1.JPG"
     },
     {
       "id": "jellyfish",
@@ -1964,12 +1962,12 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Jellyfish_1.JPG",
-        "../images/Animals and Dragons/Jellyfish_2.JPG",
-        "../images/Animals and Dragons/Jellyfish_3.JPG",
-        "../images/Animals and Dragons/Jellyfish_4.JPG"
+        "../images/Dragons and Animals/Jellyfish_1.JPG",
+        "../images/Dragons and Animals/Jellyfish_2.JPG",
+        "../images/Dragons and Animals/Jellyfish_3.JPG",
+        "../images/Dragons and Animals/Jellyfish_4.JPG"
       ],
-      "image": "../images/Animals and Dragons/Jellyfish_1.JPG"
+      "image": "../images/Dragons and Animals/Jellyfish_1.JPG"
     },
     {
       "id": "large-sea-turtle",
@@ -1981,10 +1979,10 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Large_Sea_Turtle_1.JPG",
-        "../images/Animals and Dragons/Large_Sea_Turtle_2.JPG"
+        "../images/Dragons and Animals/Large_Sea_Turtle_1.JPG",
+        "../images/Dragons and Animals/Large_Sea_Turtle_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Large_Sea_Turtle_1.JPG"
+      "image": "../images/Dragons and Animals/Large_Sea_Turtle_1.JPG"
     },
     {
       "id": "long-tentacle-jellyfish",
@@ -1996,10 +1994,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Long_Tentacle_Jellyfish_1.JPG",
-        "../images/Animals and Dragons/Long_Tentacle_Jellyfish_2.JPG"
+        "../images/Dragons and Animals/Long_Tentacle_Jellyfish_1.JPG",
+        "../images/Dragons and Animals/Long_Tentacle_Jellyfish_2.JPG"
       ],
-      "image": "../images/Animals and Dragons/Long_Tentacle_Jellyfish_1.JPG"
+      "image": "../images/Dragons and Animals/Long_Tentacle_Jellyfish_1.JPG"
     },
     {
       "id": "magnetic-frog",
@@ -2010,7 +2008,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Magnetic_Frog.JPG"
+      "image": "../images/Dragons and Animals/Magnetic_Frog.JPG"
     },
     {
       "id": "mini-zephyros-dragon",
@@ -2021,7 +2019,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Animals and Dragons/Mini_Zephyros_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Mini_Zephyros_Dragon.JPG"
     },
     {
       "id": "shadowcoil-dragon",
@@ -2033,12 +2031,12 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Shadowcoil_Dragon_1.JPG",
-        "../images/Animals and Dragons/Shadowcoil_Dragon_2.JPG",
-        "../images/Animals and Dragons/Shadowcoil_Dragon_3.JPG",
-        "../images/Animals and Dragons/Shadowcoil_Dragon_4.JPG"
+        "../images/Dragons and Animals/Shadowcoil_Dragon_1.JPG",
+        "../images/Dragons and Animals/Shadowcoil_Dragon_2.JPG",
+        "../images/Dragons and Animals/Shadowcoil_Dragon_3.JPG",
+        "../images/Dragons and Animals/Shadowcoil_Dragon_4.JPG"
       ],
-      "image": "../images/Animals and Dragons/Shadowcoil_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Shadowcoil_Dragon_1.JPG"
     },
     {
       "id": "skeleton-shark",
@@ -2049,7 +2047,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Skeleton_Shark.JPG"
+      "image": "../images/Dragons and Animals/Skeleton_Shark.JPG"
     },
     {
       "id": "skeleton-snake",
@@ -2061,10 +2059,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Skeleton_Snake_1.JPG",
-        "../images/Animals and Dragons/Skeleton_Snake_2.JPG"
+        "../images/Dragons and Animals/Skeleton_Snake.JPG",
+        "../images/Dragons and Animals/Skeleton_Snake.JPG"
       ],
-      "image": "../images/Animals and Dragons/Skeleton_Snake_1.JPG"
+      "image": "../images/Dragons and Animals/Skeleton_Snake.JPG"
     },
     {
       "id": "tri-black-crystal-dragon",
@@ -2075,7 +2073,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Tri_Black_Crystal_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Tri_Black_Crystal_Dragon.JPG"
     },
     {
       "id": "twirl-octopus",
@@ -2087,10 +2085,10 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Twirl_Octopus.gif",
-        "../images/Animals and Dragons/Twirl_Octopus.JPG"
+        "../images/$3 Minis/Twirl_Octopus.JPG",
+        "../images/$3 Minis/Twirl_Octopus.JPG"
       ],
-      "image": "../images/Animals and Dragons/Twirl_Octopus.gif"
+      "image": "../images/$3 Minis/Twirl_Octopus.JPG"
     },
     {
       "id": "wyren",
@@ -2101,7 +2099,7 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Animals and Dragons/Wyren_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Wyren_Dragon.JPG"
     },
     {
       "id": "zephyros-dragon",
@@ -2113,12 +2111,12 @@
       "requiresColor": true,
       "colorCount": 1,
       "images": [
-        "../images/Animals and Dragons/Zephyros_Dragon_1.JPG",
-        "../images/Animals and Dragons/Zephyros_Dragon_2.JPG",
-        "../images/Animals and Dragons/Zephyros_Dragon_3.JPG",
-        "../images/Animals and Dragons/Zephyros_Dragon_4.JPG"
+        "../images/Dragons and Animals/Zephyros_Dragon_1.JPG",
+        "../images/Dragons and Animals/Zephyros_Dragon_2.JPG",
+        "../images/Dragons and Animals/Zephyros_Dragon_3.JPG",
+        "../images/Dragons and Animals/Zephyros_Dragon_4.JPG"
       ],
-      "image": "../images/Animals and Dragons/Zephyros_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Zephyros_Dragon_1.JPG"
     },
     {
       "id": "af-lurch",
@@ -2893,7 +2891,7 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/PK_Charmander.JPG"
+      "image": "../images/Pokeballs/Charmander_1.JPG"
     },
     {
       "id": "pk-gengar",
@@ -3851,7 +3849,7 @@
       "colorCount": 1,
       "images": [
         "../images/Fidgets/Flower_Fidget.JPG",
-        "../images/Fidgets/Flower_Fidget.mp4"
+        "../images/Fidgets/Flower_Fidget.JPG"
       ],
       "image": "../images/Fidgets/Flower_Fidget.JPG"
     },
@@ -4269,7 +4267,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Alien_Stitch.JPG"
+      "image": "../images/Mystery Bag Items/Alien_Stitch.JPG"
     },
     {
       "id": "demogorgon",
@@ -4280,7 +4278,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Demogorgon.JPG"
+      "image": "../images/Mystery Bag Items/Demogorgon.JPG"
     },
     {
       "id": "elvis-stitch",
@@ -4291,7 +4289,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Elvis_Stitch.JPG"
+      "image": "../images/Mystery Bag Items/Elvis_Stitch.JPG"
     },
     {
       "id": "funko-jack",
@@ -4302,7 +4300,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Funko_Jack.JPG"
+      "image": "../images/Mystery Bag Items/Funko_Jack.JPG"
     },
     {
       "id": "glow-turtle",
@@ -4313,7 +4311,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Glow_Turtle.JPG"
+      "image": "../images/Mystery Bag Items/Glow_Turtle.JPG"
     },
     {
       "id": "mega-charizard-x",
@@ -4324,7 +4322,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Mega_Charizard_X.JPG"
+      "image": "../images/Mystery Bag Items/Mega_Charizard_X.JPG"
     },
     {
       "id": "optimis-prime",
@@ -4335,7 +4333,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Optimus_Prime.JPG"
+      "image": "../images/Mystery Bag Items/Optimus_Prime.JPG"
     },
     {
       "id": "santa-jack",
@@ -4346,7 +4344,7 @@
       "category": "Mystery_Bag",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Mystery Bag/Santa_Jack.JPG"
+      "image": "../images/Mystery Bag Items/Santa_Jack.JPG"
     },
     {
       "id": "charmander-pokeball",
