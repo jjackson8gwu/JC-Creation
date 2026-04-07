@@ -3778,7 +3778,7 @@
       "category": "Custom_Designs",
       "requiresColor": true,
       "colorCount": 1,
-      "priceVaries": false,
+      //"priceVaries": false,
       "madeToOrder": true,
       "images": [
         "../images/Custom Designs/Scrub_Daddy_1.JPG",
