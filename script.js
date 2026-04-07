@@ -137,6 +137,46 @@ function displayProducts(category) {
 
   // Re-attach event listeners after products are added
   attachProductEventListeners();
+
+  // Freeze any GIF images so they only animate on hover
+  freezeGifs();
+}
+
+// Freeze GIF images on load; play only on hover
+function freezeGifs() {
+  const imgs = document.querySelectorAll('.products img');
+  imgs.forEach(img => {
+    const src = (img.src || '').toLowerCase();
+    if (!src.endsWith('.gif')) return;
+    if (img.dataset.gifSetup) return; // already wired up
+    img.dataset.gifSetup = 'true';
+    img.dataset.gifSrc = img.src;  // store the animated GIF url
+
+    const captureFirstFrame = () => {
+      if (!img.naturalWidth) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      try {
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        img.dataset.gifFrozen = canvas.toDataURL('image/png');
+        img.src = img.dataset.gifFrozen;
+      } catch(e) { /* cross-origin safety — skip freeze if it ever fails */ }
+    };
+
+    if (img.complete && img.naturalWidth > 0) {
+      captureFirstFrame();
+    } else {
+      img.addEventListener('load', captureFirstFrame, { once: true });
+    }
+
+    img.addEventListener('mouseenter', () => {
+      if (img.dataset.gifSrc) img.src = img.dataset.gifSrc;
+    });
+    img.addEventListener('mouseleave', () => {
+      if (img.dataset.gifFrozen) img.src = img.dataset.gifFrozen;
+    });
+  });
 }
 
 // Create HTML for a single product (supports multiple images via gallery)

@@ -4,8 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/favicon.png">
-  <title>J&C Creations</title>
-  <link rel="stylesheet" href="./resources/styles.css">
+  <title>Colors - J&C Creations</title>
+  <link rel="stylesheet" href="../resources/styles.css">
+  <style>
+    .colors-page h1 {
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+    .colors-page .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0.6rem 0.4rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .color-swatch:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+    .color-swatch img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 0.4rem;
+    }
+    .color-swatch span {
+      font-size: 0.72rem;
+      text-align: center;
+      color: #444;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -19,27 +68,27 @@
       <span></span>
       <span></span>
     </div>
-    
+
     <!-- Desktop Navigation -->
     <nav>
-      <a href="../../index.html">🏠 Home</a>
-      <a href="../../order/1_dollar_minis.html">$1 Minis</a>
-      <a href="../../order/2_dollar_minis.html">$2 Minis</a>
-      <a href="../../order/3_dollar_minis.html">$3 Minis</a>
-        <a href="../order/4_dollar_minis.html">$4 Minis</a>
-        <a href="../order/Pen_Holders.html">Pen Holders</a>
-      <a href="../../order/Fan_Art.html">Fan Art</a>
-      <a href="../../order/Custom_Designs.html">Custom Designs</a>
-      <a href="../../order/Dragons_and_Animals.html">Dragons & Animals</a>
-      <a href="../../order/Fidgets.html">Fidgets</a>
-      <a href="../../order/Pokeballs.html">Pokeballs</a>
-      <a href="../../order/Clickers.html">Clickers</a>
-      <a href="../../order/Keychains.html">Keychains</a>
-      <a href="../../order/Mystery_Bag.html">Mystery Bag</a>
-      <a href="../../order/Seasonal.html">Seasonal</a>
-      <a href="../../colors/index.html">🎨 Colors</a>
+      <a href="../index.html">🏠 Home</a>
+      <a href="../order/1_dollar_minis.html">$1 Minis</a>
+      <a href="../order/2_dollar_minis.html">$2 Minis</a>
+      <a href="../order/3_dollar_minis.html">$3 Minis</a>
+      <a href="../order/4_dollar_minis.html">$4 Minis</a>
+      <a href="../order/Pen_Holders.html">Pen Holders</a>
+      <a href="../order/Fan_Art.html">Fan Art</a>
+      <a href="../order/Custom_Designs.html">Custom Designs</a>
+      <a href="../order/Dragons_and_Animals.html">Dragons &amp; Animals</a>
+      <a href="../order/Fidgets.html">Fidgets</a>
+      <a href="../order/Pokeballs.html">Pokeballs</a>
+      <a href="../order/Clickers.html">Clickers</a>
+      <a href="../order/Keychains.html">Keychains</a>
+      <a href="../order/Mystery_Bag.html">Mystery Bag</a>
+      <a href="../order/Seasonal.html">Seasonal</a>
+      <a href="index.html">🎨 Colors</a>
     </nav>
-    
+
     <div>
       <a href="#" id="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
     </div>
@@ -56,91 +105,316 @@
     <a href="../order/1_dollar_minis.html">$1 Minis</a>
     <a href="../order/2_dollar_minis.html">$2 Minis</a>
     <a href="../order/3_dollar_minis.html">$3 Minis</a>
-      <a href="../order/4_dollar_minis.html">$4 Minis</a>
-      <a href="../order/Pen_Holders.html">Pen Holders</a>
+    <a href="../order/4_dollar_minis.html">$4 Minis</a>
+    <a href="../order/Pen_Holders.html">Pen Holders</a>
     <a href="../order/Fan_Art.html">Fan Art</a>
     <a href="../order/Custom_Designs.html">Custom Designs</a>
-    <a href="../order/Dragons_and_Animals.html">Dragons & Animals</a>
+    <a href="../order/Dragons_and_Animals.html">Dragons &amp; Animals</a>
     <a href="../order/Fidgets.html">Fidgets</a>
     <a href="../order/Pokeballs.html">Pokeballs</a>
-
     <a href="../order/Clickers.html">Clickers</a>
-
     <a href="../order/Keychains.html">Keychains</a>
-
     <a href="../order/Mystery_Bag.html">Mystery Bag</a>
-
     <a href="../order/Seasonal.html">Seasonal</a>
-    <a href="../colors/index.html">🎨 Colors</a>
+    <a href="index.html">🎨 Colors</a>
     <a href="#" id="mobile-cart-link">🛒 Cart (<span id="mobile-cart-count">0</span>)</a>
   </nav>
 </div>
-  
-  <main>
-    <!-- Hero Section with Large Logo -->
-    <!--<section class="hero-section">
-      <div class="hero-content">
-        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">
-        <h1>J&C Creations</h1>
-        <p class="hero-subtitle">Custom 3D Printed Creations</p>
-      </div>
-  </section -->
-    
-    <!-- Carousel Section -->
-    <section class="carousel-section">
-      <div class="carousel-container">
-        <div class="carousel-window">
-          <div class="carousel" id="carousel">
-            <img src="images/Pokeballs/Greninja_1.JPG" alt="Greninja Pokeball" class="carousel-image">
-            <img src="images/Dragons and Animals/Crystal_Winged_Dragon.JPG" alt="Crystal Winged Dragon" class="carousel-image">
-            <img src="images/Dragons and Animals/1_Color_Crystal_Dragon.JPG" alt="1-Color Crystal Dragon" class="carousel-image">
-            <img src="images/Custom Designs/Door_Corner_1.JPG" alt="Door Corner" class="carousel-image">
-            <img src="images/Pen Holders/Pen_Holder_1.JPG" alt="Pen Holder" class="carousel-image">
-          </div>
-          <button class="carousel-btn prev" id="prev-btn">‹</button>
-          <button class="carousel-btn next" id="next-btn">›</button>
-        </div>
-        <div class="carousel-dots" id="carousel-dots"></div>
-      </div>
-    </section>
 
-    <!-- Hero Section with Large Logo -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <!--<img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">-->
-         <h2>Welcome to J&C Creations</h2>
-      <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
-      </div>
-    </section>
+  <main class="colors-page">
+    <h1>🎨 Available Colors</h1>
+    <p class="subtitle">All item colors can be changed on request. Browse our full filament selection below!</p>
 
-    <!-- Vendor Logo Strip -->
-    <section class="vendor-strip">
-     <div class="vendor-strip-container">
-        <div class="vendor-logos">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <!-- Duplicate the logos for seamless loop -->
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-        </div>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <img src="../images/colors/Amolen-Black-Red.jpg" alt="Amolen Black Red" loading="lazy">
+        <span>Amolen Black Red</span>
       </div>
-    </section>
+      <div class="color-swatch">
+        <img src="../images/colors/Amolen_Yellow_Feldspar_Rock.jpg" alt="Amolen Yellow Feldspar Rock" loading="lazy">
+        <span>Amolen Yellow Feldspar Rock</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Bambu_Green.jpg" alt="Bambu Green" loading="lazy">
+        <span>Bambu Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Beige.jpg" alt="Beige" loading="lazy">
+        <span>Beige</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Black.jpg" alt="Black" loading="lazy">
+        <span>Black</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Blue-Gray.jpg" alt="Blue Gray" loading="lazy">
+        <span>Blue Gray</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Blue.jpg" alt="Blue" loading="lazy">
+        <span>Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/BrightGreen.jpg" alt="Bright Green" loading="lazy">
+        <span>Bright Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Brown.jpg" alt="Brown" loading="lazy">
+        <span>Brown</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/CobaltBlue.jpg" alt="Cobalt Blue" loading="lazy">
+        <span>Cobalt Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/CocoaBrown.jpg" alt="Cocoa Brown" loading="lazy">
+        <span>Cocoa Brown</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cookiecad-Darkmagic.jpg" alt="Cookiecad Dark Magic" loading="lazy">
+        <span>Cookiecad Dark Magic</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cookiecad-Fairy-Floss.jpg" alt="Cookiecad Fairy Floss" loading="lazy">
+        <span>Cookiecad Fairy Floss</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cookiecad-Green-Apple.jpg" alt="Cookiecad Green Apple" loading="lazy">
+        <span>Cookiecad Green Apple</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cookiecad-Mint-Green-Elixir.jpg" alt="Cookiecad Mint Green Elixir" loading="lazy">
+        <span>Cookiecad Mint Green Elixir</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cookiecad-Pastel-Rainbow.jpg" alt="Cookiecad Pastel Rainbow" loading="lazy">
+        <span>Cookiecad Pastel Rainbow</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Cyan.jpg" alt="Cyan" loading="lazy">
+        <span>Cyan</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Dark_Gray.jpg" alt="Dark Gray" loading="lazy">
+        <span>Dark Gray</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/E-Sun_Pine_Green.jpg" alt="E-Sun Pine Green" loading="lazy">
+        <span>E-Sun Pine Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Elegoo-Beige.jpg" alt="Elegoo Beige" loading="lazy">
+        <span>Elegoo Beige</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Glow-Green.jpg" alt="Glow Green" loading="lazy">
+        <span>Glow Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Glow_Blue.jpg" alt="Glow Blue" loading="lazy">
+        <span>Glow Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gold.jpg" alt="Gold" loading="lazy">
+        <span>Gold</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gradient_Dusk_Glare.jpg" alt="Gradient Dusk Glare" loading="lazy">
+        <span>Gradient Dusk Glare</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gradient_Green.jpg" alt="Gradient Green" loading="lazy">
+        <span>Gradient Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gradient_Ocean_to_Meadow.jpg" alt="Gradient Ocean to Meadow" loading="lazy">
+        <span>Gradient Ocean to Meadow</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gradient_Pink_Citrus.jpg" alt="Gradient Pink Citrus" loading="lazy">
+        <span>Gradient Pink Citrus</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gradient_Solar_Breeze.jpg" alt="Gradient Solar Breeze" loading="lazy">
+        <span>Gradient Solar Breeze</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Gray.jpg" alt="Gray" loading="lazy">
+        <span>Gray</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/HotPink.jpg" alt="Hot Pink" loading="lazy">
+        <span>Hot Pink</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/IndigoPurple.jpg" alt="Indigo Purple" loading="lazy">
+        <span>Indigo Purple</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/iSANMATE-Blue-Green-Pink.jpg" alt="iSANMATE Blue-Green-Pink" loading="lazy">
+        <span>iSANMATE Blue-Green-Pink</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/iSANMATE-Bluish-Green-Purple.jpg" alt="iSANMATE Bluish-Green-Purple" loading="lazy">
+        <span>iSANMATE Bluish-Green-Purple</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/iSANMATE-Gradient_Red-Orange.jpg" alt="iSANMATE Gradient Red-Orange" loading="lazy">
+        <span>iSANMATE Gradient Red-Orange</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/light_gray.jpg" alt="Light Gray" loading="lazy">
+        <span>Light Gray</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Magenta.jpg" alt="Magenta" loading="lazy">
+        <span>Magenta</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/MaroonRed.jpg" alt="Maroon Red" loading="lazy">
+        <span>Maroon Red</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Apple-Green.jpg" alt="Matte Apple Green" loading="lazy">
+        <span>Matte Apple Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Caramel.jpg" alt="Matte Caramel" loading="lazy">
+        <span>Matte Caramel</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Dark-Blue.jpg" alt="Matte Dark Blue" loading="lazy">
+        <span>Matte Dark Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Dark-Green.jpg" alt="Matte Dark Green" loading="lazy">
+        <span>Matte Dark Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Desert-Tan.jpg" alt="Matte Desert Tan" loading="lazy">
+        <span>Matte Desert Tan</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Grass-Green.jpg" alt="Matte Grass Green" loading="lazy">
+        <span>Matte Grass Green</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Ice-Blue.jpg" alt="Matte Ice Blue" loading="lazy">
+        <span>Matte Ice Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Latte-Brown.jpg" alt="Matte Latte Brown" loading="lazy">
+        <span>Matte Latte Brown</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Lemon-Yellow.jpg" alt="Matte Lemon Yellow" loading="lazy">
+        <span>Matte Lemon Yellow</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Lilac-purple.jpg" alt="Matte Lilac Purple" loading="lazy">
+        <span>Matte Lilac Purple</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Plum.jpg" alt="Matte Plum" loading="lazy">
+        <span>Matte Plum</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Sakura-Pink.jpg" alt="Matte Sakura Pink" loading="lazy">
+        <span>Matte Sakura Pink</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Matte-Sky-Blue.jpg" alt="Matte Sky Blue" loading="lazy">
+        <span>Matte Sky Blue</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Orange.jpg" alt="Orange" loading="lazy">
+        <span>Orange</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Pink.jpg" alt="Pink" loading="lazy">
+        <span>Pink</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Polymaker_Gradient_Matte.jpg" alt="Polymaker Gradient Matte" loading="lazy">
+        <span>Polymaker Gradient Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/PumpkinOrange.jpg" alt="Pumpkin Orange" loading="lazy">
+        <span>Pumpkin Orange</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Purple.jpg" alt="Purple" loading="lazy">
+        <span>Purple</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Red.jpg" alt="Red" loading="lazy">
+        <span>Red</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Silver.jpg" alt="Silver" loading="lazy">
+        <span>Silver</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/SunflowerYellow.jpg" alt="Sunflower Yellow" loading="lazy">
+        <span>Sunflower Yellow</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Sunlu-Purple-Green-Matte.jpg" alt="Sunlu Purple-Green Matte" loading="lazy">
+        <span>Sunlu Purple-Green Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Sunlu-Yellow-Cyan-Matte.jpg" alt="Sunlu Yellow-Cyan Matte" loading="lazy">
+        <span>Sunlu Yellow-Cyan Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Turquoise.jpg" alt="Turquoise" loading="lazy">
+        <span>Turquoise</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/White.jpg" alt="White" loading="lazy">
+        <span>White</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Yellow.jpg" alt="Yellow" loading="lazy">
+        <span>Yellow</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Colorful_Mist-Matte.jpg" alt="Ziro Colorful Mist Matte" loading="lazy">
+        <span>Ziro Colorful Mist Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Matcha-Matte.jpg" alt="Ziro Matcha Matte" loading="lazy">
+        <span>Ziro Matcha Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Meadow_Mirage-Matte.jpg" alt="Ziro Meadow Mirage Matte" loading="lazy">
+        <span>Ziro Meadow Mirage Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Neon-Matte.jpg" alt="Ziro Neon Matte" loading="lazy">
+        <span>Ziro Neon Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Northern_Lights-Matte.jpg" alt="Ziro Northern Lights Matte" loading="lazy">
+        <span>Ziro Northern Lights Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Rainbow_Blaze-Matte.jpg" alt="Ziro Rainbow Blaze Matte" loading="lazy">
+        <span>Ziro Rainbow Blaze Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Rosy-Cloud-Matte.jpg" alt="Ziro Rosy Cloud Matte" loading="lazy">
+        <span>Ziro Rosy Cloud Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Rusted_Jungle-Matte.jpg" alt="Ziro Rusted Jungle Matte" loading="lazy">
+        <span>Ziro Rusted Jungle Matte</span>
+      </div>
+      <div class="color-swatch">
+        <img src="../images/colors/Ziro-Vibrant_Coral-Matte.jpg" alt="Ziro Vibrant Coral Matte" loading="lazy">
+        <span>Ziro Vibrant Coral Matte</span>
+      </div>
+    </div>
   </main>
 
   <!-- Checkout Modal -->
@@ -208,6 +482,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
