@@ -116,8 +116,8 @@ function displayProducts(category) {
     if (p.category !== category) return false;
     // Mystery Bag items are always shown (informational preview, not purchasable individually)
     if (category === 'Mystery_Bag') return true;
-    // Custom Designs are always shown (price varies / made to order)
-    if (category === 'Custom_Designs' || p.priceVaries) return true;
+    // Always show: price-varies items and everything in Custom_Designs (even at qty=0)
+    if (p.priceVaries || category === 'Custom_Designs') return true;
     // Hide out-of-stock items unless explicitly marked as made-to-order
     if (p.quantity === 0 && !p.madeToOrder) return false;
     return true;
@@ -220,12 +220,13 @@ function createProductHTML(product, category) {
 
   // ── Determine display category (fall back to product's own field) ─────────
   const cat = category || product.category || '';
-  const isMysteryBag    = cat === 'Mystery_Bag';
-  //const isCustomDesign  = cat === 'Custom_Designs' || product.priceVaries;
+  const isMysteryBag   = cat === 'Mystery_Bag';
+  // priceVaries field is the authoritative flag — category name alone does NOT force "varies"
+  const isPriceVaries  = product.priceVaries === true;
 
   // ── Price block ───────────────────────────────────────────────────────────
   let priceHTML = '';
-  if (isCustomDesign) {
+  if (isPriceVaries) {
     priceHTML = '<p class="price price-varies">Price Varies by Order</p>';
   } else if (!isMysteryBag) {
     priceHTML = `<p class="price">$${(product.price || 0).toFixed(2)}</p>`;
@@ -242,8 +243,8 @@ function createProductHTML(product, category) {
   if (isMysteryBag) {
     // Mystery Bag items are display-only — no price, no cart button
     actionHTML = '';
-  } else if (isCustomDesign) {
-    // Custom Designs: link to the quote/request form instead of cart
+  } else if (isPriceVaries) {
+    // Price-varies items: show a quote request link instead of cart
     actionHTML = `<a href="Custom_Designs.html" class="add-to-cart-btn request-quote-btn">Request a Quote</a>`;
   } else {
     const maxQty = product.quantity > 0 ? product.quantity : 99;
