@@ -78,13 +78,61 @@
   
   <main>
     <h1>Custom Designs</h1>
-    <p style="text-align:center; color:#555;">Have something specific in mind? Browse our custom designs below or reach out for a completely unique creation!</p>
-    
+
+    <!-- Hero request banner -->
+    <div style="text-align:center; margin: 0.5rem auto 1.5rem; max-width:620px;">
+      <p style="color:#555; margin-bottom:1rem;">Browse our existing custom designs below, or don't see what you're looking for? We can print almost anything — just ask!</p>
+      <button onclick="openQuoteModal('')" style="
+        background:#68a6aa; color:white; border:none; border-radius:8px;
+        padding:14px 32px; font-size:1.05rem; font-weight:bold; cursor:pointer;
+        box-shadow:0 3px 10px rgba(0,0,0,0.15); transition:background 0.2s;">
+        ✏️ Request a Custom Design
+      </button>
+    </div>
+
     <!-- Product Grid -->
     <section class="products">
       <!-- Products will be loaded here by JavaScript -->
     </section>
   </main>
+
+  <!-- Custom Design Request Modal -->
+  <div id="quote-modal" class="modal">
+    <div class="modal-content order-form">
+      <span class="close" onclick="closeQuoteModal()">&times;</span>
+      <h2>Request a Custom Design</h2>
+      <p style="color:#666; font-size:0.9rem; margin-top:0;">Fill out the form below and we'll get back to you with pricing and details!</p>
+      <form id="quote-form" action="https://formspree.io/f/mpwonlbb" method="POST">
+        <div class="form-group">
+          <label>Name: <input type="text" name="name" required></label>
+        </div>
+        <div class="form-group">
+          <label>Email: <input type="email" name="email" required></label>
+        </div>
+        <div class="form-group">
+          <label>Phone: <input type="tel" name="phone"></label>
+        </div>
+        <div class="form-group">
+          <label>Design / Item Name:
+            <input type="text" name="design_name" id="quote-design-name" placeholder="e.g. Door Corner, specific character, etc.">
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Description &amp; Details:
+            <textarea name="description" rows="4" placeholder="Describe what you'd like — size, colors, quantity, any reference images you can email us, etc." required style="width:100%; padding:8px; border:2px solid #ddd; border-radius:6px; font-size:0.95rem; resize:vertical;"></textarea>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Color Preferences: <input type="text" name="colors" placeholder="e.g. Red and Black, any color, surprise me!"></label>
+        </div>
+        <div class="payment-info">
+          📬 We'll reply to your email within 1–2 business days with a quote and next steps.
+        </div>
+        <button type="submit" class="submit-order-btn">Send Request</button>
+        <button type="button" onclick="closeQuoteModal()" class="cancel-btn">Cancel</button>
+      </form>
+    </div>
+  </div>
 
 
   <!-- Color Selection Modal -->

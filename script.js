@@ -244,8 +244,9 @@ function createProductHTML(product, category) {
     // Mystery Bag items are display-only — no price, no cart button
     actionHTML = '';
   } else if (isPriceVaries) {
-    // Price-varies items: show a quote request link instead of cart
-    actionHTML = `<a href="Custom_Designs.html" class="add-to-cart-btn request-quote-btn">Request a Quote</a>`;
+    // Price-varies items: open the custom design request modal
+    const safeName = (product.name || '').replace(/'/g, "\\'");
+    actionHTML = `<button onclick="openQuoteModal('${safeName}')" class="add-to-cart-btn request-quote-btn">Request a Quote</button>`;
   } else {
     const maxQty = product.quantity > 0 ? product.quantity : 99;
     const addFn  = product.requiresColor
@@ -579,6 +580,36 @@ function closeColorSelection() {
   modal.classList.remove("show");
   document.body.style.overflow = "auto";
   pendingItem = null;
+}
+
+// ── Custom Design Quote Modal ─────────────────────────────────────────────────
+function openQuoteModal(productName) {
+  const modal = document.getElementById('quote-modal');
+  if (!modal) return;
+  // Pre-fill the design name if a specific product was clicked
+  const nameField = document.getElementById('quote-design-name');
+  if (nameField) nameField.value = productName || '';
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  // Show a confirmation alert once after the form submits
+  const form = document.getElementById('quote-form');
+  if (form && !form.dataset.listenerAdded) {
+    form.dataset.listenerAdded = 'true';
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        closeQuoteModal();
+        form.reset();
+        alert("Your request has been sent! We'll be in touch within 1–2 business days.");
+      }, 800);
+    });
+  }
+}
+
+function closeQuoteModal() {
+  const modal = document.getElementById('quote-modal');
+  if (modal) modal.classList.remove('show');
+  document.body.style.overflow = 'auto';
 }
 
 function confirmAddToCart() {
