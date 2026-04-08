@@ -97,7 +97,7 @@
   </main>
 
   <!-- Custom Design Request Modal -->
-  <div id="quote-modal" class="modal">
+  <div id="quote-modal" class="modal" style="display:none; opacity:1;">
     <div class="modal-content order-form">
       <span class="close" onclick="closeQuoteModal()">&times;</span>
       <h2>Request a Custom Design</h2>
@@ -350,5 +350,27 @@
   </div>
 
   <script src="../script.js"></script>
+
+  <!-- Quote modal helpers defined inline so they work even if script.js has any load issues -->
+  <script>
+    function openQuoteModal(productName) {
+      var modal = document.getElementById('quote-modal');
+      if (!modal) return;
+      var nameField = document.getElementById('quote-design-name');
+      if (nameField) nameField.value = productName || '';
+      modal.style.display = 'flex';
+      modal.style.opacity = '1';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeQuoteModal() {
+      var modal = document.getElementById('quote-modal');
+      if (modal) { modal.style.display = 'none'; modal.style.opacity = '0'; }
+      document.body.style.overflow = 'auto';
+    }
+    // Close when clicking the dark backdrop
+    document.getElementById('quote-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeQuoteModal();
+    });
+  </script>
 </body>
 </html>
