@@ -10,7 +10,7 @@
 <body>
   <header>
   <div id="logo">
-    <img src="../images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
+    <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="header-logo" id="header-logo">
   </div>
   <div class="header-flex">
     <!-- Hamburger Icon -->
@@ -77,25 +77,37 @@
 </div>
   
   <main>
-    <!-- Hero Section with Large Logo -->
-    <!--<section class="hero-section">
-      <div class="hero-content">
-        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">
-        <h1>J&C Creations</h1>
-        <p class="hero-subtitle">Custom 3D Printed Creations</p>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- HERO BANNER                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="hero-banner" style="background-image: url('images/Dragons and Animals/Crystal_Winged_Dragon.JPG');">
+      <div class="hero-banner-overlay">
+        <img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-banner-logo" onerror="this.style.display='none'">
+        <h1 class="hero-banner-title">J&amp;C Creations</h1>
+        <p class="hero-banner-sub">Custom 3D Printed Items — Any Color, Made to Order</p>
+        <div class="hero-cta-row">
+          <a href="order/1_dollar_minis.html" class="cta-btn cta-primary">Shop Now</a>
+          <a href="order/Custom_Designs.html" class="cta-btn cta-secondary">Request Custom Design</a>
+        </div>
       </div>
-  </section -->
-    
-    <!-- Carousel Section -->
-    <section class="carousel-section">
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- FEATURED CAROUSEL                                           -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="carousel-section" style="padding: 40px 20px 20px;">
+      <h2 class="section-heading">Featured Items</h2>
       <div class="carousel-container">
-        <div class="carousel-window">
+        <div class="carousel-window" style="width:85%; max-width:860px; height:420px;">
           <div class="carousel" id="carousel">
             <img src="images/Pokeballs/Greninja_1.JPG" alt="Greninja Pokeball" class="carousel-image">
             <img src="images/Dragons and Animals/Crystal_Winged_Dragon.JPG" alt="Crystal Winged Dragon" class="carousel-image">
-            <img src="images/Dragons and Animals/1_Color_Crystal_Dragon.JPG" alt="1-Color Crystal Dragon" class="carousel-image">
-            <img src="images/Custom Designs/Door_Corner_1.JPG" alt="Door Corner" class="carousel-image">
-            <img src="images/Pen Holders/Pen_Holder_1.JPG" alt="Pen Holder" class="carousel-image">
+            <img src="images/$2 Minis/Alpaca.JPG" alt="Alpaca Mini" class="carousel-image">
+            <img src="images/Fan Art/DIS_Bluey.jpg" alt="Bluey Fan Art" class="carousel-image">
+            <img src="images/Fidgets/Flower_Fidget.JPG" alt="Flower Fidget" class="carousel-image">
+            <img src="images/Custom Designs/Door_Corner_1.JPG" alt="Custom Door Corner" class="carousel-image">
+            <img src="images/Keychains/Emberling_Dragon_Keychain.JPG" alt="Emberling Dragon Keychain" class="carousel-image">
           </div>
           <button class="carousel-btn prev" id="prev-btn">‹</button>
           <button class="carousel-btn next" id="next-btn">›</button>
@@ -104,43 +116,119 @@
       </div>
     </section>
 
-    <!-- Hero Section with Large Logo -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <!--<img src="images/JCCreationsLogo.png" alt="J&C Creations Logo" class="hero-logo" id="hero-logo">-->
-         <h2>Welcome to J&C Creations</h2>
-      <p>Discover our amazing collection of custom 3D printed items. Browse our gallery above and visit our order page to start shopping!</p>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SHOP BY CATEGORY GRID                                       -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="category-section">
+      <h2 class="section-heading">Shop by Category</h2>
+      <div class="category-grid">
+
+        <a href="order/1_dollar_minis.html" class="category-card" style="background-image:url('images/$1 Minis/Bee_Hatchling.JPG')">
+          <div class="category-card-overlay"><span>$1 Minis</span></div>
+        </a>
+
+        <a href="order/2_dollar_minis.html" class="category-card" style="background-image:url('images/$2 Minis/Alpaca.JPG')">
+          <div class="category-card-overlay"><span>$2 Minis</span></div>
+        </a>
+
+        <a href="order/3_dollar_minis.html" class="category-card" style="background-image:url('images/$3 Minis/Astronaut.JPG')">
+          <div class="category-card-overlay"><span>$3 Minis</span></div>
+        </a>
+
+        <a href="order/Pokeballs.html" class="category-card" style="background-image:url('images/Pokeballs/Greninja_1.JPG')">
+          <div class="category-card-overlay"><span>Pokeballs</span></div>
+        </a>
+
+        <a href="order/Dragons_and_Animals.html" class="category-card" style="background-image:url('images/Dragons and Animals/Crystal_Winged_Dragon.JPG')">
+          <div class="category-card-overlay"><span>Dragons &amp; Animals</span></div>
+        </a>
+
+        <a href="order/Fan_Art.html" class="category-card" style="background-image:url('images/Fan Art/DIS_Bluey.jpg')">
+          <div class="category-card-overlay"><span>Fan Art</span></div>
+        </a>
+
+        <a href="order/Fidgets.html" class="category-card" style="background-image:url('images/Fidgets/Flower_Fidget.JPG')">
+          <div class="category-card-overlay"><span>Fidgets</span></div>
+        </a>
+
+        <a href="order/Clickers.html" class="category-card" style="background-image:url('images/Clickers/Icecream_Cone_Clicker.JPG')">
+          <div class="category-card-overlay"><span>Clickers</span></div>
+        </a>
+
+        <a href="order/Keychains.html" class="category-card" style="background-image:url('images/Keychains/Emberling_Dragon_Keychain.JPG')">
+          <div class="category-card-overlay"><span>Keychains</span></div>
+        </a>
+
+        <a href="order/Seasonal.html" class="category-card" style="background-image:url('images/Seasonal/Christmas_Tealight_1.JPG')">
+          <div class="category-card-overlay"><span>Seasonal</span></div>
+        </a>
+
+        <a href="order/Custom_Designs.html" class="category-card" style="background-image:url('images/Custom Designs/Door_Corner_1.JPG')">
+          <div class="category-card-overlay"><span>Custom Designs</span></div>
+        </a>
+
+        <a href="order/Mystery_Bag.html" class="category-card" style="background-image:url('images/Mystery Bag Items/Alien_Stitch.JPG')">
+          <div class="category-card-overlay"><span>Mystery Bag 🎁</span></div>
+        </a>
+
       </div>
     </section>
 
-    <!-- Vendor Logo Strip -->
-    <section class="vendor-strip">
-     <div class="vendor-strip-container">
-        <div class="vendor-logos">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <!-- Duplicate the logos for seamless loop -->
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
-          <img src="images/creators/Artflex.png" alt="Vendor 1">
-          <img src="images/creators/Flexi Factory.png" alt="Vendor 2">
-          <img src="images/creators/PolyPocket3D.png" alt="Vendor 3">
-          <img src="images/creators/SugarPaws3D.png" alt="Vendor 4">
-          <img src="images/creators/TriDimensions.png" alt="Vendor 5">
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- WHY CHOOSE US                                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="features-section">
+      <h2 class="section-heading" style="color:white;">Why J&amp;C Creations?</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🎨</div>
+          <h3>Any Color You Want</h3>
+          <p>Choose from 70+ filament colors. Every item can be customized to match your style.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🖨️</div>
+          <h3>Printed on Demand</h3>
+          <p>Each item is printed fresh for your order — no dusty shelves, always quality.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✏️</div>
+          <h3>Fully Custom Designs</h3>
+          <p>Don't see what you're looking for? We can print almost anything — just ask!</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📦</div>
+          <h3>Local Pickup or Shipping</h3>
+          <p>Pick up for free or have your order shipped straight to your door.</p>
         </div>
       </div>
     </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- CREATOR LOGO STRIP                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="vendor-strip">
+      <p style="text-align:center; color:#aaa; font-size:0.82rem; margin:0 0 8px; letter-spacing:0.05em; text-transform:uppercase;">Designs by</p>
+      <div class="vendor-strip-container">
+        <div class="vendor-logos">
+          <img src="images/creators/Artflex.png" alt="Artflex">
+          <img src="images/creators/Flexi Factory.png" alt="Flexi Factory">
+          <img src="images/creators/PolyPocket3D.png" alt="PolyPocket3D">
+          <img src="images/creators/SugarPaws3D.png" alt="SugarPaws3D">
+          <img src="images/creators/TriDimensions.png" alt="TriDimensions">
+          <img src="images/creators/Artflex.png" alt="Artflex">
+          <img src="images/creators/Flexi Factory.png" alt="Flexi Factory">
+          <img src="images/creators/PolyPocket3D.png" alt="PolyPocket3D">
+          <img src="images/creators/SugarPaws3D.png" alt="SugarPaws3D">
+          <img src="images/creators/TriDimensions.png" alt="TriDimensions">
+          <img src="images/creators/Artflex.png" alt="Artflex">
+          <img src="images/creators/Flexi Factory.png" alt="Flexi Factory">
+          <img src="images/creators/PolyPocket3D.png" alt="PolyPocket3D">
+          <img src="images/creators/SugarPaws3D.png" alt="SugarPaws3D">
+          <img src="images/creators/TriDimensions.png" alt="TriDimensions">
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Checkout Modal -->
