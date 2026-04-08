@@ -192,6 +192,46 @@
     .mto-toggle input:checked + .mto-slider { background: #D2762B; }
     .mto-toggle input:checked + .mto-slider:before { transform: translateX(20px); }
 
+    /* Price-Varies toggle — teal */
+    .pv-toggle {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .pv-toggle input { opacity: 0; width: 0; height: 0; }
+    .pv-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      transition: background 0.2s;
+    }
+    .pv-slider:before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .pv-toggle input:checked + .pv-slider { background: #68a6aa; }
+    .pv-toggle input:checked + .pv-slider:before { transform: translateX(20px); }
+
+    /* Inline price input */
+    .price-input {
+      width: 70px;
+      padding: 4px 6px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: right;
+    }
+    .price-input:focus { outline: none; border-color: #68a6aa; }
+    .price-input.changed { border-color: #68a6aa; background: #f0fafa; }
+
     .category-tag {
       display: inline-block;
       padding: 2px 8px;
@@ -279,10 +319,11 @@
         <th>Stock</th>
         <th onclick="sortBy('quantity')">Status &#8597;</th>
         <th title="Made to Order: show item on site even when quantity = 0">Made to Order</th>
+        <th title="Price Varies: show 'Price Varies by Order' instead of a fixed price. Turn OFF to assign a specific price.">Price Varies</th>
       </tr>
     </thead>
     <tbody id="table-body">
-      <tr><td colspan="6" class="empty-state">Loading products...</td></tr>
+      <tr><td colspan="7" class="empty-state">Loading products...</td></tr>
     </tbody>
   </table>
 
@@ -339,7 +380,7 @@ async function loadProducts() {
     updateChangesBar();
   } catch (e) {
     document.getElementById('table-body').innerHTML =
-      `<tr><td colspan="5" class="empty-state" style="color:#e74c3c">
+      `<tr><td colspan="7" class="empty-state" style="color:#e74c3c">
         Could not load products.json. Make sure you're viewing this page through your website (not directly from a file).
       </td></tr>`;
   }
@@ -390,9 +431,12 @@ function renderTable() {
   }
 
   tbody.innerHTML = filtered.map(p => {
-    const qty       = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
-    const mto       = changes[p.id]?.madeToOrder !== undefined ? changes[p.id].madeToOrder : (p.madeToOrder || false);
-    const qtyChanged = changes[p.id]?.qty !== undefined;
+    const qty        = changes[p.id]?.qty         !== undefined ? changes[p.id].qty         : p.quantity;
+    const mto        = changes[p.id]?.madeToOrder !== undefined ? changes[p.id].madeToOrder : (p.madeToOrder  || false);
+    const pv         = changes[p.id]?.priceVaries !== undefined ? changes[p.id].priceVaries : (p.priceVaries  || false);
+    const priceVal   = changes[p.id]?.price       !== undefined ? changes[p.id].price       : (p.price        || 0);
+    const qtyChanged   = changes[p.id]?.qty   !== undefined;
+    const priceChanged = changes[p.id]?.price !== undefined;
 
     let badge = '';
     if (qty === 0 && mto) badge = '<span class="badge badge-out">Out &mdash; Made to Order</span>';
@@ -400,14 +444,18 @@ function renderTable() {
     else if (qty <= 3)    badge = `<span class="badge badge-low">Low (${qty})</span>`;
     else                  badge = `<span class="badge badge-in">In Stock (${qty})</span>`;
 
-    const priceDisplay = (p.priceVaries || p.category === 'Custom_Designs')
-      ? '<em style="color:#68a6aa">Varies</em>'
-      : `$${(p.price||0).toFixed(2)}`;
+    // Price cell: editable input when priceVaries is OFF, "Varies" label when ON
+    const priceCell = pv
+      ? '<em style="color:#68a6aa;font-size:0.85rem">Varies by Order</em>'
+      : `$<input class="price-input${priceChanged?' changed':''}" type="number"
+           id="price-${p.id}" value="${priceVal.toFixed(2)}" min="0" step="0.01"
+           onchange="setPrice('${p.id}', this.value)"
+           title="Edit price — toggle 'Price Varies' ON to hide price on site">`;
 
     return `<tr>
       <td><strong>${p.name}</strong></td>
       <td><span class="category-tag">${(p.category||'').replace(/_/g,' ')}</span></td>
-      <td>${priceDisplay}</td>
+      <td>${priceCell}</td>
       <td>
         <div class="qty-cell">
           <button class="qty-btn" onclick="adjustQty('${p.id}', -1)">&#8722;</button>
@@ -423,6 +471,13 @@ function renderTable() {
           <input type="checkbox" ${mto ? 'checked' : ''}
             onchange="setMadeToOrder('${p.id}', this.checked)">
           <span class="mto-slider"></span>
+        </label>
+      </td>
+      <td style="text-align:center">
+        <label class="pv-toggle" title="When ON: shows 'Price Varies by Order' on site instead of a fixed price. Turn OFF to set a specific price.">
+          <input type="checkbox" ${pv ? 'checked' : ''}
+            onchange="setPriceVaries('${p.id}', this.checked)">
+          <span class="pv-slider"></span>
         </label>
       </td>
     </tr>`;
@@ -467,6 +522,34 @@ function setMadeToOrder(id, value) {
   updateChangesBar();
 }
 
+function setPriceVaries(id, value) {
+  const prod = products.find(p => p.id === id);
+  if (!prod) return;
+  if (!changes[id]) changes[id] = {};
+  if (value === (prod.priceVaries || false)) {
+    delete changes[id].priceVaries;
+  } else {
+    changes[id].priceVaries = value;
+  }
+  if (Object.keys(changes[id]).length === 0) delete changes[id];
+  renderTable();
+  updateChangesBar();
+}
+
+function setPrice(id, val) {
+  const prod = products.find(p => p.id === id);
+  if (!prod) return;
+  const newPrice = Math.max(0, parseFloat(val) || 0);
+  if (!changes[id]) changes[id] = {};
+  if (newPrice === (prod.price || 0)) {
+    delete changes[id].price;
+  } else {
+    changes[id].price = newPrice;
+  }
+  if (Object.keys(changes[id]).length === 0) delete changes[id];
+  updateChangesBar();
+}
+
 function revertAll() {
   changes = {};
   renderTable();
@@ -492,8 +575,10 @@ function sortBy(key) {
 function downloadJSON() {
   const updated = products.map(p => {
     const copy = { ...p };
-    if (changes[p.id]?.qty !== undefined)         copy.quantity    = changes[p.id].qty;
+    if (changes[p.id]?.qty         !== undefined) copy.quantity    = changes[p.id].qty;
     if (changes[p.id]?.madeToOrder !== undefined) copy.madeToOrder = changes[p.id].madeToOrder;
+    if (changes[p.id]?.priceVaries !== undefined) copy.priceVaries = changes[p.id].priceVaries;
+    if (changes[p.id]?.price       !== undefined) copy.price       = changes[p.id].price;
     return copy;
   });
 
