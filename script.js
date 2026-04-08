@@ -221,7 +221,7 @@ function createProductHTML(product, category) {
   // ── Determine display category (fall back to product's own field) ─────────
   const cat = category || product.category || '';
   const isMysteryBag    = cat === 'Mystery_Bag';
-  const isCustomDesign  = cat === 'Custom_Designs' || product.priceVaries;
+  //const isCustomDesign  = cat === 'Custom_Designs' || product.priceVaries;
 
   // ── Price block ───────────────────────────────────────────────────────────
   let priceHTML = '';
