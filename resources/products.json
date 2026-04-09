@@ -783,7 +783,8 @@
         "../images/$2 Minis/Chick_in_Egg.gif",
         "../images/$2 Minis/Chick_in_Egg_1.JPG"
       ],
-      "image": "../images/$2 Minis/Chick_in_Egg.gif"
+      "image": "../images/$2 Minis/Chick_in_Egg.gif",
+      "madeToOrder": true
     },
     {
       "id": "cow-w-ribs",
@@ -1744,7 +1745,8 @@
         "../images/Dragons and Animals/Aquatic_Dragon_2.JPG",
         "../images/Dragons and Animals/Aquatic_Dragon_3.JPG"
       ],
-      "image": "../images/Dragons and Animals/Aquatic_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Aquatic_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "axolotl-small",
@@ -1771,7 +1773,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Animals and Dragons/Medium_Axolotl.JPG"
+      "image": "../images/Animals and Dragons/Medium_Axolotl.JPG",
+      "madeToOrder": true
     },
     {
       "id": "axolotl-large",
@@ -1812,7 +1815,8 @@
         "../images/Dragons and Animals/Crystal_Snake_1.JPG",
         "../images/Dragons and Animals/Crystal_Snake_2.JPG"
       ],
-      "image": "../images/Dragons and Animals/Crystal_Snake_1.JPG"
+      "image": "../images/Dragons and Animals/Crystal_Snake_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "crystal-winged-dragon",
@@ -1823,7 +1827,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Dragons and Animals/Crystal_Winged_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Crystal_Winged_Dragon.JPG",
+      "madeToOrder": true
     },
     {
       "id": "cute-dragon",
@@ -1834,7 +1839,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Dragons and Animals/Cute_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Cute_Dragon.JPG",
+      "madeToOrder": true
     },
     {
       "id": "dino-egg",
@@ -1845,7 +1851,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Dragons and Animals/Dino_Egg.JPG"
+      "image": "../images/Dragons and Animals/Dino_Egg.JPG",
+      "madeToOrder": true
     },
     {
       "id": "dragonic-winged-dragon",
@@ -1861,7 +1868,8 @@
         "../images/Dragons and Animals/Dragonic_Winged_Dragon_2.JPG",
         "../images/Dragons and Animals/Dragonic_Winged_Dragon_3.jpeg"
       ],
-      "image": "../images/Dragons and Animals/Dragonic_Winged_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Dragonic_Winged_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "duskscale-snake",
@@ -1876,7 +1884,8 @@
         "../images/Dragons and Animals/Duskscale_Snake_1.JPG",
         "../images/Dragons and Animals/Duskscale_Snake_2.JPG"
       ],
-      "image": "../images/Dragons and Animals/Duskscale_Snake_1.JPG"
+      "image": "../images/Dragons and Animals/Duskscale_Snake_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "emberling-dragon",
@@ -1934,7 +1943,8 @@
         "../images/Dragons and Animals/Glow_Ashbone_Dragon_1.JPG",
         "../images/Dragons and Animals/Glow_Ashbone_Dragon_2.JPG"
       ],
-      "image": "../images/Dragons and Animals/Glow_Ashbone_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Glow_Ashbone_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "glow-mini-zephyros-dragon",
@@ -1950,7 +1960,8 @@
         "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_2.JPG",
         "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_3.JPG"
       ],
-      "image": "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Glow_Mini_Zephyros_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "jellyfish",
@@ -1997,7 +2008,8 @@
         "../images/Dragons and Animals/Long_Tentacle_Jellyfish_1.JPG",
         "../images/Dragons and Animals/Long_Tentacle_Jellyfish_2.JPG"
       ],
-      "image": "../images/Dragons and Animals/Long_Tentacle_Jellyfish_1.JPG"
+      "image": "../images/Dragons and Animals/Long_Tentacle_Jellyfish_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "magnetic-frog",
@@ -2008,7 +2020,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Dragons and Animals/Magnetic_Frog.JPG"
+      "image": "../images/Dragons and Animals/Magnetic_Frog.JPG",
+      "madeToOrder": true
     },
     {
       "id": "mini-zephyros-dragon",
@@ -2036,7 +2049,8 @@
         "../images/Dragons and Animals/Shadowcoil_Dragon_3.JPG",
         "../images/Dragons and Animals/Shadowcoil_Dragon_4.JPG"
       ],
-      "image": "../images/Dragons and Animals/Shadowcoil_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Shadowcoil_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "skeleton-shark",
@@ -2047,7 +2061,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Dragons and Animals/Skeleton_Shark.JPG"
+      "image": "../images/Dragons and Animals/Skeleton_Shark.JPG",
+      "madeToOrder": true
     },
     {
       "id": "skeleton-snake",
@@ -2062,7 +2077,8 @@
         "../images/Dragons and Animals/Skeleton_Snake.JPG",
         "../images/Dragons and Animals/Skeleton_Snake.JPG"
       ],
-      "image": "../images/Dragons and Animals/Skeleton_Snake.JPG"
+      "image": "../images/Dragons and Animals/Skeleton_Snake.JPG",
+      "madeToOrder": true
     },
     {
       "id": "tri-black-crystal-dragon",
@@ -2073,7 +2089,8 @@
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Dragons and Animals/Tri_Black_Crystal_Dragon.JPG"
+      "image": "../images/Dragons and Animals/Tri_Black_Crystal_Dragon.JPG",
+      "madeToOrder": true
     },
     {
       "id": "twirl-octopus",
@@ -2116,7 +2133,8 @@
         "../images/Dragons and Animals/Zephyros_Dragon_3.JPG",
         "../images/Dragons and Animals/Zephyros_Dragon_4.JPG"
       ],
-      "image": "../images/Dragons and Animals/Zephyros_Dragon_1.JPG"
+      "image": "../images/Dragons and Animals/Zephyros_Dragon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "af-lurch",
@@ -2307,7 +2325,8 @@
         "../images/Fan Art/Gary_De'Snake_1.JPG",
         "../images/Fan Art/Gary_De'Snake_2.JPG"
       ],
-      "image": "../images/Fan Art/Gary_De'Snake_1.JPG"
+      "image": "../images/Fan Art/Gary_De'Snake_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "gizmo",
@@ -2626,7 +2645,8 @@
       "category": "Fan_Art",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Fan Art/KingKong.jpg"
+      "image": "../images/Fan Art/KingKong.jpg",
+      "madeToOrder": true
     },
     {
       "id": "mar-deadpool",
@@ -3254,7 +3274,8 @@
       "category": "Clickers",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Clickers/Icecream_Cone_Clicker.JPG"
+      "image": "../images/Clickers/Icecream_Cone_Clicker.JPG",
+      "madeToOrder": true
     },
     {
       "id": "led-clicker",
@@ -3558,7 +3579,8 @@
       "category": "Seasonal",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Seasonal/Name_Tree.JPG"
+      "image": "../images/Seasonal/Name_Tree.JPG",
+      "madeToOrder": true
     },
     {
       "id": "nintendo-switch-game-holder",
@@ -3765,7 +3787,8 @@
       "category": "Seasonal",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Seasonal/Reindeer_Ornament.JPG"
+      "image": "../images/Seasonal/Reindeer_Ornament.JPG",
+      "madeToOrder": true
     },
     {
       "id": "scrub-daddy-holder",
@@ -3812,7 +3835,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Dahlia_Fidget.gif"
+      "image": "../images/Fidgets/Dahlia_Fidget.gif",
+      "madeToOrder": true
     },
     {
       "id": "echo-fidget",
@@ -3823,7 +3847,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Echo_Fidget.gif"
+      "image": "../images/Fidgets/Echo_Fidget.gif",
+      "madeToOrder": true
     },
     {
       "id": "fidget-cube",
@@ -3834,14 +3859,15 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Infinity_Cube.gif"
+      "image": "../images/Fidgets/Infinity_Cube.gif",
+      "madeToOrder": true
     },
     {
       "id": "flower-fidget",
       "name": "Flower Fidget",
       "description": "Custom 3D printed Flower Fidget",
       "price": 4,
-      "quantity": 1,
+      "quantity": 0,
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
@@ -3860,7 +3886,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Gear_Ball.gif"
+      "image": "../images/Fidgets/Gear_Ball.gif",
+      "madeToOrder": true
     },
     {
       "id": "hex-fidget",
@@ -3871,18 +3898,20 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Infinity_Hex_Fidget.gif"
+      "image": "../images/Fidgets/Infinity_Hex_Fidget.gif",
+      "madeToOrder": true
     },
     {
       "id": "jacobs-ladder",
       "name": "Jacobs Ladder",
       "description": "Custom 3D printed Jacobs Ladder",
       "price": 8,
-      "quantity": 2,
+      "quantity": 0,
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Jacobs_Ladder.JPG"
+      "image": "../images/Fidgets/Jacobs_Ladder.JPG",
+      "madeToOrder": true
     },
     {
       "id": "kinetic-fidget",
@@ -3900,11 +3929,12 @@
       "name": "Large Gear Ring",
       "description": "Custom 3D printed Large Gear Ring",
       "price": 12,
-      "quantity": 1,
+      "quantity": 0,
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Large_Gear_Ring.JPG"
+      "image": "../images/Fidgets/Large_Gear_Ring.JPG",
+      "madeToOrder": true
     },
     {
       "id": "large-grid",
@@ -3915,7 +3945,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Large_Grid.JPG"
+      "image": "../images/Fidgets/Large_Grid.JPG",
+      "madeToOrder": true
     },
     {
       "id": "bunny-egg-passthrough",
@@ -3948,7 +3979,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Large_Pass_Through_Cone.gif"
+      "image": "../images/Fidgets/Large_Pass_Through_Cone.gif",
+      "madeToOrder": true
     },
     {
       "id": "mario-transforming-cube",
@@ -3985,7 +4017,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Flexi_Morph_Ball.gif"
+      "image": "../images/Fidgets/Flexi_Morph_Ball.gif",
+      "madeToOrder": true
     },
     {
       "id": "mushroom-fidget",
@@ -4012,7 +4045,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Oreo_Fidgets.gif"
+      "image": "../images/Fidgets/Oreo_Fidgets.gif",
+      "madeToOrder": true
     },
     {
       "id": "origami-transformation-cube",
@@ -4023,7 +4057,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Transforming_Cube.gif"
+      "image": "../images/Fidgets/Transforming_Cube.gif",
+      "madeToOrder": true
     },
     {
       "id": "pyramid-passthrough",
@@ -4087,7 +4122,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Small_Gear_Ring.gif"
+      "image": "../images/Fidgets/Small_Gear_Ring.gif",
+      "madeToOrder": true
     },
     {
       "id": "small-grid",
@@ -4098,7 +4134,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Small_Grid.JPG"
+      "image": "../images/Fidgets/Small_Grid.JPG",
+      "madeToOrder": true
     },
     {
       "id": "spinner-fidget",
@@ -4109,7 +4146,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Spinner_Fidget.gif"
+      "image": "../images/Fidgets/Spinner_Fidget.gif",
+      "madeToOrder": true
     },
     {
       "id": "spinning-top",
@@ -4120,7 +4158,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Spinning_Top.gif"
+      "image": "../images/Fidgets/Spinning_Top.gif",
+      "madeToOrder": true
     },
     {
       "id": "starfish-mesh",
@@ -4162,7 +4201,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Twisty_Vase_Mini.gif"
+      "image": "../images/Fidgets/Twisty_Vase_Mini.gif",
+      "madeToOrder": true
     },
     {
       "id": "twirl-flower",
@@ -4173,7 +4213,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Twirl_Flower.gif"
+      "image": "../images/Fidgets/Twirl_Flower.gif",
+      "madeToOrder": true
     },
     {
       "id": "twisty-vase-micro",
@@ -4221,7 +4262,8 @@
         "../images/Keychains/Keychains.JPG",
         "../images/Keychains/Keychains_2.JPG"
       ],
-      "image": "../images/Keychains/Keychains.JPG"
+      "image": "../images/Keychains/Keychains.JPG",
+      "madeToOrder": true
     },
     {
       "id": "keychain-baseball",
@@ -4232,7 +4274,8 @@
       "category": "Keychains",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Keychains/Keychain_Baseball.JPG"
+      "image": "../images/Keychains/Keychain_Baseball.JPG",
+      "madeToOrder": true
     },
     {
       "id": "keychain-softball",
@@ -4243,7 +4286,8 @@
       "category": "Keychains",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Keychains/Keychain_Softball.JPG"
+      "image": "../images/Keychains/Keychain_Softball.JPG",
+      "madeToOrder": true
     },
     {
       "id": "stanley-chapstick-holder",
@@ -4254,7 +4298,8 @@
       "category": "Keychains",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Keychains/Stanley_Chapstick.JPG"
+      "image": "../images/Keychains/Stanley_Chapstick.JPG",
+      "madeToOrder": true
     },
     {
       "id": "alien-stitch",
@@ -4353,7 +4398,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Charmander_1.JPG"
+      "image": "../images/Pokeballs/Charmander_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "darkrai-pokeball",
@@ -4364,7 +4410,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Darkrai_1.JPG"
+      "image": "../images/Pokeballs/Darkrai_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "dragapult-pokeball",
@@ -4375,7 +4422,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Dragapult_Pokeball.JPG"
+      "image": "../images/Pokeballs/Dragapult_Pokeball.JPG",
+      "madeToOrder": true
     },
     {
       "id": "dragonite-pokeball",
@@ -4386,7 +4434,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Dragonite_1.JPG"
+      "image": "../images/Pokeballs/Dragonite_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "eevee-pokeball",
@@ -4397,7 +4446,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Eevee_Pokeball.JPG"
+      "image": "../images/Pokeballs/Eevee_Pokeball.JPG",
+      "madeToOrder": true
     },
     {
       "id": "gengar-pokeball",
@@ -4412,7 +4462,8 @@
         "../images/Pokeballs/Gengar_1.JPG",
         "../images/Pokeballs/Gengar_2.JPG"
       ],
-      "image": "../images/Pokeballs/Gengar_1.JPG"
+      "image": "../images/Pokeballs/Gengar_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "greninja-pokeball",
@@ -4428,7 +4479,8 @@
         "../images/Pokeballs/Greninja_1.JPG",
         "../images/Pokeballs/Greninja_2.JPG"
       ],
-      "image": "../images/Pokeballs/Greninja_3.JPG"
+      "image": "../images/Pokeballs/Greninja_3.JPG",
+      "madeToOrder": true
     },
     {
       "id": "growlithe-pokeball",
@@ -4443,7 +4495,8 @@
         "../images/Pokeballs/Growlithe_1.JPG",
         "../images/Pokeballs/Growlithe_2.JPG"
       ],
-      "image": "../images/Pokeballs/Growlithe_1.JPG"
+      "image": "../images/Pokeballs/Growlithe_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "latios-pokeball",
@@ -4458,7 +4511,8 @@
         "../images/Pokeballs/Latios_1.JPG",
         "../images/Pokeballs/Lattios_2.JPG"
       ],
-      "image": "../images/Pokeballs/Latios_1.JPG"
+      "image": "../images/Pokeballs/Latios_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "leafeon-pokeball",
@@ -4469,7 +4523,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Leafeon_1.JPG"
+      "image": "../images/Pokeballs/Leafeon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "lucario-pokeball",
@@ -4484,7 +4539,8 @@
         "../images/Pokeballs/Lucario_1.JPG",
         "../images/Pokeballs/Lucario_2.JPG"
       ],
-      "image": "../images/Pokeballs/Lucario_1.JPG"
+      "image": "../images/Pokeballs/Lucario_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "lugia-pokeball",
@@ -4495,7 +4551,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Lugia_1.JPG"
+      "image": "../images/Pokeballs/Lugia_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "mega-charizard-x-pokeball",
@@ -4506,7 +4563,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Mega_Charizard_X_1.JPG"
+      "image": "../images/Pokeballs/Mega_Charizard_X_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "mega-gengar-pokeball",
@@ -4522,7 +4580,8 @@
         "../images/Pokeballs/Mega_Gengar_1.JPG",
         "../images/Pokeballs/Mega_Gengar_2.JPG"
       ],
-      "image": "../images/Pokeballs/Mega_Gengar_3.JPG"
+      "image": "../images/Pokeballs/Mega_Gengar_3.JPG",
+      "madeToOrder": true
     },
     {
       "id": "mega-lucario-pokeball",
@@ -4533,7 +4592,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Mega_Lucario_2.JPG"
+      "image": "../images/Pokeballs/Mega_Lucario_2.JPG",
+      "madeToOrder": true
     },
     {
       "id": "mewtow-pokeball",
@@ -4544,7 +4604,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Mewtwo_3.JPG"
+      "image": "../images/Pokeballs/Mewtwo_3.JPG",
+      "madeToOrder": true
     },
     {
       "id": "opening-pokeball",
@@ -4555,7 +4616,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Opening_Pokeball_2.JPG"
+      "image": "../images/Pokeballs/Opening_Pokeball_2.JPG",
+      "madeToOrder": true
     },
     {
       "id": "pikachu-pokeball",
@@ -4570,7 +4632,8 @@
         "../images/Pokeballs/Pikachu_2.JPG",
         "../images/Pokeballs/Pikachu_1.JPG"
       ],
-      "image": "../images/Pokeballs/Pikachu_2.JPG"
+      "image": "../images/Pokeballs/Pikachu_2.JPG",
+      "madeToOrder": true
     },
     {
       "id": "rayquaza-pokeball",
@@ -4581,7 +4644,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Rayquaza_1.JPG"
+      "image": "../images/Pokeballs/Rayquaza_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "squirtle-pokeball",
@@ -4592,7 +4656,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Squirtle_1.JPG"
+      "image": "../images/Pokeballs/Squirtle_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "typhlosion-pokeball",
@@ -4603,7 +4668,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Typholosion_1.JPG"
+      "image": "../images/Pokeballs/Typholosion_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "tyranitar-pokeball",
@@ -4614,7 +4680,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Tyranitar_1.JPG"
+      "image": "../images/Pokeballs/Tyranitar_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "umbreon-pokeball",
@@ -4625,7 +4692,8 @@
       "category": "Pokeballs",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Pokeballs/Umbreon_1.JPG"
+      "image": "../images/Pokeballs/Umbreon_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "christmas-tealight",
@@ -4641,7 +4709,8 @@
         "../images/Seasonal/Christmas_Tealight_2.JPG",
         "../images/Seasonal/Christmas_Tealight_3.JPG"
       ],
-      "image": "../images/Seasonal/Christmas_Tealight_1.JPG"
+      "image": "../images/Seasonal/Christmas_Tealight_1.JPG",
+      "madeToOrder": true
     },
     {
       "id": "heart-picture-tealight",
@@ -4652,7 +4721,8 @@
       "category": "Seasonal",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Seasonal/Love_Tealight.JPG"
+      "image": "../images/Seasonal/Love_Tealight.JPG",
+      "madeToOrder": true
     },
     {
       "id": "roses",
@@ -4678,7 +4748,8 @@
         "../images/Seasonal/Nativity_1.jpg",
         "../images/Seasonal/Nativity_2.JPG"
       ],
-      "image": "../images/Seasonal/Nativity_1.jpg"
+      "image": "../images/Seasonal/Nativity_1.jpg",
+      "madeToOrder": true
     },
     {
       "id": "infinity-name-sign",
@@ -4694,7 +4765,8 @@
         "../images/Seasonal/Infinity_Name_2.jpg",
         "../images/Seasonal/Infinity_Name_3.jpg"
       ],
-      "image": "../images/Seasonal/Infinity_Name_1.jpg"
+      "image": "../images/Seasonal/Infinity_Name_1.jpg",
+      "madeToOrder": true
     },
     {
       "id": "july-4th-stars",
