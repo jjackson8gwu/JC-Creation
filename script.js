@@ -144,37 +144,43 @@ function displayProducts(category) {
   freezeGifs();
 }
 
-// Wire up GIF hover-to-play. GIFs are rendered with data-gif-src (not src)
-// so they never auto-play on load. We load each GIF off-screen, capture
-// frame 0 via canvas, and display that still image until the user hovers.
+// GIF freeze: show the GIF immediately (may animate briefly while loading),
+// then capture frame 0 via canvas and freeze it. Hover replays the animation.
 function freezeGifs() {
-  const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   document.querySelectorAll('.products img[data-gif-src]').forEach(img => {
     if (img.dataset.gifSetup) return;
     img.dataset.gifSetup = 'true';
     const gifSrc = img.dataset.gifSrc;
 
-    // Load GIF off-screen and capture frame 0 as a frozen PNG
-    const offscreen = new Image();
-    offscreen.onload = () => {
+    // Show the GIF right away so there's no blank period
+    img.src = gifSrc;
+
+    const freeze = () => {
+      if (!img.naturalWidth) return;
       const canvas = document.createElement('canvas');
-      canvas.width  = offscreen.naturalWidth;
-      canvas.height = offscreen.naturalHeight;
+      canvas.width  = img.naturalWidth;
+      canvas.height = img.naturalHeight;
       try {
-        canvas.getContext('2d').drawImage(offscreen, 0, 0);
+        canvas.getContext('2d').drawImage(img, 0, 0);
         const frozen = canvas.toDataURL('image/png');
         img.dataset.gifFrozen = frozen;
-        img.src = frozen;              // show still frame by default
-      } catch(e) {
-        img.src = gifSrc;              // cross-origin fallback: just show GIF
-      }
+        if (!img.dataset.hovered) img.src = frozen;
+      } catch(e) { /* leave as live GIF if canvas capture fails */ }
     };
-    offscreen.onerror = () => { img.src = gifSrc; };
-    offscreen.src = gifSrc;            // loads silently off-screen
 
-    img.addEventListener('mouseenter', () => { img.src = gifSrc; });
+    if (img.complete && img.naturalWidth > 0) {
+      freeze(); // already cached — freeze immediately
+    } else {
+      img.addEventListener('load', freeze, { once: true });
+    }
+
+    img.addEventListener('mouseenter', () => {
+      img.dataset.hovered = 'true';
+      img.src = gifSrc;
+    });
     img.addEventListener('mouseleave', () => {
-      img.src = img.dataset.gifFrozen || BLANK;
+      img.dataset.hovered = '';
+      if (img.dataset.gifFrozen) img.src = img.dataset.gifFrozen;
     });
   });
 }
