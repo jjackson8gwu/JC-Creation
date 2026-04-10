@@ -85,24 +85,25 @@ async function loadProducts() {
 }
 
 // Get current page category from URL
-// Checks work with or without .html (supports both GitHub Pages and Netlify clean URLs)
+// Uses lowercase comparison so it works whether the host preserves or
+// lowercases the URL (Netlify lowercases; GitHub Pages does not).
 function getCurrentPageCategory() {
-  const path = window.location.pathname;
+  const path = window.location.pathname.toLowerCase();
 
   if (path.includes('1_dollar_minis')) return '1_dollar_minis';
   if (path.includes('2_dollar_minis')) return '2_dollar_minis';
   if (path.includes('3_dollar_minis')) return '3_dollar_minis';
   if (path.includes('4_dollar_minis')) return '4_dollar_minis';
-  if (path.includes('Dragons_and_Animals')) return 'Dragons_and_Animals';
-  if (path.includes('Fan_Art')) return 'Fan_Art';
-  if (path.includes('Custom_Designs')) return 'Custom_Designs';
-  if (path.includes('Fidgets')) return 'Fidgets';
-  if (path.includes('Pokeballs')) return 'Pokeballs';
-  if (path.includes('Clickers')) return 'Clickers';
-  if (path.includes('Keychains')) return 'Keychains';
-  if (path.includes('Mystery_Bag')) return 'Mystery_Bag';
-  if (path.includes('Pen_Holders')) return 'Pen_Holders';
-  if (path.includes('Seasonal')) return 'Seasonal';
+  if (path.includes('dragons_and_animals')) return 'Dragons_and_Animals';
+  if (path.includes('fan_art'))           return 'Fan_Art';
+  if (path.includes('custom_designs'))    return 'Custom_Designs';
+  if (path.includes('fidgets'))           return 'Fidgets';
+  if (path.includes('pokeballs'))         return 'Pokeballs';
+  if (path.includes('clickers'))          return 'Clickers';
+  if (path.includes('keychains'))         return 'Keychains';
+  if (path.includes('mystery_bag'))       return 'Mystery_Bag';
+  if (path.includes('pen_holders'))       return 'Pen_Holders';
+  if (path.includes('seasonal'))          return 'Seasonal';
 
   return null;
 }
