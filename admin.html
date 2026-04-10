@@ -263,11 +263,72 @@
       font-size: 1rem;
     }
 
+    /* ── New Product Modal ─────────────────────────────────────────── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .modal-box h2 { margin: 0 0 20px; color: #1a4054; font-size: 1.3rem; }
+    .field-row { margin-bottom: 16px; }
+    .field-row label { display: block; font-weight: bold; color: #333; margin-bottom: 5px; font-size: 0.9rem; }
+    .field-row input[type=text],
+    .field-row input[type=number],
+    .field-row select,
+    .field-row textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .field-row input:focus,
+    .field-row select:focus,
+    .field-row textarea:focus { outline: none; border-color: #D2762B; }
+    .field-row textarea { resize: vertical; min-height: 68px; }
+    .field-hint { font-size: 0.78rem; color: #888; margin-top: 4px; }
+    .field-row-inline { display: flex; gap: 16px; }
+    .field-row-inline .field-row { flex: 1; }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #f7fafc;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .toggle-row span { font-size: 0.9rem; color: #333; }
+    .toggle-row small { display: block; font-size: 0.75rem; color: #888; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+    .btn-red { background: #e74c3c; color: white; }
+    .new-row td { background: #f0fff4 !important; }
+    .new-badge { background: #c8e6c9; color: #2e7d32; font-size: 0.72rem; padding: 2px 6px; border-radius: 8px; margin-left: 6px; }
+
     @media (max-width: 600px) {
       body { padding: 10px; }
       table { font-size: 0.82rem; }
       th, td { padding: 8px 10px; }
       .qty-input { width: 46px; }
+      .field-row-inline { flex-direction: column; gap: 0; }
     }
   </style>
 </head>
@@ -287,6 +348,7 @@
   <div class="admin-header">
     <h1>&#128230; Inventory Manager — J&amp;C Creations</h1>
     <div class="admin-actions">
+      <button class="btn btn-orange" onclick="openAddModal()">&#43; Add New Product</button>
       <button class="btn btn-blue" onclick="reloadFromSite()">&#128260; Reload from Site</button>
       <button class="btn btn-green" onclick="downloadJSON()">&#11015; Download Updated JSON</button>
       <button class="btn btn-gray" onclick="location.href='index.html'">&#127968; Back to Site</button>
@@ -328,6 +390,103 @@
   </table>
 
   <div style="height:70px"></div> <!-- spacer for sticky bar -->
+</div>
+
+<!-- ── ADD NEW PRODUCT MODAL ─────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="add-modal" onclick="handleBackdropClick(event)">
+  <div class="modal-box">
+    <h2>&#43; Add New Product</h2>
+
+    <div class="field-row">
+      <label>Product Name <span style="color:#e74c3c">*</span></label>
+      <input type="text" id="new-name" placeholder="e.g. Rainbow Dragon">
+    </div>
+
+    <div class="field-row">
+      <label>Category <span style="color:#e74c3c">*</span></label>
+      <select id="new-category">
+        <option value="">— Select a category —</option>
+        <option value="1_dollar_minis">$1 Minis</option>
+        <option value="2_dollar_minis">$2 Minis</option>
+        <option value="3_dollar_minis">$3 Minis</option>
+        <option value="4_dollar_minis">$4 Minis</option>
+        <option value="Clickers">Clickers</option>
+        <option value="Custom_Designs">Custom Designs</option>
+        <option value="Dragons_and_Animals">Dragons &amp; Animals</option>
+        <option value="Fan_Art">Fan Art</option>
+        <option value="Fidgets">Fidgets</option>
+        <option value="Keychains">Keychains</option>
+        <option value="Mystery_Bag">Mystery Bag</option>
+        <option value="Pen_Holders">Pen Holders</option>
+        <option value="Pokeballs">Pokeballs</option>
+        <option value="Seasonal">Seasonal</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label>Description</label>
+      <textarea id="new-description" placeholder="Short description (leave blank to auto-generate)"></textarea>
+    </div>
+
+    <div class="field-row-inline">
+      <div class="field-row">
+        <label>Price ($)</label>
+        <input type="number" id="new-price" placeholder="0.00" min="0" step="0.01" value="">
+        <p class="field-hint">Leave blank if Price Varies is ON</p>
+      </div>
+      <div class="field-row">
+        <label>Starting Quantity</label>
+        <input type="number" id="new-quantity" placeholder="0" min="0" step="1" value="0">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <label>Image Path</label>
+      <input type="text" id="new-image" placeholder="../images/Category Folder/filename.JPG">
+      <p class="field-hint">Add the image file to your images folder first, then paste the path here. Example: <code>../images/Fidgets/My_New_Fidget.JPG</code></p>
+    </div>
+
+    <div class="field-row-inline">
+      <div class="field-row">
+        <label>Number of Colors</label>
+        <input type="number" id="new-colorCount" value="1" min="1" step="1">
+      </div>
+      <div class="field-row" style="display:flex;align-items:flex-end;padding-bottom:2px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:normal">
+          <input type="checkbox" id="new-requiresColor" style="width:auto"> Requires color selection
+        </label>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <span>Made to Order</span>
+        <small>Show item on site even when quantity = 0</small>
+      </div>
+      <label class="mto-toggle">
+        <input type="checkbox" id="new-madeToOrder">
+        <span class="mto-slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <span>Price Varies by Order</span>
+        <small>Show "Price Varies by Order" instead of a fixed price</small>
+      </div>
+      <label class="pv-toggle">
+        <input type="checkbox" id="new-priceVaries">
+        <span class="pv-slider"></span>
+      </label>
+    </div>
+
+    <div id="add-modal-error" style="color:#e74c3c;font-size:0.88rem;margin-top:8px;display:none"></div>
+
+    <div class="modal-footer">
+      <button class="btn btn-gray" onclick="closeAddModal()">Cancel</button>
+      <button class="btn btn-orange" onclick="saveNewProduct()">&#43; Add Product</button>
+    </div>
+  </div>
 </div>
 
 <!-- ── CHANGES BAR ───────────────────────────────────────────────────────── -->
@@ -452,8 +611,9 @@ function renderTable() {
            onchange="setPrice('${p.id}', this.value)"
            title="Edit price — toggle 'Price Varies' ON to hide price on site">`;
 
-    return `<tr>
-      <td><strong>${p.name}</strong></td>
+    const isNew = p._isNew === true;
+    return `<tr class="${isNew ? 'new-row' : ''}">
+      <td><strong>${p.name}</strong>${isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
       <td><span class="category-tag">${(p.category||'').replace(/_/g,' ')}</span></td>
       <td>${priceCell}</td>
       <td>
@@ -564,6 +724,97 @@ function updateChangesBar() {
   bar.classList.toggle('visible', count > 0);
 }
 
+// ── Add New Product ──────────────────────────────────────────────────────────
+function openAddModal() {
+  // Reset all fields
+  document.getElementById('new-name').value        = '';
+  document.getElementById('new-category').value    = '';
+  document.getElementById('new-description').value = '';
+  document.getElementById('new-price').value       = '';
+  document.getElementById('new-quantity').value    = '0';
+  document.getElementById('new-image').value       = '';
+  document.getElementById('new-colorCount').value  = '1';
+  document.getElementById('new-requiresColor').checked  = false;
+  document.getElementById('new-madeToOrder').checked    = false;
+  document.getElementById('new-priceVaries').checked    = false;
+  document.getElementById('add-modal-error').style.display = 'none';
+  document.getElementById('add-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('new-name').focus();
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('add-modal')) closeAddModal();
+}
+
+function saveNewProduct() {
+  const errEl = document.getElementById('add-modal-error');
+  errEl.style.display = 'none';
+
+  const name     = document.getElementById('new-name').value.trim();
+  const category = document.getElementById('new-category').value;
+
+  if (!name) {
+    errEl.textContent = 'Please enter a product name.';
+    errEl.style.display = 'block';
+    document.getElementById('new-name').focus();
+    return;
+  }
+  if (!category) {
+    errEl.textContent = 'Please select a category.';
+    errEl.style.display = 'block';
+    document.getElementById('new-category').focus();
+    return;
+  }
+
+  // Generate a unique ID from the name
+  const baseId = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  let id = baseId;
+  let suffix = 1;
+  while (products.some(p => p.id === id)) { id = `${baseId}-${suffix++}`; }
+
+  const priceVaries   = document.getElementById('new-priceVaries').checked;
+  const madeToOrder   = document.getElementById('new-madeToOrder').checked;
+  const requiresColor = document.getElementById('new-requiresColor').checked;
+  const colorCount    = Math.max(1, parseInt(document.getElementById('new-colorCount').value) || 1);
+  const quantity      = Math.max(0, parseInt(document.getElementById('new-quantity').value) || 0);
+  const priceRaw      = parseFloat(document.getElementById('new-price').value);
+  const price         = isNaN(priceRaw) ? 0 : Math.max(0, priceRaw);
+  const imageRaw      = document.getElementById('new-image').value.trim();
+  const descRaw       = document.getElementById('new-description').value.trim();
+  const description   = descRaw || `Custom 3D printed ${name}`;
+
+  const newProduct = {
+    id,
+    name,
+    description,
+    price,
+    quantity,
+    category,
+    requiresColor,
+    colorCount,
+    ...(imageRaw   && { image: imageRaw }),
+    ...(madeToOrder  && { madeToOrder: true }),
+    ...(priceVaries  && { priceVaries: true }),
+    _isNew: true   // marker so we can highlight it in the table
+  };
+
+  products.push(newProduct);
+  populateCategoryFilter();
+  // Switch filter to the new product's category so it's immediately visible
+  document.getElementById('filter-cat').value    = category;
+  document.getElementById('filter-search').value = '';
+  document.getElementById('filter-low').checked  = false;
+  renderTable();
+  updateChangesBar();
+  closeAddModal();
+}
+
 // ── Sort ─────────────────────────────────────────────────────────────────────
 function sortBy(key) {
   if (sortKey === key) sortAsc = !sortAsc;
@@ -575,6 +826,7 @@ function sortBy(key) {
 function downloadJSON() {
   const updated = products.map(p => {
     const copy = { ...p };
+    delete copy._isNew;  // strip internal marker
     if (changes[p.id]?.qty         !== undefined) copy.quantity    = changes[p.id].qty;
     if (changes[p.id]?.madeToOrder !== undefined) copy.madeToOrder = changes[p.id].madeToOrder;
     if (changes[p.id]?.priceVaries !== undefined) copy.priceVaries = changes[p.id].priceVaries;
