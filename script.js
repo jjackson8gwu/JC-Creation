@@ -145,7 +145,8 @@ function displayProducts(category) {
 }
 
 // Wire up GIF hover-to-play. GIFs are rendered with data-gif-src (not src)
-// so they never auto-load/play on page load — they only animate on hover.
+// so they never auto-play on load. We load each GIF off-screen, capture
+// frame 0 via canvas, and display that still image until the user hovers.
 function freezeGifs() {
   const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   document.querySelectorAll('.products img[data-gif-src]').forEach(img => {
@@ -153,8 +154,28 @@ function freezeGifs() {
     img.dataset.gifSetup = 'true';
     const gifSrc = img.dataset.gifSrc;
 
+    // Load GIF off-screen and capture frame 0 as a frozen PNG
+    const offscreen = new Image();
+    offscreen.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width  = offscreen.naturalWidth;
+      canvas.height = offscreen.naturalHeight;
+      try {
+        canvas.getContext('2d').drawImage(offscreen, 0, 0);
+        const frozen = canvas.toDataURL('image/png');
+        img.dataset.gifFrozen = frozen;
+        img.src = frozen;              // show still frame by default
+      } catch(e) {
+        img.src = gifSrc;              // cross-origin fallback: just show GIF
+      }
+    };
+    offscreen.onerror = () => { img.src = gifSrc; };
+    offscreen.src = gifSrc;            // loads silently off-screen
+
     img.addEventListener('mouseenter', () => { img.src = gifSrc; });
-    img.addEventListener('mouseleave', () => { img.src = BLANK; });
+    img.addEventListener('mouseleave', () => {
+      img.src = img.dataset.gifFrozen || BLANK;
+    });
   });
 }
 

@@ -395,11 +395,6 @@ header nav a:hover {
   margin-bottom: 5px;
 }
 
-/* GIF placeholder — dark card with play icon; swaps to real GIF on hover */
-.product img[data-gif-src] {
-  background: #1a3340 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='rgba(255,255,255,0.12)'/%3E%3Cpolygon points='10,7 19,12 10,17' fill='rgba(255,255,255,0.75)'/%3E%3C/svg%3E") center/60px no-repeat;
-  cursor: pointer;
-}
 
 .product video {
   width: 100%;
