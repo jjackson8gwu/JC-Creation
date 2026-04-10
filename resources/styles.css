@@ -1435,12 +1435,18 @@ header nav a:hover {
   aspect-ratio: 1 / 1;
   border-radius: 14px;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
   text-decoration: none;
   box-shadow: 0 4px 18px rgba(0,0,0,0.35);
   transition: transform 0.25s, box-shadow 0.25s;
   display: block;
+}
+.category-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .category-card:hover {
   transform: translateY(-4px) scale(1.02);
