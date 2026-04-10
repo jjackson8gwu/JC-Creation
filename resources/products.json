@@ -4423,7 +4423,7 @@
       "requiresColor": false,
       "colorCount": 1,
       "image": "../images/Pokeballs/Dragapult_Pokeball.JPG",
-      "madeToOrder": true
+      "madeToOrder": false
     },
     {
       "id": "dragonite-pokeball",
@@ -4447,7 +4447,7 @@
       "requiresColor": false,
       "colorCount": 1,
       "image": "../images/Pokeballs/Eevee_Pokeball.JPG",
-      "madeToOrder": true
+      "madeToOrder": false
     },
     {
       "id": "gengar-pokeball",
