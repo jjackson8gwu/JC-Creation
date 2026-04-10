@@ -85,23 +85,24 @@ async function loadProducts() {
 }
 
 // Get current page category from URL
+// Checks work with or without .html (supports both GitHub Pages and Netlify clean URLs)
 function getCurrentPageCategory() {
   const path = window.location.pathname;
 
-  if (path.includes('1_dollar_minis.html')) return '1_dollar_minis';
-  if (path.includes('2_dollar_minis.html')) return '2_dollar_minis';
-  if (path.includes('3_dollar_minis.html')) return '3_dollar_minis';
-  if (path.includes('Dragons_and_Animals.html')) return 'Dragons_and_Animals';
-  if (path.includes('Fan_Art.html')) return 'Fan_Art';
-  if (path.includes('Custom_Designs.html')) return 'Custom_Designs';
-  if (path.includes('Fidgets.html')) return 'Fidgets';
-  if (path.includes('Pokeballs.html')) return 'Pokeballs';
-  if (path.includes('Clickers.html')) return 'Clickers';
-  if (path.includes('Keychains.html')) return 'Keychains';
-  if (path.includes('Mystery_Bag.html')) return 'Mystery_Bag';
-  if (path.includes('4_dollar_minis.html')) return '4_dollar_minis';
-  if (path.includes('Pen_Holders.html')) return 'Pen_Holders';
-  if (path.includes('Seasonal.html')) return 'Seasonal';
+  if (path.includes('1_dollar_minis')) return '1_dollar_minis';
+  if (path.includes('2_dollar_minis')) return '2_dollar_minis';
+  if (path.includes('3_dollar_minis')) return '3_dollar_minis';
+  if (path.includes('4_dollar_minis')) return '4_dollar_minis';
+  if (path.includes('Dragons_and_Animals')) return 'Dragons_and_Animals';
+  if (path.includes('Fan_Art')) return 'Fan_Art';
+  if (path.includes('Custom_Designs')) return 'Custom_Designs';
+  if (path.includes('Fidgets')) return 'Fidgets';
+  if (path.includes('Pokeballs')) return 'Pokeballs';
+  if (path.includes('Clickers')) return 'Clickers';
+  if (path.includes('Keychains')) return 'Keychains';
+  if (path.includes('Mystery_Bag')) return 'Mystery_Bag';
+  if (path.includes('Pen_Holders')) return 'Pen_Holders';
+  if (path.includes('Seasonal')) return 'Seasonal';
 
   return null;
 }
