@@ -144,40 +144,17 @@ function displayProducts(category) {
   freezeGifs();
 }
 
-// Freeze GIF images on load; play only on hover
+// Wire up GIF hover-to-play. GIFs are rendered with data-gif-src (not src)
+// so they never auto-load/play on page load — they only animate on hover.
 function freezeGifs() {
-  const imgs = document.querySelectorAll('.products img');
-  imgs.forEach(img => {
-    const src = (img.src || '').toLowerCase();
-    if (!src.endsWith('.gif')) return;
-    if (img.dataset.gifSetup) return; // already wired up
+  const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  document.querySelectorAll('.products img[data-gif-src]').forEach(img => {
+    if (img.dataset.gifSetup) return;
     img.dataset.gifSetup = 'true';
-    img.dataset.gifSrc = img.src;  // store the animated GIF url
+    const gifSrc = img.dataset.gifSrc;
 
-    const captureFirstFrame = () => {
-      if (!img.naturalWidth) return;
-      const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      try {
-        canvas.getContext('2d').drawImage(img, 0, 0);
-        img.dataset.gifFrozen = canvas.toDataURL('image/png');
-        img.src = img.dataset.gifFrozen;
-      } catch(e) { /* cross-origin safety — skip freeze if it ever fails */ }
-    };
-
-    if (img.complete && img.naturalWidth > 0) {
-      captureFirstFrame();
-    } else {
-      img.addEventListener('load', captureFirstFrame, { once: true });
-    }
-
-    img.addEventListener('mouseenter', () => {
-      if (img.dataset.gifSrc) img.src = img.dataset.gifSrc;
-    });
-    img.addEventListener('mouseleave', () => {
-      if (img.dataset.gifFrozen) img.src = img.dataset.gifFrozen;
-    });
+    img.addEventListener('mouseenter', () => { img.src = gifSrc; });
+    img.addEventListener('mouseleave', () => { img.src = BLANK; });
   });
 }
 
@@ -190,14 +167,18 @@ function createProductHTML(product, category) {
 
   let mediaHTML = '';
 
+  // Transparent 1px placeholder — GIFs never auto-play; they load only on hover
+  const GIF_BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
   if (imageList.length > 1) {
     // ── Multi-image gallery ──────────────────────────────────────────────
     const slides = imageList.map((src, i) => {
       const isVid = /\.(mp4|webm)$/i.test(src);
+      const isGif = /\.gif$/i.test(src);
       const cls = `gallery-slide${i === 0 ? ' active' : ''}`;
-      return isVid
-        ? `<video class="${cls}" muted loop playsinline><source src="${src}" type="video/mp4"></video>`
-        : `<img class="${cls}" src="${src}" alt="${product.name}">`;
+      if (isVid) return `<video class="${cls}" muted loop playsinline><source src="${src}" type="video/mp4"></video>`;
+      if (isGif) return `<img class="${cls}" src="${GIF_BLANK}" data-gif-src="${src}" alt="${product.name}">`;
+      return `<img class="${cls}" src="${src}" alt="${product.name}">`;
     }).join('\n        ');
 
     const dots = imageList.map((_, i) =>
@@ -217,7 +198,9 @@ function createProductHTML(product, category) {
     const isGif   = /\.gif$/i.test(imageList[0]);
     mediaHTML = isVideo
       ? `<video muted loop playsinline><source src="${imageList[0]}" type="video/mp4"></video>`
-      : `<img src="${imageList[0]}" alt="${product.name}">`;
+      : isGif
+        ? `<img src="${GIF_BLANK}" data-gif-src="${imageList[0]}" alt="${product.name}">`
+        : `<img src="${imageList[0]}" alt="${product.name}">`;
   }
 
   // ── Determine display category (fall back to product's own field) ─────────
