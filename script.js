@@ -262,8 +262,8 @@ function createProductHTML(product, category) {
   } else {
     const maxQty = product.quantity > 0 ? product.quantity : 99;
     const addFn  = product.requiresColor
-      ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1})`
-      : `addToCart('${product.name}', ${product.price}, this)`;
+      ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1}, '${product.id}')`
+      : `addToCart('${product.name}', ${product.price}, this, '${product.id}')`;
     actionHTML = `
       <div class="quantity-controls">
         <button onclick="decreaseQuantity(this)">-</button>
@@ -456,35 +456,58 @@ function initializeEventListeners() {
   
   const checkoutForm = document.getElementById("checkout-form");
   if (checkoutForm) {
-    checkoutForm.addEventListener("submit", (e) => {
+    checkoutForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
       const pickupSelect = document.getElementById("pickup");
       if (!pickupSelect.value) {
-        e.preventDefault();
         alert("Please select a delivery method.");
         return;
       }
 
-      // After Formspree receives the email, also update Google Sheets inventory
-      if (INVENTORY_SHEET_URL) {
-        const orderItems = cart.map(item => ({
-          name: item.name,
-          id:   item.id || '',
-          quantity: item.quantity
-        }));
-        fetch(INVENTORY_SHEET_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: orderItems })
-        }).catch(err => console.warn('Inventory update failed:', err));
-      }
+      // Disable submit button to prevent double-submission
+      const submitBtn = checkoutForm.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
 
-      setTimeout(() => {
-        alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
-        cart = [];
-        saveCart(cart);
-        updateCartDisplay();
-        closeOrderForm();
-      }, 100);
+      // ── 1. Fire inventory update (best-effort, non-blocking) ──────────────
+      const orderItems = cart.map(item => ({
+        id:       item.id || '',
+        name:     item.name,
+        quantity: item.quantity
+      }));
+      fetch('/.netlify/functions/update-inventory', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ items: orderItems })
+      }).catch(err => console.warn('Inventory update failed (non-critical):', err));
+
+      // ── 2. Submit order form to Formspree via AJAX ────────────────────────
+      try {
+        const formData = new FormData(checkoutForm);
+        const res = await fetch(checkoutForm.action, {
+          method: 'POST',
+          body:   formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
+          cart = [];
+          saveCart(cart);
+          updateCartDisplay();
+          closeOrderForm();
+          checkoutForm.reset();
+        } else {
+          const data = await res.json().catch(() => ({}));
+          const msg  = data.errors ? data.errors.map(err => err.message).join(', ') : 'Unknown error';
+          alert(`There was a problem submitting your order: ${msg}. Please try again.`);
+        }
+      } catch (err) {
+        console.error('Order submission error:', err);
+        alert('Could not submit your order. Please check your connection and try again.');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Place Order'; }
+      }
     });
   }
 }
@@ -528,18 +551,19 @@ function addMysteryBagToCart(buttonElement) {
 }
 
 // Simple addToCart function for items without color selection
-function addToCart(itemName, price, buttonElement) {
+function addToCart(itemName, price, buttonElement, itemId) {
   const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
   const quantity = parseInt(quantityInput.value) || 1;
-  
+
   const existingItemIndex = cart.findIndex(item => item.name === itemName && !item.colors);
-  
+
   if (existingItemIndex !== -1) {
     cart[existingItemIndex].quantity += quantity;
   } else {
     cart.push({
-      name: itemName,
-      price: price,
+      id:       itemId || '',
+      name:     itemName,
+      price:    price,
       quantity: quantity
     });
   }
@@ -553,16 +577,17 @@ function addToCart(itemName, price, buttonElement) {
 }
 
 // Enhanced Color Selection Functions for Multi-Color Support
-function openColorSelection(itemName, price, buttonElement, colorCount = 1) {
+function openColorSelection(itemName, price, buttonElement, colorCount = 1, itemId = '') {
   const quantityInput = buttonElement.parentNode.querySelector(".quantity-input");
   const quantity = parseInt(quantityInput.value) || 1;
-  
+
   pendingItem = {
-    name: itemName,
-    price: price,
-    quantity: quantity,
+    id:            itemId,
+    name:          itemName,
+    price:         price,
+    quantity:      quantity,
     buttonElement: buttonElement,
-    colorCount: colorCount
+    colorCount:    colorCount
   };
   
   document.getElementById('selected-product-name').textContent = itemName;
@@ -671,10 +696,11 @@ function confirmAddToCart() {
     cart[existingItemIndex].quantity += pendingItem.quantity;
   } else {
     cart.push({
-      name: pendingItem.name,
-      price: pendingItem.price,
-      quantity: pendingItem.quantity,
-      colors: colorInfo,
+      id:         pendingItem.id || '',
+      name:       pendingItem.name,
+      price:      pendingItem.price,
+      quantity:   pendingItem.quantity,
+      colors:     colorInfo,
       colorCount: pendingItem.colorCount
     });
   }
