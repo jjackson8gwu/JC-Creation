@@ -2162,7 +2162,7 @@
       "id": "af-thing",
       "name": "AF - Thing",
       "description": "Custom 3D printed AF - Thing",
-      "price": 3,
+      "price": 1,
       "quantity": 20,
       "category": "Fan_Art",
       "requiresColor": false,
