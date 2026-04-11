@@ -1691,7 +1691,7 @@
       "name": "1 Color Crystal Dragon",
       "description": "Custom 3D printed 1 Color Crystal Dragon",
       "price": 10,
-      "quantity": 5,
+      "quantity": 6,
       "category": "Dragons_and_Animals",
       "requiresColor": true,
       "colorCount": 1,
