@@ -322,7 +322,6 @@
       "requiresColor": false,
       "colorCount": 1,
       "images": [
-        "../images/$1 Minis/Tiny_Dolphin_1.JPG",
         "../images/$1 Minis/Tiny_Dolphin_2.jpg"
       ],
       "image": "../images/$1 Minis/Tiny_Dolphin_1.JPG"
