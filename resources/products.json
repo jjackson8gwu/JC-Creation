@@ -4793,6 +4793,76 @@
       "requiresColor": false,
       "colorCount": 1,
       "image": "../images/Seasonal/Pumpkin_Tealights.jpg"
+    },
+    {
+      "id": "marlin-fish",
+      "name": "Marlin Fish",
+      "description": "Custom 3D printed Marlin Fish",
+      "price": 1,
+      "quantity": 30,
+      "category": "1_dollar_minis",
+      "requiresColor": false,
+      "colorCount": 1,
+      "image": "../images/$1 Minis/Marlin"
+    },
+    {
+      "id": "flarewing-dragon",
+      "name": "Flarewing Dragon",
+      "description": "Custom 3D printed Flarewing Dragon",
+      "price": 8,
+      "quantity": 6,
+      "category": "Dragons_and_Animals",
+      "requiresColor": false,
+      "colorCount": 1,
+      "images": [
+        "../images/Dragons and Animals/Flarewing_Dragon.gif",
+        "../images/Dragons and Animals/Flarewing_Dragon_1.JPG",
+        "../images/Dragons and Animals/Flarewing_Dragon_2.JPG"
+      ],
+    },
+    {
+      "id": "axocutie",
+      "name": "Axocutie",
+      "description": "Custom 3D printed Axocutie",
+      "price": 3,
+      "quantity": 11,
+      "category": "3_dollar_minis",
+      "requiresColor": false,
+      "colorCount": 1,
+      "image": "../images/$3 Minis/Axocutie.JPG"
+    },
+    {
+      "id": "peanut-gueina-pig",
+      "name": "Peanut Gueina Pig",
+      "description": "Custom 3D printed Peanut Gueina Pig",
+      "price": 3,
+      "quantity": 17,
+      "category": "3_dollar_minis",
+      "requiresColor": false,
+      "colorCount": 1,
+      "image": "../images/$3 Minis/Peanut Gueina Pig.JPG"
+    },
+    {
+      "id": "baseball-spinner",
+      "name": "Baseball Spinner",
+      "description": "Custom 3D printed Baseball Spinner",
+      "price": 3,
+      "quantity": 12,
+      "category": "Fidgets",
+      "requiresColor": false,
+      "colorCount": 1,
+      "image": "../images/Fidgets/Baseball_Spinner.gif"
+    },
+    {
+      "id": "football-spinner",
+      "name": "Football Spinner",
+      "description": "Custom 3D printed Football Spinner",
+      "price": 3,
+      "quantity": 12,
+      "category": "Fan_Art",
+      "requiresColor": false,
+      "colorCount": 1,
+      "image": "../images/Fidgets/Football_Spinner.gif"
     }
   ]
 }
