@@ -1538,3 +1538,108 @@ header nav a:hover {
   .feature-item h3 { font-size: 0.9rem; }
 }
 
+
+/* ── "Each" price label ─────────────────────────────────────────────────── */
+.price-each-label {
+  font-size: 0.75em;
+  font-weight: 500;
+  color: #888;
+  margin-left: 2px;
+  text-transform: lowercase;
+}
+
+/* ── Lightbox ────────────────────────────────────────────────────────────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.lb-open { display: flex; }
+
+#lb-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+}
+
+#lb-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#lb-img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  display: block;
+}
+
+#lb-counter {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+}
+
+#lb-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 2;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+#lb-close:hover { background: rgba(255,255,255,0.3); }
+
+#lb-prev, #lb-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+#lb-prev { left: 16px; }
+#lb-next { right: 16px; }
+#lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.3); }
+
+/* Make product images show a pointer so users know they're clickable */
+.products img {
+  cursor: zoom-in;
+}
+
+@media (max-width: 600px) {
+  #lb-prev, #lb-next { width: 40px; height: 40px; font-size: 1.8rem; }
+  #lb-prev { left: 6px; }
+  #lb-next { right: 6px; }
+}

@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartDisplay();
   handleLogoError();
   loadProducts();
+  initLightbox();
 });
 
 // Load products from JSON, then optionally overlay live quantities from Google Sheets
@@ -237,11 +238,13 @@ function createProductHTML(product, category) {
   const isPriceVaries  = product.priceVaries === true;
 
   // ── Price block ───────────────────────────────────────────────────────────
+  const isPriceEach = product.priceEach === true;
   let priceHTML = '';
   if (isPriceVaries) {
     priceHTML = '<p class="price price-varies">Price Varies by Order</p>';
   } else if (!isMysteryBag) {
-    priceHTML = `<p class="price">$${(product.price || 0).toFixed(2)}</p>`;
+    const eachLabel = isPriceEach ? ' <span class="price-each-label">each</span>' : '';
+    priceHTML = `<p class="price">$${(product.price || 0).toFixed(2)}${eachLabel}</p>`;
   }
 
   // ── Stock / Made-to-Order label ───────────────────────────────────────────
@@ -948,5 +951,86 @@ function updateMobileCartCount() {
   const desktopCartCount = document.getElementById('cart-count');
   if (mobileCartCount && desktopCartCount) {
     mobileCartCount.textContent = desktopCartCount.textContent;
+  }
+}
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+// Injects a full-screen image viewer. Click any product image to enlarge it.
+// Gallery products support left/right navigation inside the lightbox.
+
+function initLightbox() {
+  // Build the lightbox DOM once
+  const lb = document.createElement('div');
+  lb.id = 'lightbox';
+  lb.innerHTML = `
+    <div id="lb-backdrop"></div>
+    <button id="lb-close" aria-label="Close">&#10005;</button>
+    <button id="lb-prev"  aria-label="Previous">&#8249;</button>
+    <button id="lb-next"  aria-label="Next">&#8250;</button>
+    <div id="lb-inner">
+      <img id="lb-img" src="" alt="">
+      <div id="lb-counter"></div>
+    </div>`;
+  document.body.appendChild(lb);
+
+  document.getElementById('lb-backdrop').addEventListener('click', closeLightbox);
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', () => lbStep(-1));
+  document.getElementById('lb-next').addEventListener('click', () => lbStep(1));
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('lb-open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+
+  // Delegate clicks on product images (works for dynamically rendered products)
+  document.addEventListener('click', e => {
+    const img = e.target.closest('.products img:not([data-no-lightbox])');
+    if (!img) return;
+    // Collect all images in the same product card
+    const card = img.closest('.product');
+    const srcs = card
+      ? [...card.querySelectorAll('img:not([data-no-lightbox])')].map(i => i.dataset.gifSrc || i.src).filter(s => s && !s.startsWith('data:'))
+      : [img.dataset.gifSrc || img.src];
+    const clicked = img.dataset.gifSrc || img.src;
+    const startIdx = srcs.indexOf(clicked) >= 0 ? srcs.indexOf(clicked) : 0;
+    openLightbox(srcs, startIdx);
+  });
+}
+
+let lbImages = [];
+let lbIndex  = 0;
+
+function openLightbox(srcs, index) {
+  lbImages = srcs;
+  lbIndex  = index;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('lb-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('lb-open');
+  document.body.style.overflow = '';
+}
+
+function lbStep(dir) {
+  lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+  renderLightbox();
+}
+
+function renderLightbox() {
+  document.getElementById('lb-img').src = lbImages[lbIndex];
+  const counter = document.getElementById('lb-counter');
+  const prev    = document.getElementById('lb-prev');
+  const next    = document.getElementById('lb-next');
+  if (lbImages.length > 1) {
+    counter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
+    prev.style.display = 'block';
+    next.style.display = 'block';
+  } else {
+    counter.textContent = '';
+    prev.style.display = 'none';
+    next.style.display = 'none';
   }
 }

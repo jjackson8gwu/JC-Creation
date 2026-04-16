@@ -3262,7 +3262,8 @@
       "category": "Clickers",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Clickers/Cross_Clicker.gif"
+      "image": "../images/Clickers/Cross_Clicker.gif",
+      "priceEach": true
     },
     {
       "id": "icecream-cone-clicker",
@@ -3285,7 +3286,8 @@
       "category": "Clickers",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Clickers/LED Clickers.gif"
+      "image": "../images/Clickers/LED Clickers.gif",
+      "priceEach": true
     },
     {
       "id": "minecraft-creeper-clicker",
@@ -3329,7 +3331,8 @@
       "category": "Clickers",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Clickers/Peep_Clicker.gif"
+      "image": "../images/Clickers/Peep_Clicker.gif",
+      "priceEach": true
     },
     {
       "id": "seaturtle-clicker",
@@ -3340,7 +3343,8 @@
       "category": "Clickers",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Clickers/Turtle_Clickers.gif"
+      "image": "../images/Clickers/Turtle_Clickers.gif",
+      "priceEach": true
     },
     {
       "id": "stitch-clicker",
@@ -3603,7 +3607,8 @@
       "category": "Keychains",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Keychains/Owala_Chapstick.JPG"
+      "image": "../images/Keychains/Owala_Chapstick.JPG",
+      "priceEach": true
     },
     {
       "id": "ozzy-duck",
@@ -3921,7 +3926,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Kinetic_Fidget.gif"
+      "image": "../images/Fidgets/Kinetic_Fidget.gif",
+      "priceEach": true
     },
     {
       "id": "large-gear-ring",
@@ -3956,7 +3962,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Pass-Through_Bunny_Egg.jpeg"
+      "image": "../images/Fidgets/Pass-Through_Bunny_Egg.jpeg",
+      "priceEach": true
     },
     {
       "id": "passthrough-cone",
@@ -3967,7 +3974,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Pass_Through_Cones.JPG"
+      "image": "../images/Fidgets/Pass_Through_Cones.JPG",
+      "priceEach": true
     },
     {
       "id": "large-spiral-cone-passthrough",
@@ -4045,7 +4053,8 @@
       "requiresColor": true,
       "colorCount": 1,
       "image": "../images/Fidgets/Oreo_Fidgets.gif",
-      "madeToOrder": true
+      "madeToOrder": true,
+      "priceEach": true
     },
     {
       "id": "origami-transformation-cube",
@@ -4068,7 +4077,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 2,
-      "image": "../images/Fidgets/Pass_Through_Pyramid.gif"
+      "image": "../images/Fidgets/Pass_Through_Pyramid.gif",
+      "priceEach": true
     },
     {
       "id": "seaturtle-mesh",
@@ -4146,7 +4156,8 @@
       "requiresColor": true,
       "colorCount": 2,
       "image": "../images/Fidgets/Spinner_Fidget.gif",
-      "madeToOrder": true
+      "madeToOrder": true,
+      "priceEach": true
     },
     {
       "id": "spinning-top",
@@ -4235,7 +4246,8 @@
       "category": "Fidgets",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Fidgets/Wiggly_Cat.gif"
+      "image": "../images/Fidgets/Wiggly_Cat.gif",
+      "priceEach": true
     },
     {
       "id": "emberling-dragon-keychain",
@@ -4298,7 +4310,8 @@
       "requiresColor": true,
       "colorCount": 1,
       "image": "../images/Keychains/Stanley_Chapstick.JPG",
-      "madeToOrder": true
+      "madeToOrder": true,
+      "priceEach": true
     },
     {
       "id": "alien-stitch",
@@ -4709,7 +4722,8 @@
         "../images/Seasonal/Christmas_Tealight_3.JPG"
       ],
       "image": "../images/Seasonal/Christmas_Tealight_1.JPG",
-      "madeToOrder": true
+      "madeToOrder": true,
+      "priceEach": true
     },
     {
       "id": "heart-picture-tealight",
@@ -4732,7 +4746,8 @@
       "category": "Seasonal",
       "requiresColor": true,
       "colorCount": 1,
-      "image": "../images/Seasonal/Roses.JPG"
+      "image": "../images/Seasonal/Roses.JPG",
+      "priceEach": true
     },
     {
       "id": "nativity-tealight",
@@ -4792,7 +4807,8 @@
       "category": "Seasonal",
       "requiresColor": false,
       "colorCount": 1,
-      "image": "../images/Seasonal/Pumpkin_Tealights.jpg"
+      "image": "../images/Seasonal/Pumpkin_Tealights.jpg",
+      "priceEach": true
     },
     {
       "id": "marlin-fish",

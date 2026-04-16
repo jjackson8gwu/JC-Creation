@@ -382,6 +382,7 @@
         <th onclick="sortBy('quantity')">Status &#8597;</th>
         <th title="Made to Order: show item on site even when quantity = 0">Made to Order</th>
         <th title="Price Varies: show 'Price Varies by Order' instead of a fixed price. Turn OFF to assign a specific price.">Price Varies</th>
+        <th title="Show Each: display 'each' next to the price (e.g. '$5 each') to clarify items are priced individually.">Show Each</th>
       </tr>
     </thead>
     <tbody id="table-body">
@@ -593,6 +594,7 @@ function renderTable() {
     const qty        = changes[p.id]?.qty         !== undefined ? changes[p.id].qty         : p.quantity;
     const mto        = changes[p.id]?.madeToOrder !== undefined ? changes[p.id].madeToOrder : (p.madeToOrder  || false);
     const pv         = changes[p.id]?.priceVaries !== undefined ? changes[p.id].priceVaries : (p.priceVaries  || false);
+    const pe         = changes[p.id]?.priceEach   !== undefined ? changes[p.id].priceEach   : (p.priceEach    || false);
     const priceVal   = changes[p.id]?.price       !== undefined ? changes[p.id].price       : (p.price        || 0);
     const qtyChanged   = changes[p.id]?.qty   !== undefined;
     const priceChanged = changes[p.id]?.price !== undefined;
@@ -640,6 +642,13 @@ function renderTable() {
           <span class="pv-slider"></span>
         </label>
       </td>
+      <td style="text-align:center">
+        <label class="pv-toggle" title="When ON: price displays as '$X each' on the site.">
+          <input type="checkbox" ${pe ? 'checked' : ''}
+            onchange="setPriceEach('${p.id}', this.checked)">
+          <span class="pv-slider"></span>
+        </label>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -676,6 +685,20 @@ function setMadeToOrder(id, value) {
     delete changes[id].madeToOrder;
   } else {
     changes[id].madeToOrder = value;
+  }
+  if (Object.keys(changes[id]).length === 0) delete changes[id];
+  renderTable();
+  updateChangesBar();
+}
+
+function setPriceEach(id, value) {
+  const prod = products.find(p => p.id === id);
+  if (!prod) return;
+  if (!changes[id]) changes[id] = {};
+  if (value === (prod.priceEach || false)) {
+    delete changes[id].priceEach;
+  } else {
+    changes[id].priceEach = value;
   }
   if (Object.keys(changes[id]).length === 0) delete changes[id];
   renderTable();
@@ -830,6 +853,7 @@ function downloadJSON() {
     if (changes[p.id]?.qty         !== undefined) copy.quantity    = changes[p.id].qty;
     if (changes[p.id]?.madeToOrder !== undefined) copy.madeToOrder = changes[p.id].madeToOrder;
     if (changes[p.id]?.priceVaries !== undefined) copy.priceVaries = changes[p.id].priceVaries;
+    if (changes[p.id]?.priceEach   !== undefined) copy.priceEach   = changes[p.id].priceEach;
     if (changes[p.id]?.price       !== undefined) copy.price       = changes[p.id].price;
     return copy;
   });
