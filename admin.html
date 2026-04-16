@@ -77,6 +77,84 @@
     .btn-orange { background: #D2762B; color: white; }
     .btn-blue   { background: #2196F3; color: white; }
     .btn-gray   { background: #6c757d; color: white; }
+    .btn-teal   { background: #68a6aa; color: white; }
+    .btn-purple { background: #7c4dba; color: white; }
+    .btn-sm     { padding: 7px 14px; font-size: 12px; }
+
+    /* ── Sheets Sync Panel ────────────────────────────────────────── */
+    #sheets-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: linear-gradient(135deg,#1a4054,#68a6aa);
+      overflow-y: auto;
+      padding: 20px;
+    }
+    #sheets-panel.open { display: block; }
+    .sheets-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sheets-header h2 { margin:0; color:white; font-size:1.3rem; }
+    .sheets-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .sheets-card h3 { margin:0 0 14px; color:#1a4054; font-size:1rem; display:flex; align-items:center; gap:8px; }
+    .url-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .url-row input { flex:1; min-width:200px; padding:9px 12px; border:2px solid #ddd; border-radius:8px; font-size:13px; }
+    .url-row input:focus { outline:none; border-color:#68a6aa; }
+    .conn-status { font-size:0.85rem; margin-top:8px; }
+    .conn-ok   { color:#2e7d32; } .conn-err { color:#c62828; }
+    .script-box {
+      background:#1e1e2e; color:#cdd6f4; border-radius:8px;
+      padding:14px 16px; font-size:12px; font-family:monospace;
+      overflow-x:auto; white-space:pre; margin:10px 0;
+      max-height:260px; overflow-y:auto;
+    }
+    .mapping-toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+    .mapping-toolbar input { padding:7px 10px; border:2px solid #ddd; border-radius:6px; font-size:13px; width:220px; }
+    .mapping-toolbar input:focus { outline:none; border-color:#68a6aa; }
+    #mapping-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    #mapping-table th { background:#1a4054; color:white; padding:9px 12px; text-align:left; }
+    #mapping-table td { padding:8px 12px; border-bottom:1px solid #f0f0f0; }
+    #mapping-table tr:hover td { background:#f7fafc; }
+    .map-select {
+      width:100%; padding:5px 8px; border:2px solid #ddd;
+      border-radius:6px; font-size:12px;
+    }
+    .map-select:focus { outline:none; border-color:#68a6aa; }
+    .map-select.matched  { border-color:#4CAF50; background:#f0fff4; }
+    .map-select.unmatched { border-color:#ddd; }
+    .sync-badge { font-size:0.72rem; padding:2px 7px; border-radius:8px; margin-left:6px; }
+    .sync-updated { background:#c8e6c9; color:#2e7d32; }
+    .sync-skipped { background:#fff3e0; color:#e65100; }
+    .steps-list { counter-reset:step; list-style:none; padding:0; margin:0; }
+    .steps-list li {
+      counter-increment:step; padding:8px 0 8px 40px; position:relative;
+      border-bottom:1px solid #f0f0f0; font-size:0.9rem; color:#333;
+    }
+    .steps-list li:last-child { border-bottom:none; }
+    .steps-list li::before {
+      content:counter(step);
+      position:absolute; left:0; top:8px;
+      width:26px; height:26px; background:#1a4054; color:white;
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:0.8rem; font-weight:bold;
+    }
+    .steps-list code { background:#f0f4f8; padding:1px 5px; border-radius:4px; font-size:0.85em; }
+    .pull-summary { background:#e8f5e9; border-radius:8px; padding:12px 16px; margin-top:10px; font-size:0.88rem; color:#2e7d32; display:none; }
 
     .info-bar {
       background: #e3f2fd;
@@ -348,6 +426,7 @@
   <div class="admin-header">
     <h1>&#128230; Inventory Manager — J&amp;C Creations</h1>
     <div class="admin-actions">
+      <button class="btn btn-teal" onclick="openSheetsPanel()">&#128202; Sheets Sync</button>
       <button class="btn btn-orange" onclick="openAddModal()">&#43; Add New Product</button>
       <button class="btn btn-blue" onclick="reloadFromSite()">&#128260; Reload from Site</button>
       <button class="btn btn-green" onclick="downloadJSON()">&#11015; Download Updated JSON</button>
@@ -391,6 +470,88 @@
   </table>
 
   <div style="height:70px"></div> <!-- spacer for sticky bar -->
+</div>
+
+<!-- ── SHEETS SYNC PANEL ──────────────────────────────────────────────────── -->
+<div id="sheets-panel">
+  <div class="sheets-header">
+    <h2>&#128202; Google Sheets Sync</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-green btn-sm" onclick="pullFromSheets()">&#11015; Pull Prices &amp; Qty</button>
+      <button class="btn btn-purple btn-sm" onclick="pushToSheets()">&#11014; Push Qty to Sheet</button>
+      <button class="btn btn-gray btn-sm" onclick="closeSheetsPanel()">&#10005; Close</button>
+    </div>
+  </div>
+
+  <!-- Setup instructions -->
+  <div class="sheets-card" id="setup-card">
+    <h3>&#9881; One-Time Setup</h3>
+    <ol class="steps-list">
+      <li>Open your Google Sheet, then click <code>Extensions</code> → <code>Apps Script</code></li>
+      <li>Delete any existing code, paste the script below, then save (<kbd>Ctrl+S</kbd>)</li>
+      <li>In Apps Script, click the <strong>⚙ Project Settings</strong> (gear icon, left sidebar)</li>
+      <li>Scroll to <strong>Script Properties</strong> → <strong>Add script property</strong> and add all four:
+        <ul style="margin-top:6px;font-size:0.85rem;line-height:1.9">
+          <li><code>GITHUB_TOKEN</code> → your GitHub personal access token (needs <em>repo</em> scope)</li>
+          <li><code>GITHUB_OWNER</code> → <code>jjackson8gwu</code></li>
+          <li><code>GITHUB_REPO</code> → <code>JC-Creation</code></li>
+          <li><code>GITHUB_FILE</code> → <code>resources/products.json</code></li>
+        </ul>
+      </li>
+      <li>Click <strong>Deploy</strong> → <strong>New deployment</strong> → Type: <strong>Web app</strong><br>
+          Set <em>Execute as</em>: <strong>Me</strong> &nbsp;|&nbsp; <em>Who has access</em>: <strong>Anyone</strong><br>
+          Click <strong>Deploy</strong>, authorize when prompted, then copy the Web App URL</li>
+      <li>Paste the URL in the box below and click <strong>Connect</strong></li>
+      <li>Back in Apps Script editor, run the <code>createTrigger()</code> function once — this enables automatic hourly sync from your sheet to the website</li>
+    </ol>
+    <div style="background:#e8f5e9;border-left:4px solid #4caf50;padding:10px 14px;border-radius:6px;font-size:0.85rem;margin-bottom:12px">
+      <strong>✅ How automatic sync works after setup:</strong><br>
+      • Customer buys online → website <em>and</em> Google Sheet quantities both decrease automatically<br>
+      • You update quantities in your Google Sheet → website updates within the hour (via hourly trigger)
+    </div>
+    <button class="btn btn-gray btn-sm" onclick="toggleScript()" style="margin-bottom:8px">&#128196; Show / Hide Apps Script Code</button>
+    <div id="apps-script-code" style="display:none">
+      <div class="script-box" id="script-content"></div>
+      <button class="btn btn-teal btn-sm" onclick="copyScript()" style="margin-top:6px">&#128203; Copy Script</button>
+    </div>
+  </div>
+
+  <!-- Connection -->
+  <div class="sheets-card">
+    <h3>&#128279; Apps Script URL</h3>
+    <div class="url-row">
+      <input type="text" id="sheet-url-input" placeholder="https://script.google.com/macros/s/…/exec">
+      <button class="btn btn-teal btn-sm" onclick="connectSheet()">&#9654; Connect</button>
+    </div>
+    <div class="conn-status" id="conn-status"></div>
+  </div>
+
+  <!-- Mapping table (shown after connect) -->
+  <div class="sheets-card" id="mapping-card" style="display:none">
+    <h3>&#128279; Product Mapping <span id="map-counts" style="font-weight:normal;font-size:0.85rem;color:#666"></span></h3>
+    <p style="color:#555;font-size:0.88rem;margin:0 0 12px">
+      Each site product is matched to a row in your Google Sheet. Green = auto-matched.
+      Use the dropdown to fix or add a match manually.
+    </p>
+    <div class="mapping-toolbar">
+      <input type="text" id="map-search" placeholder="Search products…" oninput="renderMappingTable()">
+      <button class="btn btn-blue btn-sm" onclick="autoMatchAll()">&#9889; Auto-Match All</button>
+      <button class="btn btn-green btn-sm" onclick="saveMapping()">&#128190; Save Mapping</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="mapping-table">
+        <thead><tr>
+          <th>Site Product</th>
+          <th>Category</th>
+          <th>Matched Sheet Row</th>
+          <th>Sheet Price</th>
+          <th>Sheet Qty</th>
+        </tr></thead>
+        <tbody id="mapping-body"></tbody>
+      </table>
+    </div>
+    <div class="pull-summary" id="pull-summary"></div>
+  </div>
 </div>
 
 <!-- ── ADD NEW PRODUCT MODAL ─────────────────────────────────────────────── -->
@@ -745,6 +906,447 @@ function updateChangesBar() {
   document.getElementById('changes-count').textContent =
     count === 0 ? 'No unsaved changes' : `${count} unsaved change${count > 1 ? 's' : ''}`;
   bar.classList.toggle('visible', count > 0);
+}
+
+// ── Google Sheets Sync ───────────────────────────────────────────────────────
+const APPS_SCRIPT_CODE = `// ============================================================
+// JC Creations — Full Two-Way Inventory Sync Script
+// ============================================================
+// SETUP INSTRUCTIONS:
+// 1. Paste this into Apps Script (Extensions → Apps Script)
+// 2. Set Script Properties (Project Settings → Script Properties):
+//      GITHUB_TOKEN  = your GitHub personal access token
+//      GITHUB_OWNER  = jjackson8gwu
+//      GITHUB_REPO   = JC-Creation
+//      GITHUB_FILE   = resources/products.json
+// 3. Deploy as Web App:
+//      Execute as: Me  |  Who has access: Anyone
+// 4. Run createTrigger() once from the Apps Script editor
+//    to enable automatic hourly sheet→website sync
+// ============================================================
+
+var COL_NAME    = 1;   // Column A = product name
+var COL_PRICE   = 10;  // Column J = sell price
+var COL_QTY     = 13;  // Column M = inventory quantity
+var HEADER_ROWS = 1;   // Rows to skip at top (headers)
+
+// ── Utility: normalize a product name for fuzzy matching ──
+function normName(s) {
+  return String(s || '').toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .replace(/\\b(the|a|an|and|or|of|for|holder|set|pack)\\b/g, '')
+    .replace(/\\s+/g, ' ').trim();
+}
+
+// Token-overlap score between two names (0–1)
+function tokenScore(a, b) {
+  var na = normName(a).split(' ').filter(Boolean);
+  var nb = normName(b).split(' ').filter(Boolean);
+  if (!na.length || !nb.length) return 0;
+  var setB = {};
+  nb.forEach(function(w){ setB[w] = true; });
+  var common = na.filter(function(w){ return setB[w]; }).length;
+  return common / Math.max(na.length, nb.length);
+}
+
+// ── GET: return all sheet rows as {row, name, price, qty} ──
+function doGet(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    var data  = sheet.getDataRange().getValues();
+    var rows  = [];
+    for (var i = HEADER_ROWS; i < data.length; i++) {
+      var name = String(data[i][COL_NAME - 1]).trim();
+      if (!name) continue;
+      var price = parseFloat(data[i][COL_PRICE - 1]);
+      var qty   = parseInt(data[i][COL_QTY - 1]);
+      rows.push({ row: i + 1, name: name,
+        price: isNaN(price) ? 0 : price,
+        qty:   isNaN(qty)   ? 0 : qty });
+    }
+    return respond({ success: true, products: rows });
+  } catch(err) { return respond({ success: false, error: err.message }); }
+}
+
+// ── POST: two modes ──
+//   mode 1 (from admin page):  { updates: [{row, qty}, ...] }
+//   mode 2 (from Netlify checkout): { items: [{name, quantity}, ...] }
+function doPost(e) {
+  try {
+    var body    = JSON.parse(e.postData.contents);
+    var sheet   = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    var data    = sheet.getDataRange().getValues();
+
+    // Mode 1: direct row updates from admin
+    if (body.updates) {
+      body.updates.forEach(function(u) {
+        if (u.row && u.qty !== undefined)
+          sheet.getRange(u.row, COL_QTY).setValue(u.qty);
+      });
+      return respond({ success: true, updated: body.updates.length });
+    }
+
+    // Mode 2: reduce by name match (from online checkout)
+    if (body.items) {
+      var reduced = [];
+      body.items.forEach(function(item) {
+        var itemNorm = normName(item.name);
+        var bestRow = -1, bestScore = 0;
+        for (var i = HEADER_ROWS; i < data.length; i++) {
+          var cellName = String(data[i][COL_NAME - 1]).trim();
+          if (!cellName) continue;
+          var s = tokenScore(item.name, cellName);
+          if (s > bestScore) { bestScore = s; bestRow = i; }
+        }
+        if (bestScore >= 0.5 && bestRow >= 0) {
+          var curQty = parseInt(data[bestRow][COL_QTY - 1]) || 0;
+          var newQty = Math.max(0, curQty - (item.quantity || 1));
+          sheet.getRange(bestRow + 1, COL_QTY).setValue(newQty);
+          data[bestRow][COL_QTY - 1] = newQty; // update local copy
+          reduced.push({ name: item.name, matched: data[bestRow][COL_NAME - 1], before: curQty, after: newQty });
+        }
+      });
+      return respond({ success: true, reduced: reduced });
+    }
+
+    return respond({ success: false, error: 'Unknown request format.' });
+  } catch(err) { return respond({ success: false, error: err.message }); }
+}
+
+// ── Hourly trigger: read sheet → update products.json on GitHub ──
+function syncSheetToGitHub() {
+  var props = PropertiesService.getScriptProperties();
+  var token = props.getProperty('GITHUB_TOKEN');
+  var owner = props.getProperty('GITHUB_OWNER') || 'jjackson8gwu';
+  var repo  = props.getProperty('GITHUB_REPO')  || 'JC-Creation';
+  var file  = props.getProperty('GITHUB_FILE')  || 'resources/products.json';
+
+  if (!token) {
+    Logger.log('ERROR: GITHUB_TOKEN Script Property is not set. Aborting sync.');
+    return;
+  }
+
+  // 1. Read current products.json from GitHub
+  var getUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + file;
+  var getResp = UrlFetchApp.fetch(getUrl, {
+    headers: { 'Authorization': 'Bearer ' + token,
+               'Accept': 'application/vnd.github+json',
+               'X-GitHub-Api-Version': '2022-11-28',
+               'User-Agent': 'JCCreations-AppsScript-Sync' },
+    muteHttpExceptions: true
+  });
+  if (getResp.getResponseCode() !== 200) {
+    Logger.log('Failed to fetch products.json: ' + getResp.getContentText());
+    return;
+  }
+  var ghData  = JSON.parse(getResp.getContentText());
+  var catalog = JSON.parse(Utilities.newBlob(Utilities.base64Decode(ghData.content)).getDataAsString());
+  var sha     = ghData.sha;
+
+  // 2. Read current sheet data
+  var sheet      = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var sheetData  = sheet.getDataRange().getValues();
+  var sheetRows  = {};
+  for (var i = HEADER_ROWS; i < sheetData.length; i++) {
+    var nm = String(sheetData[i][COL_NAME - 1]).trim();
+    if (!nm) continue;
+    sheetRows[normName(nm)] = {
+      price: parseFloat(sheetData[i][COL_PRICE - 1]),
+      qty:   parseInt(sheetData[i][COL_QTY - 1])
+    };
+  }
+
+  // 3. Update catalog quantities (and prices) using fuzzy match
+  var changed = 0;
+  catalog.products.forEach(function(p) {
+    var pNorm = normName(p.name);
+    // Try exact norm match first, then best token score
+    var match = sheetRows[pNorm];
+    if (!match) {
+      var bestScore = 0, bestKey = null;
+      Object.keys(sheetRows).forEach(function(k) {
+        var s = tokenScore(p.name, k);
+        if (s > bestScore) { bestScore = s; bestKey = k; }
+      });
+      if (bestScore >= 0.5) match = sheetRows[bestKey];
+    }
+    if (match) {
+      if (!isNaN(match.qty) && match.qty !== p.quantity) { p.quantity = match.qty; changed++; }
+      if (!isNaN(match.price) && match.price > 0 && match.price !== p.price) { p.price = match.price; changed++; }
+    }
+  });
+
+  if (changed === 0) {
+    Logger.log('Sheet sync: no changes detected.');
+    return;
+  }
+
+  // 4. Commit updated products.json back to GitHub
+  var newContent = Utilities.base64Encode(JSON.stringify(catalog, null, 2));
+  var putResp = UrlFetchApp.fetch(getUrl, {
+    method: 'put',
+    contentType: 'application/json',
+    headers: { 'Authorization': 'Bearer ' + token,
+               'Accept': 'application/vnd.github+json',
+               'X-GitHub-Api-Version': '2022-11-28',
+               'User-Agent': 'JCCreations-AppsScript-Sync' },
+    payload: JSON.stringify({
+      message: 'Auto-sync inventory from Google Sheet (' + changed + ' changes)',
+      content: newContent,
+      sha: sha
+    }),
+    muteHttpExceptions: true
+  });
+  var putCode = putResp.getResponseCode();
+  if (putCode === 200 || putCode === 201) {
+    Logger.log('Sheet sync: committed ' + changed + ' changes to GitHub.');
+  } else {
+    Logger.log('Sheet sync: GitHub PUT failed (' + putCode + '): ' + putResp.getContentText());
+  }
+}
+
+// ── Run once from the editor to create an hourly trigger ──
+function createTrigger() {
+  // Remove duplicates first
+  deleteTriggers();
+  ScriptApp.newTrigger('syncSheetToGitHub')
+    .timeBased().everyHours(1).create();
+  Logger.log('Hourly trigger created for syncSheetToGitHub.');
+}
+
+function deleteTriggers() {
+  ScriptApp.getProjectTriggers().forEach(function(t) {
+    ScriptApp.deleteTrigger(t);
+  });
+  Logger.log('All triggers deleted.');
+}
+
+function respond(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+let sheetProducts = [];  // [{row, name, price, qty}] loaded from Apps Script
+let sheetMapping  = {};  // {productId: {row, sheetName}}
+let sheetUrl      = '';
+
+// Populate script display
+document.getElementById('script-content').textContent = APPS_SCRIPT_CODE;
+
+function openSheetsPanel() {
+  // Restore saved URL and mapping
+  sheetUrl = localStorage.getItem('jcc_sheet_url') || '';
+  try { sheetMapping = JSON.parse(localStorage.getItem('jcc_sheet_mapping') || '{}'); } catch(e) { sheetMapping = {}; }
+  document.getElementById('sheet-url-input').value = sheetUrl;
+  document.getElementById('sheets-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (sheetUrl) connectSheet();
+}
+
+function closeSheetsPanel() {
+  document.getElementById('sheets-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleScript() {
+  const el = document.getElementById('apps-script-code');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function copyScript() {
+  navigator.clipboard.writeText(APPS_SCRIPT_CODE)
+    .then(() => alert('Apps Script code copied to clipboard!'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = APPS_SCRIPT_CODE;
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      alert('Apps Script code copied!');
+    });
+}
+
+async function connectSheet() {
+  const url = document.getElementById('sheet-url-input').value.trim();
+  const status = document.getElementById('conn-status');
+  if (!url) { status.innerHTML = '<span class="conn-err">Please enter a URL.</span>'; return; }
+  sheetUrl = url;
+  localStorage.setItem('jcc_sheet_url', url);
+  status.innerHTML = 'Connecting…';
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Script returned an error.');
+    sheetProducts = data.products || [];
+    status.innerHTML = `<span class="conn-ok">✓ Connected — ${sheetProducts.length} products loaded from sheet.</span>`;
+    document.getElementById('mapping-card').style.display = 'block';
+    autoMatchAll();
+  } catch(e) {
+    status.innerHTML = `<span class="conn-err">✗ Could not connect: ${e.message}. Check the URL and make sure the Web App is deployed with "Anyone" access.</span>`;
+    document.getElementById('mapping-card').style.display = 'none';
+  }
+}
+
+// ── Name normalization for fuzzy matching ─────────────────────────────────────
+function normName(s) {
+  return (s || '').toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .replace(/\b(the|a|an|and|or|of|for|holder|set|pack)\b/g, '')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function matchScore(a, b) {
+  const na = normName(a), nb = normName(b);
+  if (na === nb) return 1;
+  const ta = new Set(na.split(' ').filter(Boolean));
+  const tb = new Set(nb.split(' ').filter(Boolean));
+  let common = 0;
+  ta.forEach(w => { if (tb.has(w)) common++; });
+  return common / Math.max(ta.size, tb.size, 1);
+}
+
+function bestMatch(productName) {
+  let best = null, bestScore = 0;
+  sheetProducts.forEach(sp => {
+    const s = matchScore(productName, sp.name);
+    if (s > bestScore) { bestScore = s; best = sp; }
+  });
+  return bestScore >= 0.5 ? best : null;
+}
+
+function autoMatchAll() {
+  products.forEach(p => {
+    if (!sheetMapping[p.id] || !sheetMapping[p.id].row) {
+      const match = bestMatch(p.name);
+      if (match) sheetMapping[p.id] = { row: match.row, sheetName: match.name };
+    }
+  });
+  saveMapping(true);
+  renderMappingTable();
+}
+
+function saveMapping(silent) {
+  localStorage.setItem('jcc_sheet_mapping', JSON.stringify(sheetMapping));
+  if (!silent) alert('Mapping saved!');
+}
+
+function updateMapping(productId, rowStr) {
+  const row  = parseInt(rowStr);
+  const sp   = sheetProducts.find(p => p.row === row);
+  if (row && sp) {
+    sheetMapping[productId] = { row, sheetName: sp.name };
+  } else {
+    delete sheetMapping[productId];
+  }
+}
+
+function renderMappingTable() {
+  const search = (document.getElementById('map-search').value || '').toLowerCase();
+  const tbody  = document.getElementById('mapping-body');
+  let matched = 0, total = 0;
+
+  const rows = products
+    .filter(p => !search || p.name.toLowerCase().includes(search))
+    .map(p => {
+      total++;
+      const m   = sheetMapping[p.id];
+      const sp  = m ? sheetProducts.find(s => s.row === m.row) : null;
+      if (m) matched++;
+
+      const options = sheetProducts.map(s =>
+        `<option value="${s.row}" ${m && m.row === s.row ? 'selected' : ''}>${s.name}</option>`
+      ).join('');
+
+      const priceCell = sp ? `$${sp.price.toFixed(2)}` : '<span style="color:#bbb">—</span>';
+      const qtyCell   = sp ? sp.qty : '<span style="color:#bbb">—</span>';
+
+      return `<tr>
+        <td><strong>${p.name}</strong></td>
+        <td><span style="font-size:0.78rem;background:#e3f2fd;color:#1565c0;padding:2px 7px;border-radius:8px">${(p.category||'').replace(/_/g,' ')}</span></td>
+        <td>
+          <select class="map-select ${m ? 'matched' : 'unmatched'}" onchange="updateMapping('${p.id}', this.value)">
+            <option value="">— Not mapped —</option>
+            ${options}
+          </select>
+        </td>
+        <td>${priceCell}</td>
+        <td>${qtyCell}</td>
+      </tr>`;
+    });
+
+  tbody.innerHTML = rows.join('');
+  document.getElementById('map-counts').textContent = `${matched} / ${total} mapped`;
+}
+
+// ── Pull prices & quantities from sheet ───────────────────────────────────────
+async function pullFromSheets() {
+  if (!sheetUrl) { alert('Connect to your Google Sheet first.'); return; }
+  if (!sheetProducts.length) { alert('No sheet data loaded. Click Connect first.'); return; }
+
+  let updatedCount = 0, skippedCount = 0;
+  const updated = [];
+
+  products.forEach(p => {
+    const m  = sheetMapping[p.id];
+    const sp = m ? sheetProducts.find(s => s.row === m.row) : null;
+    if (!sp) { skippedCount++; return; }
+
+    // Apply sheet values to product
+    if (!changes[p.id]) changes[p.id] = {};
+    if (sp.price !== (p.price || 0)) {
+      changes[p.id].price = sp.price;
+      updated.push(`${p.name}: price $${p.price} → $${sp.price}`);
+    }
+    if (sp.qty !== p.quantity) {
+      changes[p.id].qty = sp.qty;
+      updated.push(`${p.name}: qty ${p.quantity} → ${sp.qty}`);
+    }
+    if (Object.keys(changes[p.id]).length === 0) delete changes[p.id];
+    else updatedCount++;
+  });
+
+  renderTable();
+  updateChangesBar();
+
+  const summary = document.getElementById('pull-summary');
+  if (updatedCount > 0) {
+    summary.style.display = 'block';
+    summary.innerHTML = `<strong>✓ ${updatedCount} products updated</strong> (${skippedCount} skipped — not mapped).<br>
+      Review changes in the inventory table, then click <strong>Download Updated JSON</strong> to save.`;
+  } else {
+    summary.style.display = 'block';
+    summary.innerHTML = `<strong>✓ All prices and quantities already match your sheet.</strong> No changes needed.`;
+  }
+}
+
+// ── Push quantities to sheet ──────────────────────────────────────────────────
+async function pushToSheets() {
+  if (!sheetUrl) { alert('Connect to your Google Sheet first.'); return; }
+
+  const updates = [];
+  products.forEach(p => {
+    const m = sheetMapping[p.id];
+    if (!m) return;
+    const qty = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
+    updates.push({ row: m.row, qty });
+  });
+
+  if (!updates.length) { alert('No mapped products to push.'); return; }
+
+  try {
+    const res  = await fetch(sheetUrl, {
+      method:  'POST',
+      body:    JSON.stringify({ updates }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert(`✓ Pushed ${data.updated} inventory quantities to your Google Sheet.`);
+    } else {
+      alert('Error from sheet: ' + (data.error || 'Unknown error'));
+    }
+  } catch(e) {
+    alert('Could not reach the Apps Script: ' + e.message);
+  }
 }
 
 // ── Add New Product ──────────────────────────────────────────────────────────

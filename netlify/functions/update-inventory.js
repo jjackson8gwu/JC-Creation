@@ -1,12 +1,51 @@
 // Netlify Function: update-inventory
-// Called at checkout to reduce product quantities in products.json via GitHub API.
-// Requires GITHUB_TOKEN environment variable set in Netlify site settings.
+// Called at checkout to:
+//   1. Reduce product quantities in products.json via GitHub API.
+//   2. Notify the Google Apps Script Web App to reduce the same items in Google Sheets.
+// Env vars required in Netlify site settings:
+//   GITHUB_TOKEN  — GitHub personal access token with repo scope
+//   SHEET_URL     — Google Apps Script Web App URL (optional; skipped if not set)
 
 const https = require('https');
 
 const GITHUB_OWNER = 'jjackson8gwu';
 const GITHUB_REPO  = 'JC-Creation';
 const FILE_PATH    = 'resources/products.json';
+
+// Promisified HTTPS POST to an arbitrary URL (used for Apps Script notification).
+// Follows up to 5 redirects (Google Apps Script may redirect on first call).
+function httpsPost(url, payload, redirectsLeft = 5) {
+  return new Promise((resolve, reject) => {
+    const body   = JSON.stringify(payload);
+    const parsed = new URL(url);
+    const options = {
+      hostname: parsed.hostname,
+      port:     parsed.port || 443,
+      path:     parsed.pathname + parsed.search,
+      method:   'POST',
+      headers: {
+        'Content-Type':   'application/json',
+        'Content-Length': Buffer.byteLength(body),
+        'User-Agent':     'JCCreations-Inventory-Bot'
+      }
+    };
+    const req = https.request(options, res => {
+      // Follow redirects (Apps Script sometimes issues a 302 on first POST)
+      if ([301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location && redirectsLeft > 0) {
+        res.resume(); // drain the response
+        const method = res.statusCode === 307 || res.statusCode === 308 ? 'POST' : 'POST';
+        resolve(httpsPost(res.headers.location, payload, redirectsLeft - 1));
+        return;
+      }
+      let data = '';
+      res.on('data', c => { data += c; });
+      res.on('end', () => resolve({ status: res.statusCode, body: data }));
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
 
 // Promisified HTTPS request
 function githubRequest(method, path, token, body) {
@@ -140,6 +179,25 @@ exports.handler = async (event) => {
   } catch (e) {
     console.error('Failed to commit inventory update:', e.message);
     return { statusCode: 502, headers: corsHeaders, body: JSON.stringify({ error: 'Could not save inventory update to GitHub.' }) };
+  }
+
+  // ── 4. Notify Apps Script to reduce the same items in Google Sheets ────────
+  const sheetUrl = process.env.SHEET_URL;
+  if (sheetUrl) {
+    try {
+      // Send the original order items so the sheet can match by name and subtract qty
+      const sheetItems = orderItems.map(item => ({
+        name: item.name || (updated.find(u => u.id === item.id || u.name === item.name) || {}).name || '',
+        quantity: item.quantity || 1
+      }));
+      const sheetRes = await httpsPost(sheetUrl, { items: sheetItems });
+      console.log(`Apps Script notified — status ${sheetRes.status}: ${sheetRes.body.slice(0, 200)}`);
+    } catch (e) {
+      // Non-fatal: GitHub commit already succeeded, just log the sheet error
+      console.warn('Could not notify Apps Script (sheet will sync on next hourly trigger):', e.message);
+    }
+  } else {
+    console.log('SHEET_URL not configured — skipping Google Sheets notification.');
   }
 
   return {
