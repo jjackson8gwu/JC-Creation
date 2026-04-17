@@ -1220,9 +1220,9 @@
       "image": "../images/$2 Minis/Peacock.JPG"
     },
     {
-      "id": "pidgeon",
-      "name": "Pidgeon",
-      "description": "Custom 3D printed Pidgeon",
+      "id": "pigeon",
+      "name": "Pigeon",
+      "description": "Custom 3D printed Pigeon",
       "price": 2,
       "quantity": 9,
       "category": "2_dollar_minis",
@@ -1286,9 +1286,9 @@
       "image": "../images/$2 Minis/Reindeer_Dragon.JPG"
     },
     {
-      "id": "ruldolph-reindeer",
-      "name": "Ruldolph Reindeer",
-      "description": "Custom 3D printed Ruldolph Reindeer",
+      "id": "rudolph-reindeer",
+      "name": "Rudolph Reindeer",
+      "description": "Custom 3D printed Rudolph Reindeer",
       "price": 2,
       "quantity": 3,
       "category": "2_dollar_minis",
@@ -1546,9 +1546,9 @@
       "image": "../images/$3 Minis/Girl_Dolphin.JPG"
     },
     {
-      "id": "dobberman",
-      "name": "Dobberman",
-      "description": "Custom 3D printed Dobberman",
+      "id": "dobermann",
+      "name": "Dobermann",
+      "description": "Custom 3D printed Dobermann",
       "price": 3,
       "quantity": 8,
       "category": "3_dollar_minis",
@@ -1675,9 +1675,9 @@
       "image": "../images/$3 Minis/Twirl_Octopus.JPG"
     },
     {
-      "id": "schauzer",
-      "name": "Schauzer",
-      "description": "Custom 3D printed Schauzer",
+      "id": "schnauzer",
+      "name": "Schnauzer",
+      "description": "Custom 3D printed Schnauzer",
       "price": 4,
       "quantity": 15,
       "category": "4_dollar_minis",
