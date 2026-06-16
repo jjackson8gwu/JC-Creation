@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventory Manager - J&C Creations</title>
+  <title>Inventory Manager — J&amp;C Creations</title>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #1a4054, #68a6aa);
       min-height: 100vh;
-      margin: 0;
       padding: 20px;
     }
+
+    /* ── Login ────────────────────────────────────────────── */
     #login-screen {
       max-width: 360px;
       margin: 80px auto;
@@ -22,55 +23,37 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.3);
       text-align: center;
     }
-    #login-screen h1 { color: #1a4054; margin-top: 0; font-size: 1.6rem; }
-    #login-screen p { color: #666; }
+    #login-screen h1 { color: #1a4054; font-size: 1.6rem; margin-bottom: 8px; }
+    #login-screen p { color: #666; margin-bottom: 20px; }
     #pw-input {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      margin: 12px 0;
+      width: 100%; padding: 12px; border: 2px solid #ddd;
+      border-radius: 8px; font-size: 16px; margin-bottom: 12px;
     }
     #pw-input:focus { outline: none; border-color: #D2762B; }
     #login-btn {
-      background: #D2762B;
-      color: white;
-      border: none;
-      padding: 13px 30px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.3s;
+      background: #D2762B; color: white; border: none;
+      padding: 13px 30px; border-radius: 8px; font-size: 16px;
+      font-weight: bold; cursor: pointer; width: 100%;
     }
     #login-btn:hover { background: #b8641f; }
     #pw-error { color: #e74c3c; font-size: 0.9rem; margin-top: 8px; display: none; }
 
+    /* ── Admin shell ───────────────────────────────────────── */
     #admin-screen { display: none; }
     .admin-header {
-      background: #1a4054;
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
+      background: #1a4054; color: white;
+      padding: 16px 24px; border-radius: 12px;
       margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
-    .admin-header h1 { margin: 0; font-size: 1.4rem; }
+    .admin-header h1 { font-size: 1.4rem; }
     .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Buttons ────────────────────────────────────────────── */
     .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-      transition: opacity 0.2s;
+      padding: 10px 20px; border: none; border-radius: 8px;
+      cursor: pointer; font-size: 14px; font-weight: bold; transition: opacity 0.2s;
     }
     .btn:hover { opacity: 0.85; }
     .btn-green  { background: #4CAF50; color: white; }
@@ -78,1403 +61,940 @@
     .btn-blue   { background: #2196F3; color: white; }
     .btn-gray   { background: #6c757d; color: white; }
     .btn-teal   { background: #68a6aa; color: white; }
-    .btn-purple { background: #7c4dba; color: white; }
+    .btn-red    { background: #e53935; color: white; }
     .btn-sm     { padding: 7px 14px; font-size: 12px; }
 
-    /* ── Sheets Sync Panel ────────────────────────────────────────── */
-    #sheets-panel {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      background: linear-gradient(135deg,#1a4054,#68a6aa);
-      overflow-y: auto;
-      padding: 20px;
+    /* ── Stats bar ──────────────────────────────────────────── */
+    .stats-bar {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
     }
-    #sheets-panel.open { display: block; }
-    .sheets-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 14px 20px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-      gap: 10px;
+    .stat-card {
+      background: white; border-radius: 10px; padding: 14px 20px;
+      flex: 1; min-width: 140px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .sheets-header h2 { margin:0; color:white; font-size:1.3rem; }
-    .sheets-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .sheets-card h3 { margin:0 0 14px; color:#1a4054; font-size:1rem; display:flex; align-items:center; gap:8px; }
-    .url-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .url-row input { flex:1; min-width:200px; padding:9px 12px; border:2px solid #ddd; border-radius:8px; font-size:13px; }
-    .url-row input:focus { outline:none; border-color:#68a6aa; }
-    .conn-status { font-size:0.85rem; margin-top:8px; }
-    .conn-ok   { color:#2e7d32; } .conn-err { color:#c62828; }
-    .script-box {
-      background:#1e1e2e; color:#cdd6f4; border-radius:8px;
-      padding:14px 16px; font-size:12px; font-family:monospace;
-      overflow-x:auto; white-space:pre; margin:10px 0;
-      max-height:260px; overflow-y:auto;
-    }
-    .mapping-toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
-    .mapping-toolbar input { padding:7px 10px; border:2px solid #ddd; border-radius:6px; font-size:13px; width:220px; }
-    .mapping-toolbar input:focus { outline:none; border-color:#68a6aa; }
-    #mapping-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
-    #mapping-table th { background:#1a4054; color:white; padding:9px 12px; text-align:left; }
-    #mapping-table td { padding:8px 12px; border-bottom:1px solid #f0f0f0; }
-    #mapping-table tr:hover td { background:#f7fafc; }
-    .map-select {
-      width:100%; padding:5px 8px; border:2px solid #ddd;
-      border-radius:6px; font-size:12px;
-    }
-    .map-select:focus { outline:none; border-color:#68a6aa; }
-    .map-select.matched  { border-color:#4CAF50; background:#f0fff4; }
-    .map-select.unmatched { border-color:#ddd; }
-    .sync-badge { font-size:0.72rem; padding:2px 7px; border-radius:8px; margin-left:6px; }
-    .sync-updated { background:#c8e6c9; color:#2e7d32; }
-    .sync-skipped { background:#fff3e0; color:#e65100; }
-    .steps-list { counter-reset:step; list-style:none; padding:0; margin:0; }
-    .steps-list li {
-      counter-increment:step; padding:8px 0 8px 40px; position:relative;
-      border-bottom:1px solid #f0f0f0; font-size:0.9rem; color:#333;
-    }
-    .steps-list li:last-child { border-bottom:none; }
-    .steps-list li::before {
-      content:counter(step);
-      position:absolute; left:0; top:8px;
-      width:26px; height:26px; background:#1a4054; color:white;
-      border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-size:0.8rem; font-weight:bold;
-    }
-    .steps-list code { background:#f0f4f8; padding:1px 5px; border-radius:4px; font-size:0.85em; }
-    .pull-summary { background:#e8f5e9; border-radius:8px; padding:12px 16px; margin-top:10px; font-size:0.88rem; color:#2e7d32; display:none; }
+    .stat-card .stat-label { font-size: 0.78rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-card .stat-value { font-size: 1.8rem; font-weight: bold; color: #1a4054; }
 
-    .info-bar {
-      background: #e3f2fd;
-      border-left: 4px solid #2196F3;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      color: #1565c0;
-      font-size: 0.92rem;
-    }
-
+    /* ── Search / filter bar ───────────────────────────────── */
     .filter-bar {
-      background: white;
-      padding: 14px 18px;
-      border-radius: 10px;
-      margin-bottom: 16px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
+      background: white; border-radius: 12px; padding: 14px 20px;
+      margin-bottom: 16px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .filter-bar label { font-weight: bold; color: #333; }
-    .filter-bar select, .filter-bar input {
-      padding: 8px 12px;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
+    .filter-bar input, .filter-bar select {
+      padding: 8px 12px; border: 2px solid #ddd; border-radius: 8px;
+      font-size: 14px; flex: 1; min-width: 140px;
     }
-    .filter-bar select:focus, .filter-bar input:focus { outline: none; border-color: #D2762B; }
+    .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #68a6aa; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    /* ── Product table ─────────────────────────────────────── */
+    .table-wrap {
+      background: white; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12); overflow: hidden;
     }
-    thead { background: #1a4054; color: white; }
+    table { width: 100%; border-collapse: collapse; }
     th {
-      padding: 12px 14px;
-      text-align: left;
-      font-size: 0.85rem;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      user-select: none;
+      background: #1a4054; color: white; padding: 12px 14px;
+      text-align: left; font-size: 0.82rem; text-transform: uppercase;
+      letter-spacing: 0.04em; cursor: pointer; user-select: none;
+      white-space: nowrap;
     }
-    th:hover { background: #2a5f7f; }
-    td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+    th:hover { background: #225a73; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; font-size: 0.88rem; }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #f7fafc; }
+    tr:hover td { background: #f9fdfd; }
 
-    .qty-cell { display: flex; align-items: center; gap: 6px; }
-    .qty-btn {
-      width: 28px; height: 28px;
-      border: none; border-radius: 50%;
-      background: #ddd; cursor: pointer;
-      font-size: 16px; font-weight: bold;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
-    .qty-btn:hover { background: #bbb; }
     .qty-input {
-      width: 56px;
-      text-align: center;
-      padding: 5px 6px;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: bold;
+      width: 68px; padding: 5px 8px; border: 2px solid #ddd;
+      border-radius: 6px; font-size: 13px; text-align: center;
     }
-    .qty-input:focus { outline: none; border-color: #D2762B; }
-    .qty-input.changed { border-color: #4CAF50; background: #f0fff0; }
+    .qty-input:focus { outline: none; border-color: #68a6aa; }
+    .qty-input.changed { border-color: #D2762B; background: #fff8f0; }
 
-    .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-    .badge-in  { background: #e8f5e9; color: #2e7d32; }
-    .badge-out { background: #fff3e0; color: #e65100; }
-    .badge-low { background: #fff8e1; color: #f57f17; }
-
-    /* Made-to-Order toggle */
-    .mto-toggle {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-    }
-    .mto-toggle input { opacity: 0; width: 0; height: 0; }
-    .mto-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: #ccc;
-      border-radius: 24px;
-      transition: background 0.2s;
-    }
-    .mto-slider:before {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      left: 3px; bottom: 3px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.2s;
-    }
-    .mto-toggle input:checked + .mto-slider { background: #D2762B; }
-    .mto-toggle input:checked + .mto-slider:before { transform: translateX(20px); }
-
-    /* Price-Varies toggle — teal */
-    .pv-toggle {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-    }
-    .pv-toggle input { opacity: 0; width: 0; height: 0; }
-    .pv-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: #ccc;
-      border-radius: 24px;
-      transition: background 0.2s;
-    }
-    .pv-slider:before {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      left: 3px; bottom: 3px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.2s;
-    }
-    .pv-toggle input:checked + .pv-slider { background: #68a6aa; }
-    .pv-toggle input:checked + .pv-slider:before { transform: translateX(20px); }
-
-    /* Inline price input */
     .price-input {
-      width: 70px;
-      padding: 4px 6px;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      font-size: 13px;
-      text-align: right;
+      width: 80px; padding: 5px 8px; border: 2px solid #ddd;
+      border-radius: 6px; font-size: 13px; text-align: center;
     }
     .price-input:focus { outline: none; border-color: #68a6aa; }
-    .price-input.changed { border-color: #68a6aa; background: #f0fafa; }
+    .price-input.changed { border-color: #D2762B; background: #fff8f0; }
 
-    .category-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      background: #e3f2fd;
-      color: #1565c0;
+    .toggle-btn {
+      padding: 4px 12px; border: none; border-radius: 12px;
+      font-size: 11px; font-weight: bold; cursor: pointer;
     }
-    .changes-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #1a4054;
-      color: white;
-      padding: 14px 24px;
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      z-index: 1000;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
-    }
-    .changes-bar.visible { display: flex; }
-    .changes-count { font-weight: bold; }
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-      font-size: 1rem;
-    }
+    .toggle-on  { background: #e8f5e9; color: #2e7d32; }
+    .toggle-off { background: #f5f5f5; color: #999; }
 
-    /* ── New Product Modal ─────────────────────────────────────────── */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    .cat-badge {
+      font-size: 0.72rem; background: #e3f2fd; color: #1565c0;
+      padding: 2px 8px; border-radius: 10px; white-space: nowrap;
     }
-    .modal-backdrop.open { display: flex; }
+    .low-stock td:first-child { border-left: 3px solid #ff9800; }
+    .out-stock td:first-child { border-left: 3px solid #e53935; }
+
+    /* ── Changes bar ───────────────────────────────────────── */
+    #changes-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #1a4054; color: white;
+      padding: 14px 24px; display: flex;
+      align-items: center; justify-content: space-between;
+      transform: translateY(100%); transition: transform 0.3s;
+      z-index: 200; gap: 12px; flex-wrap: wrap;
+    }
+    #changes-bar.visible { transform: translateY(0); }
+    #changes-count { font-weight: bold; }
+
+    /* ── Add / Edit modal ──────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 1000;
+      overflow-y: auto; padding: 30px 20px;
+    }
+    .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
     .modal-box {
-      background: white;
-      border-radius: 16px;
-      padding: 28px 32px;
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      background: white; border-radius: 16px;
+      padding: 30px; max-width: 620px; width: 100%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
-    .modal-box h2 { margin: 0 0 20px; color: #1a4054; font-size: 1.3rem; }
-    .field-row { margin-bottom: 16px; }
-    .field-row label { display: block; font-weight: bold; color: #333; margin-bottom: 5px; font-size: 0.9rem; }
-    .field-row input[type=text],
-    .field-row input[type=number],
-    .field-row select,
-    .field-row textarea {
-      width: 100%;
-      padding: 9px 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      box-sizing: border-box;
+    .modal-box h2 { color: #1a4054; margin-bottom: 20px; font-size: 1.3rem; }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
     }
-    .field-row input:focus,
-    .field-row select:focus,
-    .field-row textarea:focus { outline: none; border-color: #D2762B; }
-    .field-row textarea { resize: vertical; min-height: 68px; }
-    .field-hint { font-size: 0.78rem; color: #888; margin-top: 4px; }
-    .field-row-inline { display: flex; gap: 16px; }
-    .field-row-inline .field-row { flex: 1; }
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      background: #f7fafc;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: bold;
+      color: #555; margin-bottom: 4px;
     }
-    .toggle-row span { font-size: 0.9rem; color: #333; }
-    .toggle-row small { display: block; font-size: 0.75rem; color: #888; }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-    .btn-red { background: #e74c3c; color: white; }
-    .new-row td { background: #f0fff4 !important; }
-    .new-badge { background: #c8e6c9; color: #2e7d32; font-size: 0.72rem; padding: 2px 6px; border-radius: 8px; margin-left: 6px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 9px 12px;
+      border: 2px solid #ddd; border-radius: 8px; font-size: 14px;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline: none; border-color: #68a6aa; }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
+    .checkbox-row input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
+    .modal-error { color: #e53935; font-size: 0.85rem; margin-top: 6px; display: none; }
 
-    @media (max-width: 600px) {
-      body { padding: 10px; }
-      table { font-size: 0.82rem; }
+    /* Image upload area */
+    .img-upload-area {
+      border: 2px dashed #ddd; border-radius: 10px;
+      padding: 18px; text-align: center; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      color: #999; font-size: 0.85rem;
+    }
+    .img-upload-area:hover { border-color: #68a6aa; background: #f0f8f8; }
+    .img-upload-area.dragging { border-color: #68a6aa; background: #e8f5f5; }
+    .img-preview-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .img-thumb {
+      position: relative; width: 80px; height: 80px;
+      border-radius: 8px; overflow: hidden; border: 2px solid #eee;
+    }
+    .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .img-thumb button {
+      position: absolute; top: 2px; right: 2px;
+      background: rgba(229,57,53,0.9); color: white; border: none;
+      border-radius: 50%; width: 20px; height: 20px; cursor: pointer;
+      font-size: 12px; line-height: 20px; padding: 0;
+    }
+
+    /* ── Confirm delete modal ──────────────────────────────── */
+    #confirm-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
+    #confirm-modal.open { display: flex; }
+    .confirm-box { background: white; border-radius: 14px; padding: 28px; max-width: 380px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .confirm-box h3 { color: #1a4054; margin-bottom: 10px; }
+    .confirm-box p { color: #555; margin-bottom: 20px; font-size: 0.9rem; }
+    .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
+    /* ── Toast ─────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 80px; right: 24px;
+      background: #1a4054; color: white;
+      padding: 12px 20px; border-radius: 10px;
+      font-size: 0.9rem; opacity: 0;
+      transition: opacity 0.3s; z-index: 3000; max-width: 320px;
+    }
+    #toast.show { opacity: 1; }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
       th, td { padding: 8px 10px; }
-      .qty-input { width: 46px; }
-      .field-row-inline { flex-direction: column; gap: 0; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── LOGIN SCREEN ──────────────────────────────────────────────────────── -->
+<!-- ═══════════════════════════════ LOGIN ═══════════════════════════════ -->
 <div id="login-screen">
-  <h1>&#128274; Inventory Manager</h1>
-  <p>J&amp;C Creations Admin</p>
-  <input type="password" id="pw-input" placeholder="Enter admin password" autocomplete="off">
-  <button id="login-btn" onclick="checkLogin()">Sign In</button>
-  <div id="pw-error">Incorrect password. Please try again.</div>
+  <h1>🔐 Admin</h1>
+  <p>J&amp;C Creations Inventory Manager</p>
+  <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+  <button id="login-btn" onclick="login()">Log In</button>
+  <div id="pw-error">Incorrect password. Try again.</div>
 </div>
 
-<!-- ── ADMIN SCREEN ──────────────────────────────────────────────────────── -->
+<!-- ═══════════════════════════════ ADMIN ═══════════════════════════════ -->
 <div id="admin-screen">
   <div class="admin-header">
-    <h1>&#128230; Inventory Manager — J&amp;C Creations</h1>
+    <h1>📦 J&amp;C Creations — Inventory</h1>
     <div class="admin-actions">
-      <button class="btn btn-teal" onclick="openSheetsPanel()">&#128202; Sheets Sync</button>
-      <button class="btn btn-orange" onclick="openAddModal()">&#43; Add New Product</button>
-      <button class="btn btn-blue" onclick="reloadFromSite()">&#128260; Reload from Site</button>
-      <button class="btn btn-green" onclick="downloadJSON()">&#11015; Download Updated JSON</button>
-      <button class="btn btn-gray" onclick="location.href='index'">&#127968; Back to Site</button>
+      <button class="btn btn-green" onclick="openAddModal()">＋ Add Product</button>
+      <button class="btn btn-teal"  onclick="saveAllChanges()" id="save-btn" style="display:none">💾 Save Changes</button>
+      <button class="btn btn-gray"  onclick="exportToSheet()">📊 Export to Sheet</button>
     </div>
   </div>
 
-  <div class="info-bar">
-    <strong>How to use:</strong> Adjust quantities after filling an order, then click <strong>Download Updated JSON</strong>.
-    Replace your <code>resources/products.json</code> file and push to GitHub — counts are updated instantly on your site.
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Total Products</div>
+      <div class="stat-value" id="stat-total">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">In Stock</div>
+      <div class="stat-value" id="stat-instock">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Out of Stock</div>
+      <div class="stat-value" id="stat-out" style="color:#e53935">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Low Stock (≤3)</div>
+      <div class="stat-value" id="stat-low" style="color:#ff9800">—</div>
+    </div>
   </div>
 
+  <!-- Filters -->
   <div class="filter-bar">
-    <label>Category:</label>
-    <select id="filter-cat" onchange="renderTable()">
+    <input type="text" id="search-input" placeholder="🔍 Search products…" oninput="renderTable()">
+    <select id="cat-filter" onchange="renderTable()">
       <option value="">All Categories</option>
     </select>
-    <label>Search:</label>
-    <input type="text" id="filter-search" placeholder="Search by name..." oninput="renderTable()">
-    <label>
-      <input type="checkbox" id="filter-low" onchange="renderTable()"> Show low / out of stock only
-    </label>
+    <select id="stock-filter" onchange="renderTable()">
+      <option value="">All Stock</option>
+      <option value="out">Out of Stock</option>
+      <option value="low">Low Stock (≤3)</option>
+      <option value="in">In Stock</option>
+    </select>
   </div>
 
-  <table id="inventory-table">
-    <thead>
-      <tr>
-        <th onclick="sortBy('name')">Product Name &#8597;</th>
-        <th onclick="sortBy('category')">Category &#8597;</th>
-        <th onclick="sortBy('price')">Price &#8597;</th>
-        <th>Stock</th>
-        <th onclick="sortBy('quantity')">Status &#8597;</th>
-        <th title="Made to Order: show item on site even when quantity = 0">Made to Order</th>
-        <th title="Price Varies: show 'Price Varies by Order' instead of a fixed price. Turn OFF to assign a specific price.">Price Varies</th>
-        <th title="Show Each: display 'each' next to the price (e.g. '$5 each') to clarify items are priced individually.">Show Each</th>
-      </tr>
-    </thead>
-    <tbody id="table-body">
-      <tr><td colspan="7" class="empty-state">Loading products...</td></tr>
-    </tbody>
-  </table>
-
-  <div style="height:70px"></div> <!-- spacer for sticky bar -->
-</div>
-
-<!-- ── SHEETS SYNC PANEL ──────────────────────────────────────────────────── -->
-<div id="sheets-panel">
-  <div class="sheets-header">
-    <h2>&#128202; Google Sheets Sync</h2>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn btn-green btn-sm" onclick="pullFromSheets()">&#11015; Pull Prices &amp; Qty</button>
-      <button class="btn btn-purple btn-sm" onclick="pushToSheets()">&#11014; Push Qty to Sheet</button>
-      <button class="btn btn-gray btn-sm" onclick="closeSheetsPanel()">&#10005; Close</button>
-    </div>
-  </div>
-
-  <!-- Setup instructions -->
-  <div class="sheets-card" id="setup-card">
-    <h3>&#9881; One-Time Setup</h3>
-    <ol class="steps-list">
-      <li>Open your Google Sheet, then click <code>Extensions</code> → <code>Apps Script</code></li>
-      <li>Delete any existing code, paste the script below, then save (<kbd>Ctrl+S</kbd>)</li>
-      <li>In Apps Script, click the <strong>⚙ Project Settings</strong> (gear icon, left sidebar)</li>
-      <li>Scroll to <strong>Script Properties</strong> → <strong>Add script property</strong> and add all four:
-        <ul style="margin-top:6px;font-size:0.85rem;line-height:1.9">
-          <li><code>GITHUB_TOKEN</code> → your GitHub personal access token (needs <em>repo</em> scope)</li>
-          <li><code>GITHUB_OWNER</code> → <code>jjackson8gwu</code></li>
-          <li><code>GITHUB_REPO</code> → <code>JC-Creation</code></li>
-          <li><code>GITHUB_FILE</code> → <code>resources/products.json</code></li>
-        </ul>
-      </li>
-      <li>Click <strong>Deploy</strong> → <strong>New deployment</strong> → Type: <strong>Web app</strong><br>
-          Set <em>Execute as</em>: <strong>Me</strong> &nbsp;|&nbsp; <em>Who has access</em>: <strong>Anyone</strong><br>
-          Click <strong>Deploy</strong>, authorize when prompted, then copy the Web App URL</li>
-      <li>Paste the URL in the box below and click <strong>Connect</strong></li>
-      <li>Back in Apps Script editor, run the <code>createTrigger()</code> function once — this enables automatic hourly sync from your sheet to the website</li>
-    </ol>
-    <div style="background:#e8f5e9;border-left:4px solid #4caf50;padding:10px 14px;border-radius:6px;font-size:0.85rem;margin-bottom:12px">
-      <strong>✅ How automatic sync works after setup:</strong><br>
-      • Customer buys online → website <em>and</em> Google Sheet quantities both decrease automatically<br>
-      • You update quantities in your Google Sheet → website updates within the hour (via hourly trigger)
-    </div>
-    <button class="btn btn-gray btn-sm" onclick="toggleScript()" style="margin-bottom:8px">&#128196; Show / Hide Apps Script Code</button>
-    <div id="apps-script-code" style="display:none">
-      <div class="script-box" id="script-content"></div>
-      <button class="btn btn-teal btn-sm" onclick="copyScript()" style="margin-top:6px">&#128203; Copy Script</button>
-    </div>
-  </div>
-
-  <!-- Connection -->
-  <div class="sheets-card">
-    <h3>&#128279; Apps Script URL</h3>
-    <div class="url-row">
-      <input type="text" id="sheet-url-input" placeholder="https://script.google.com/macros/s/…/exec">
-      <button class="btn btn-teal btn-sm" onclick="connectSheet()">&#9654; Connect</button>
-    </div>
-    <div class="conn-status" id="conn-status"></div>
-  </div>
-
-  <!-- Mapping table (shown after connect) -->
-  <div class="sheets-card" id="mapping-card" style="display:none">
-    <h3>&#128279; Product Mapping <span id="map-counts" style="font-weight:normal;font-size:0.85rem;color:#666"></span></h3>
-    <p style="color:#555;font-size:0.88rem;margin:0 0 12px">
-      Each site product is matched to a row in your Google Sheet. Green = auto-matched.
-      Use the dropdown to fix or add a match manually.
-    </p>
-    <div class="mapping-toolbar">
-      <input type="text" id="map-search" placeholder="Search products…" oninput="renderMappingTable()">
-      <button class="btn btn-blue btn-sm" onclick="autoMatchAll()">&#9889; Auto-Match All</button>
-      <button class="btn btn-green btn-sm" onclick="saveMapping()">&#128190; Save Mapping</button>
-    </div>
-    <div style="overflow-x:auto">
-      <table id="mapping-table">
-        <thead><tr>
-          <th>Site Product</th>
-          <th>Category</th>
-          <th>Matched Sheet Row</th>
-          <th>Sheet Price</th>
-          <th>Sheet Qty</th>
-        </tr></thead>
-        <tbody id="mapping-body"></tbody>
-      </table>
-    </div>
-    <div class="pull-summary" id="pull-summary"></div>
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')">Product ↕</th>
+          <th onclick="sortBy('category')">Category ↕</th>
+          <th onclick="sortBy('price')">Price ↕</th>
+          <th onclick="sortBy('quantity')">Qty ↕</th>
+          <th>Each?</th>
+          <th>Made to Order</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-tbody"></tbody>
+    </table>
   </div>
 </div>
 
-<!-- ── ADD NEW PRODUCT MODAL ─────────────────────────────────────────────── -->
-<div class="modal-backdrop" id="add-modal" onclick="handleBackdropClick(event)">
+<!-- ═══════════════════ ADD / EDIT MODAL ════════════════════ -->
+<div class="modal-overlay" id="product-modal" onclick="handleModalBackdrop(event)">
   <div class="modal-box">
-    <h2>&#43; Add New Product</h2>
+    <h2 id="modal-title">Add Product</h2>
+    <div class="form-grid">
 
-    <div class="field-row">
-      <label>Product Name <span style="color:#e74c3c">*</span></label>
-      <input type="text" id="new-name" placeholder="e.g. Rainbow Dragon">
-    </div>
+      <div class="form-group full">
+        <label>Product Name *</label>
+        <input type="text" id="f-name" placeholder="e.g. Crystal Dragon">
+      </div>
 
-    <div class="field-row">
-      <label>Category <span style="color:#e74c3c">*</span></label>
-      <select id="new-category">
-        <option value="">— Select a category —</option>
-        <option value="1_dollar_minis">$1 Minis</option>
-        <option value="2_dollar_minis">$2 Minis</option>
-        <option value="3_dollar_minis">$3 Minis</option>
-        <option value="4_dollar_minis">$4 Minis</option>
-        <option value="Clickers">Clickers</option>
-        <option value="Custom_Designs">Custom Designs</option>
-        <option value="Dragons_and_Animals">Dragons &amp; Animals</option>
-        <option value="Fan_Art">Fan Art</option>
-        <option value="Fidgets">Fidgets</option>
-        <option value="Keychains">Keychains</option>
-        <option value="Mystery_Bag">Mystery Bag</option>
-        <option value="Pen_Holders">Pen Holders</option>
-        <option value="Pokeballs">Pokeballs</option>
-        <option value="Seasonal">Seasonal</option>
-      </select>
-    </div>
-
-    <div class="field-row">
-      <label>Description</label>
-      <textarea id="new-description" placeholder="Short description (leave blank to auto-generate)"></textarea>
-    </div>
-
-    <div class="field-row-inline">
-      <div class="field-row">
+      <div class="form-group">
         <label>Price ($)</label>
-        <input type="number" id="new-price" placeholder="0.00" min="0" step="0.01" value="">
-        <p class="field-hint">Leave blank if Price Varies is ON</p>
+        <input type="number" id="f-price" step="0.01" min="0" placeholder="0.00">
       </div>
-      <div class="field-row">
-        <label>Starting Quantity</label>
-        <input type="number" id="new-quantity" placeholder="0" min="0" step="1" value="0">
+
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" id="f-quantity" min="0" placeholder="0">
       </div>
+
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="f-category">
+          <option value="">— Select —</option>
+          <option value="1_dollar_minis">$1 Minis</option>
+          <option value="2_dollar_minis">$2 Minis</option>
+          <option value="3_dollar_minis">$3 Minis</option>
+          <option value="4_dollar_minis">$4 Minis</option>
+          <option value="Pen_Holders">Pen Holders</option>
+          <option value="Fan_Art">Fan Art</option>
+          <option value="Custom_Designs">Custom Designs</option>
+          <option value="Dragons_and_Animals">Dragons &amp; Animals</option>
+          <option value="Fidgets">Fidgets</option>
+          <option value="Pokeballs">Pokeballs</option>
+          <option value="Clickers">Clickers</option>
+          <option value="Keychains">Keychains</option>
+          <option value="Mystery_Bag">Mystery Bag</option>
+          <option value="Seasonal">Seasonal</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Color Count</label>
+        <input type="number" id="f-colorCount" min="1" value="1">
+      </div>
+
+      <div class="form-group full">
+        <label>Description</label>
+        <textarea id="f-description" placeholder="Short description of this item"></textarea>
+      </div>
+
+      <!-- Toggles -->
+      <div class="form-group full" style="display:flex;gap:20px;flex-wrap:wrap;padding:4px 0">
+        <label class="checkbox-row"><input type="checkbox" id="f-requiresColor"> Requires color choice</label>
+        <label class="checkbox-row"><input type="checkbox" id="f-madeToOrder"> Made to order</label>
+        <label class="checkbox-row"><input type="checkbox" id="f-priceVaries"> Price varies</label>
+        <label class="checkbox-row"><input type="checkbox" id="f-priceEach"> Price is "each"</label>
+      </div>
+
+      <!-- Image upload -->
+      <div class="form-group full">
+        <label>Product Images</label>
+        <div class="img-upload-area" id="upload-area"
+          onclick="document.getElementById('img-file-input').click()"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event)">
+          📷 Click to upload or drag &amp; drop images<br>
+          <small style="color:#bbb">JPEG, PNG, WebP — up to 5MB each</small>
+        </div>
+        <input type="file" id="img-file-input" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
+        <div class="img-preview-grid" id="img-preview"></div>
+        <div id="img-upload-status" style="font-size:0.8rem;color:#888;margin-top:6px"></div>
+      </div>
+
     </div>
 
-    <div class="field-row">
-      <label>Image Path</label>
-      <input type="text" id="new-image" placeholder="../images/Category Folder/filename.JPG">
-      <p class="field-hint">Add the image file to your images folder first, then paste the path here. Example: <code>../images/Fidgets/My_New_Fidget.JPG</code></p>
-    </div>
-
-    <div class="field-row-inline">
-      <div class="field-row">
-        <label>Number of Colors</label>
-        <input type="number" id="new-colorCount" value="1" min="1" step="1">
-      </div>
-      <div class="field-row" style="display:flex;align-items:flex-end;padding-bottom:2px">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:normal">
-          <input type="checkbox" id="new-requiresColor" style="width:auto"> Requires color selection
-        </label>
-      </div>
-    </div>
-
-    <div class="toggle-row">
-      <div>
-        <span>Made to Order</span>
-        <small>Show item on site even when quantity = 0</small>
-      </div>
-      <label class="mto-toggle">
-        <input type="checkbox" id="new-madeToOrder">
-        <span class="mto-slider"></span>
-      </label>
-    </div>
-
-    <div class="toggle-row">
-      <div>
-        <span>Price Varies by Order</span>
-        <small>Show "Price Varies by Order" instead of a fixed price</small>
-      </div>
-      <label class="pv-toggle">
-        <input type="checkbox" id="new-priceVaries">
-        <span class="pv-slider"></span>
-      </label>
-    </div>
-
-    <div id="add-modal-error" style="color:#e74c3c;font-size:0.88rem;margin-top:8px;display:none"></div>
-
-    <div class="modal-footer">
-      <button class="btn btn-gray" onclick="closeAddModal()">Cancel</button>
-      <button class="btn btn-orange" onclick="saveNewProduct()">&#43; Add Product</button>
+    <div class="modal-error" id="modal-error"></div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-green" onclick="saveProduct()" id="save-product-btn">Save Product</button>
     </div>
   </div>
 </div>
 
-<!-- ── CHANGES BAR ───────────────────────────────────────────────────────── -->
-<div class="changes-bar" id="changes-bar">
-  <span class="changes-count" id="changes-count">0 unsaved changes</span>
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <button class="btn btn-gray" onclick="revertAll()">&#8634; Revert All</button>
-    <button class="btn btn-green" onclick="downloadJSON()">&#11015; Download Updated JSON</button>
+<!-- ═══════════════════ CONFIRM DELETE ══════════════════════ -->
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <h3>Delete Product?</h3>
+    <p id="confirm-msg">This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn btn-gray" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-red"  onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Changes bar ────────────────────────────────────────── -->
+<div id="changes-bar">
+  <span id="changes-count"></span>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-gray btn-sm" onclick="discardChanges()">Discard</button>
+    <button class="btn btn-green btn-sm" onclick="saveAllChanges()">💾 Save All Changes</button>
+  </div>
+</div>
+
+<!-- ── Toast ─────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<!-- ═══════════════════════ SHEET EXPORT PANEL ═══════════════════════ -->
+<div class="modal-overlay" id="sheet-modal" onclick="handleSheetBackdrop(event)" style="display:none">
+  <div class="modal-box" style="max-width:500px">
+    <h2>📊 Export to Google Sheet</h2>
+    <p style="color:#555;font-size:0.88rem;margin-bottom:16px">
+      Paste your Apps Script Web App URL below to push current quantities and prices to your sheet.
+    </p>
+    <div class="form-group">
+      <label>Apps Script URL</label>
+      <input type="text" id="sheet-url-input" placeholder="https://script.google.com/macros/s/…/exec">
+    </div>
+    <div id="sheet-status" style="font-size:0.85rem;margin-top:8px"></div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" onclick="closeSheetModal()">Cancel</button>
+      <button class="btn btn-teal" onclick="pushToSheet()">📤 Push to Sheet</button>
+    </div>
   </div>
 </div>
 
 <script>
-// ── Config ───────────────────────────────────────────────────────────────────
-const ADMIN_PW = 'jccreations2024';   // <-- Change this password!
-const JSON_PATH = 'resources/products.json';
+// ============================================================
+// CONFIG
+// ============================================================
+const SUPABASE_URL = 'https://ldgdubwptbxqrtjghxau.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkZ2R1YndwdGJ4cXJ0amdoeGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjQ0MDgsImV4cCI6MjA5NzE0MDQwOH0.DjAaIinhAeWkrciogJa1Dv-_Sw4NrE-8BIBAOrwHrnk';
+const STORAGE_URL  = `${SUPABASE_URL}/storage/v1/object/public/product-images`;
+const REST_URL     = `${SUPABASE_URL}/rest/v1/products`;
+const STORAGE_API  = `${SUPABASE_URL}/storage/v1/object/product-images`;
 
-// ── State ────────────────────────────────────────────────────────────────────
-let products = [];
-// changes stores per-product overrides: { id: { qty?: number, madeToOrder?: boolean } }
-let changes  = {};
-let sortKey  = 'name';
-let sortAsc  = true;
+const ADMIN_PASSWORD = 'jcc2024admin'; // ← change this if you want
 
-// ── Login ────────────────────────────────────────────────────────────────────
-document.getElementById('pw-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkLogin();
-});
-
-function checkLogin() {
+// ============================================================
+// AUTH
+// ============================================================
+function login() {
   const pw = document.getElementById('pw-input').value;
-  if (pw === ADMIN_PW) {
+  if (pw === ADMIN_PASSWORD) {
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-screen').style.display = 'block';
-    loadProducts();
+    document.getElementById('admin-screen').style.display  = 'block';
+    initAdmin();
   } else {
     document.getElementById('pw-error').style.display = 'block';
     document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
   }
 }
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 
-// ── Load products from site JSON ─────────────────────────────────────────────
-async function loadProducts() {
+// ============================================================
+// DATA
+// ============================================================
+let products   = [];   // loaded from Supabase
+let changes    = {};   // { id: { quantity, price, ... } }
+let sortKey    = 'display_order';
+let sortAsc    = true;
+let deleteTarget = null;
+let editTarget   = null;     // product being edited (null = adding)
+let pendingImages = [];       // {file, url, existing} while editing modal
+let uploadedUrls  = [];       // final public URLs for the product being saved
+
+async function sbFetch(path, opts = {}) {
+  const res = await fetch(`${SUPABASE_URL}${path}`, {
+    ...opts,
+    headers: {
+      'apikey':        SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type':  'application/json',
+      'Prefer':        'return=representation',
+      ...(opts.headers || {})
+    }
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(text || res.statusText);
+  return text ? JSON.parse(text) : null;
+}
+
+async function initAdmin() {
+  toast('Loading products…');
   try {
-    const res = await fetch(JSON_PATH + '?nocache=' + Date.now());
-    const data = await res.json();
-    products = data.products || [];
-    changes  = {};
-    populateCategoryFilter();
+    const rows = await sbFetch('/rest/v1/products?order=display_order.asc,name.asc&limit=1000');
+    products = rows.map(mapRow);
+    updateStats();
+    populateCatFilter();
     renderTable();
-    updateChangesBar();
+    toast('✓ Loaded ' + products.length + ' products', 2000);
   } catch (e) {
-    document.getElementById('table-body').innerHTML =
-      `<tr><td colspan="7" class="empty-state" style="color:#e74c3c">
-        Could not load products.json. Make sure you're viewing this page through your website (not directly from a file).
-      </td></tr>`;
+    toast('⚠ Could not load products: ' + e.message, 5000);
+    console.error(e);
   }
 }
 
-function reloadFromSite() {
-  changes = {};
-  loadProducts();
-}
-
-function populateCategoryFilter() {
-  const cats = [...new Set(products.map(p => p.category))].sort();
-  const sel  = document.getElementById('filter-cat');
-  sel.innerHTML = '<option value="">All Categories</option>';
-  cats.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c.replace(/_/g, ' ');
-    sel.appendChild(opt);
-  });
-}
-
-// ── Render table ─────────────────────────────────────────────────────────────
-function renderTable() {
-  const cat    = document.getElementById('filter-cat').value;
-  const search = document.getElementById('filter-search').value.toLowerCase();
-  const lowOnly= document.getElementById('filter-low').checked;
-
-  let filtered = products.filter(p => {
-    if (cat    && p.category !== cat) return false;
-    if (search && !p.name.toLowerCase().includes(search)) return false;
-    const qty = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
-    if (lowOnly && qty > 3) return false;
-    return true;
-  });
-
-  filtered.sort((a, b) => {
-    let va = a[sortKey], vb = b[sortKey];
-    if (sortKey === 'name' || sortKey === 'category') {
-      va = (va||'').toLowerCase(); vb = (vb||'').toLowerCase();
-    }
-    return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
-  });
-
-  const tbody = document.getElementById('table-body');
-  if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No products match your filters.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = filtered.map(p => {
-    const qty        = changes[p.id]?.qty         !== undefined ? changes[p.id].qty         : p.quantity;
-    const mto        = changes[p.id]?.madeToOrder !== undefined ? changes[p.id].madeToOrder : (p.madeToOrder  || false);
-    const pv         = changes[p.id]?.priceVaries !== undefined ? changes[p.id].priceVaries : (p.priceVaries  || false);
-    const pe         = changes[p.id]?.priceEach   !== undefined ? changes[p.id].priceEach   : (p.priceEach    || false);
-    const priceVal   = changes[p.id]?.price       !== undefined ? changes[p.id].price       : (p.price        || 0);
-    const qtyChanged   = changes[p.id]?.qty   !== undefined;
-    const priceChanged = changes[p.id]?.price !== undefined;
-
-    let badge = '';
-    if (qty === 0 && mto) badge = '<span class="badge badge-out">Out &mdash; Made to Order</span>';
-    else if (qty === 0)   badge = '<span class="badge badge-out">Out of Stock (hidden)</span>';
-    else if (qty <= 3)    badge = `<span class="badge badge-low">Low (${qty})</span>`;
-    else                  badge = `<span class="badge badge-in">In Stock (${qty})</span>`;
-
-    // Price cell: editable input when priceVaries is OFF, "Varies" label when ON
-    const priceCell = pv
-      ? '<em style="color:#68a6aa;font-size:0.85rem">Varies by Order</em>'
-      : `$<input class="price-input${priceChanged?' changed':''}" type="number"
-           id="price-${p.id}" value="${priceVal.toFixed(2)}" min="0" step="0.01"
-           onchange="setPrice('${p.id}', this.value)"
-           title="Edit price — toggle 'Price Varies' ON to hide price on site">`;
-
-    const isNew = p._isNew === true;
-    return `<tr class="${isNew ? 'new-row' : ''}">
-      <td><strong>${p.name}</strong>${isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
-      <td><span class="category-tag">${(p.category||'').replace(/_/g,' ')}</span></td>
-      <td>${priceCell}</td>
-      <td>
-        <div class="qty-cell">
-          <button class="qty-btn" onclick="adjustQty('${p.id}', -1)">&#8722;</button>
-          <input class="qty-input${qtyChanged?' changed':''}" type="number"
-            id="qty-${p.id}" value="${qty}" min="0"
-            onchange="setQty('${p.id}', this.value)">
-          <button class="qty-btn" onclick="adjustQty('${p.id}', 1)">+</button>
-        </div>
-      </td>
-      <td>${badge}</td>
-      <td style="text-align:center">
-        <label class="mto-toggle" title="When ON: item shows on site even at 0 stock with 'Made to Order' label">
-          <input type="checkbox" ${mto ? 'checked' : ''}
-            onchange="setMadeToOrder('${p.id}', this.checked)">
-          <span class="mto-slider"></span>
-        </label>
-      </td>
-      <td style="text-align:center">
-        <label class="pv-toggle" title="When ON: shows 'Price Varies by Order' on site instead of a fixed price. Turn OFF to set a specific price.">
-          <input type="checkbox" ${pv ? 'checked' : ''}
-            onchange="setPriceVaries('${p.id}', this.checked)">
-          <span class="pv-slider"></span>
-        </label>
-      </td>
-      <td style="text-align:center">
-        <label class="pv-toggle" title="When ON: price displays as '$X each' on the site.">
-          <input type="checkbox" ${pe ? 'checked' : ''}
-            onchange="setPriceEach('${p.id}', this.checked)">
-          <span class="pv-slider"></span>
-        </label>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-// ── Quantity helpers ─────────────────────────────────────────────────────────
-function adjustQty(id, delta) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  const current = changes[id]?.qty !== undefined ? changes[id].qty : prod.quantity;
-  setQty(id, current + delta);
-}
-
-function setQty(id, val) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  const newQty = Math.max(0, parseInt(val) || 0);
-  if (!changes[id]) changes[id] = {};
-  if (newQty === prod.quantity) {
-    delete changes[id].qty;
-  } else {
-    changes[id].qty = newQty;
-  }
-  // Clean up empty change objects
-  if (Object.keys(changes[id]).length === 0) delete changes[id];
-  renderTable();
-  updateChangesBar();
-}
-
-function setMadeToOrder(id, value) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  if (!changes[id]) changes[id] = {};
-  if (value === (prod.madeToOrder || false)) {
-    delete changes[id].madeToOrder;
-  } else {
-    changes[id].madeToOrder = value;
-  }
-  if (Object.keys(changes[id]).length === 0) delete changes[id];
-  renderTable();
-  updateChangesBar();
-}
-
-function setPriceEach(id, value) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  if (!changes[id]) changes[id] = {};
-  if (value === (prod.priceEach || false)) {
-    delete changes[id].priceEach;
-  } else {
-    changes[id].priceEach = value;
-  }
-  if (Object.keys(changes[id]).length === 0) delete changes[id];
-  renderTable();
-  updateChangesBar();
-}
-
-function setPriceVaries(id, value) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  if (!changes[id]) changes[id] = {};
-  if (value === (prod.priceVaries || false)) {
-    delete changes[id].priceVaries;
-  } else {
-    changes[id].priceVaries = value;
-  }
-  if (Object.keys(changes[id]).length === 0) delete changes[id];
-  renderTable();
-  updateChangesBar();
-}
-
-function setPrice(id, val) {
-  const prod = products.find(p => p.id === id);
-  if (!prod) return;
-  const newPrice = Math.max(0, parseFloat(val) || 0);
-  if (!changes[id]) changes[id] = {};
-  if (newPrice === (prod.price || 0)) {
-    delete changes[id].price;
-  } else {
-    changes[id].price = newPrice;
-  }
-  if (Object.keys(changes[id]).length === 0) delete changes[id];
-  updateChangesBar();
-}
-
-function revertAll() {
-  changes = {};
-  renderTable();
-  updateChangesBar();
-}
-
-function updateChangesBar() {
-  const bar   = document.getElementById('changes-bar');
-  const count = Object.keys(changes).length;
-  document.getElementById('changes-count').textContent =
-    count === 0 ? 'No unsaved changes' : `${count} unsaved change${count > 1 ? 's' : ''}`;
-  bar.classList.toggle('visible', count > 0);
-}
-
-// ── Google Sheets Sync ───────────────────────────────────────────────────────
-const APPS_SCRIPT_CODE = `// ============================================================
-// JC Creations — Full Two-Way Inventory Sync Script
-// ============================================================
-// SETUP INSTRUCTIONS:
-// 1. Paste this into Apps Script (Extensions → Apps Script)
-// 2. Set Script Properties (Project Settings → Script Properties):
-//      GITHUB_TOKEN  = your GitHub personal access token
-//      GITHUB_OWNER  = jjackson8gwu
-//      GITHUB_REPO   = JC-Creation
-//      GITHUB_FILE   = resources/products.json
-// 3. Deploy as Web App:
-//      Execute as: Me  |  Who has access: Anyone
-// 4. Run createTrigger() once from the Apps Script editor
-//    to enable automatic hourly sheet→website sync
-// ============================================================
-
-var COL_NAME    = 1;   // Column A = product name
-var COL_PRICE   = 10;  // Column J = sell price
-var COL_QTY     = 13;  // Column M = inventory quantity
-var HEADER_ROWS = 1;   // Rows to skip at top (headers)
-
-// ── Utility: normalize a product name for fuzzy matching ──
-function normName(s) {
-  return String(s || '').toLowerCase()
-    .replace(/[^a-z0-9 ]/g, ' ')
-    .replace(/\\b(the|a|an|and|or|of|for|holder|set|pack)\\b/g, '')
-    .replace(/\\s+/g, ' ').trim();
-}
-
-// Token-overlap score between two names (0–1)
-function tokenScore(a, b) {
-  var na = normName(a).split(' ').filter(Boolean);
-  var nb = normName(b).split(' ').filter(Boolean);
-  if (!na.length || !nb.length) return 0;
-  var setB = {};
-  nb.forEach(function(w){ setB[w] = true; });
-  var common = na.filter(function(w){ return setB[w]; }).length;
-  return common / Math.max(na.length, nb.length);
-}
-
-// ── GET: return all sheet rows as {row, name, price, qty} ──
-function doGet(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    var data  = sheet.getDataRange().getValues();
-    var rows  = [];
-    for (var i = HEADER_ROWS; i < data.length; i++) {
-      var name = String(data[i][COL_NAME - 1]).trim();
-      if (!name) continue;
-      var price = parseFloat(data[i][COL_PRICE - 1]);
-      var qty   = parseInt(data[i][COL_QTY - 1]);
-      rows.push({ row: i + 1, name: name,
-        price: isNaN(price) ? 0 : price,
-        qty:   isNaN(qty)   ? 0 : qty });
-    }
-    return respond({ success: true, products: rows });
-  } catch(err) { return respond({ success: false, error: err.message }); }
-}
-
-// ── POST: two modes ──
-//   mode 1 (from admin page):  { updates: [{row, qty}, ...] }
-//   mode 2 (from Netlify checkout): { items: [{name, quantity}, ...] }
-function doPost(e) {
-  try {
-    var body    = JSON.parse(e.postData.contents);
-    var sheet   = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    var data    = sheet.getDataRange().getValues();
-
-    // Mode 1: direct row updates from admin
-    if (body.updates) {
-      body.updates.forEach(function(u) {
-        if (u.row && u.qty !== undefined)
-          sheet.getRange(u.row, COL_QTY).setValue(u.qty);
-      });
-      return respond({ success: true, updated: body.updates.length });
-    }
-
-    // Mode 2: reduce by name match (from online checkout)
-    if (body.items) {
-      var reduced = [];
-      body.items.forEach(function(item) {
-        var itemNorm = normName(item.name);
-        var bestRow = -1, bestScore = 0;
-        for (var i = HEADER_ROWS; i < data.length; i++) {
-          var cellName = String(data[i][COL_NAME - 1]).trim();
-          if (!cellName) continue;
-          var s = tokenScore(item.name, cellName);
-          if (s > bestScore) { bestScore = s; bestRow = i; }
-        }
-        if (bestScore >= 0.5 && bestRow >= 0) {
-          var curQty = parseInt(data[bestRow][COL_QTY - 1]) || 0;
-          var newQty = Math.max(0, curQty - (item.quantity || 1));
-          sheet.getRange(bestRow + 1, COL_QTY).setValue(newQty);
-          data[bestRow][COL_QTY - 1] = newQty; // update local copy
-          reduced.push({ name: item.name, matched: data[bestRow][COL_NAME - 1], before: curQty, after: newQty });
-        }
-      });
-      return respond({ success: true, reduced: reduced });
-    }
-
-    return respond({ success: false, error: 'Unknown request format.' });
-  } catch(err) { return respond({ success: false, error: err.message }); }
-}
-
-// ── Hourly trigger: read sheet → update products.json on GitHub ──
-function syncSheetToGitHub() {
-  var props = PropertiesService.getScriptProperties();
-  var token = props.getProperty('GITHUB_TOKEN');
-  var owner = props.getProperty('GITHUB_OWNER') || 'jjackson8gwu';
-  var repo  = props.getProperty('GITHUB_REPO')  || 'JC-Creation';
-  var file  = props.getProperty('GITHUB_FILE')  || 'resources/products.json';
-
-  if (!token) {
-    Logger.log('ERROR: GITHUB_TOKEN Script Property is not set. Aborting sync.');
-    return;
-  }
-
-  // 1. Read current products.json from GitHub
-  var getUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + file;
-  var getResp = UrlFetchApp.fetch(getUrl, {
-    headers: { 'Authorization': 'Bearer ' + token,
-               'Accept': 'application/vnd.github+json',
-               'X-GitHub-Api-Version': '2022-11-28',
-               'User-Agent': 'JCCreations-AppsScript-Sync' },
-    muteHttpExceptions: true
-  });
-  if (getResp.getResponseCode() !== 200) {
-    Logger.log('Failed to fetch products.json: ' + getResp.getContentText());
-    return;
-  }
-  var ghData  = JSON.parse(getResp.getContentText());
-  var catalog = JSON.parse(Utilities.newBlob(Utilities.base64Decode(ghData.content)).getDataAsString());
-  var sha     = ghData.sha;
-
-  // 2. Read current sheet data
-  var sheet      = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-  var sheetData  = sheet.getDataRange().getValues();
-  var sheetRows  = {};
-  for (var i = HEADER_ROWS; i < sheetData.length; i++) {
-    var nm = String(sheetData[i][COL_NAME - 1]).trim();
-    if (!nm) continue;
-    sheetRows[normName(nm)] = {
-      price: parseFloat(sheetData[i][COL_PRICE - 1]),
-      qty:   parseInt(sheetData[i][COL_QTY - 1])
-    };
-  }
-
-  // 3. Update catalog quantities (and prices) using fuzzy match
-  var changed = 0;
-  catalog.products.forEach(function(p) {
-    var pNorm = normName(p.name);
-    // Try exact norm match first, then best token score
-    var match = sheetRows[pNorm];
-    if (!match) {
-      var bestScore = 0, bestKey = null;
-      Object.keys(sheetRows).forEach(function(k) {
-        var s = tokenScore(p.name, k);
-        if (s > bestScore) { bestScore = s; bestKey = k; }
-      });
-      if (bestScore >= 0.5) match = sheetRows[bestKey];
-    }
-    if (match) {
-      if (!isNaN(match.qty) && match.qty !== p.quantity) { p.quantity = match.qty; changed++; }
-      if (!isNaN(match.price) && match.price > 0 && match.price !== p.price) { p.price = match.price; changed++; }
-    }
-  });
-
-  if (changed === 0) {
-    Logger.log('Sheet sync: no changes detected.');
-    return;
-  }
-
-  // 4. Commit updated products.json back to GitHub
-  var newContent = Utilities.base64Encode(JSON.stringify(catalog, null, 2));
-  var putResp = UrlFetchApp.fetch(getUrl, {
-    method: 'put',
-    contentType: 'application/json',
-    headers: { 'Authorization': 'Bearer ' + token,
-               'Accept': 'application/vnd.github+json',
-               'X-GitHub-Api-Version': '2022-11-28',
-               'User-Agent': 'JCCreations-AppsScript-Sync' },
-    payload: JSON.stringify({
-      message: 'Auto-sync inventory from Google Sheet (' + changed + ' changes)',
-      content: newContent,
-      sha: sha
-    }),
-    muteHttpExceptions: true
-  });
-  var putCode = putResp.getResponseCode();
-  if (putCode === 200 || putCode === 201) {
-    Logger.log('Sheet sync: committed ' + changed + ' changes to GitHub.');
-  } else {
-    Logger.log('Sheet sync: GitHub PUT failed (' + putCode + '): ' + putResp.getContentText());
-  }
-}
-
-// ── Run once from the editor to create an hourly trigger ──
-function createTrigger() {
-  // Remove duplicates first
-  deleteTriggers();
-  ScriptApp.newTrigger('syncSheetToGitHub')
-    .timeBased().everyHours(1).create();
-  Logger.log('Hourly trigger created for syncSheetToGitHub.');
-}
-
-function deleteTriggers() {
-  ScriptApp.getProjectTriggers().forEach(function(t) {
-    ScriptApp.deleteTrigger(t);
-  });
-  Logger.log('All triggers deleted.');
-}
-
-function respond(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}`;
-
-let sheetProducts = [];  // [{row, name, price, qty}] loaded from Apps Script
-let sheetMapping  = {};  // {productId: {row, sheetName}}
-let sheetUrl      = '';
-
-// Populate script display
-document.getElementById('script-content').textContent = APPS_SCRIPT_CODE;
-
-function openSheetsPanel() {
-  // Restore saved URL and mapping
-  sheetUrl = localStorage.getItem('jcc_sheet_url') || '';
-  try { sheetMapping = JSON.parse(localStorage.getItem('jcc_sheet_mapping') || '{}'); } catch(e) { sheetMapping = {}; }
-  document.getElementById('sheet-url-input').value = sheetUrl;
-  document.getElementById('sheets-panel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  if (sheetUrl) connectSheet();
-}
-
-function closeSheetsPanel() {
-  document.getElementById('sheets-panel').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function toggleScript() {
-  const el = document.getElementById('apps-script-code');
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-function copyScript() {
-  navigator.clipboard.writeText(APPS_SCRIPT_CODE)
-    .then(() => alert('Apps Script code copied to clipboard!'))
-    .catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = APPS_SCRIPT_CODE;
-      document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
-      alert('Apps Script code copied!');
-    });
-}
-
-async function connectSheet() {
-  const url = document.getElementById('sheet-url-input').value.trim();
-  const status = document.getElementById('conn-status');
-  if (!url) { status.innerHTML = '<span class="conn-err">Please enter a URL.</span>'; return; }
-  sheetUrl = url;
-  localStorage.setItem('jcc_sheet_url', url);
-  status.innerHTML = 'Connecting…';
-  try {
-    const res  = await fetch(url);
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Script returned an error.');
-    sheetProducts = data.products || [];
-    status.innerHTML = `<span class="conn-ok">✓ Connected — ${sheetProducts.length} products loaded from sheet.</span>`;
-    document.getElementById('mapping-card').style.display = 'block';
-    autoMatchAll();
-  } catch(e) {
-    status.innerHTML = `<span class="conn-err">✗ Could not connect: ${e.message}. Check the URL and make sure the Web App is deployed with "Anyone" access.</span>`;
-    document.getElementById('mapping-card').style.display = 'none';
-  }
-}
-
-// ── Name normalization for fuzzy matching ─────────────────────────────────────
-function normName(s) {
-  return (s || '').toLowerCase()
-    .replace(/[^a-z0-9 ]/g, ' ')
-    .replace(/\b(the|a|an|and|or|of|for|holder|set|pack)\b/g, '')
-    .replace(/\s+/g, ' ').trim();
-}
-
-function matchScore(a, b) {
-  const na = normName(a), nb = normName(b);
-  if (na === nb) return 1;
-  const ta = new Set(na.split(' ').filter(Boolean));
-  const tb = new Set(nb.split(' ').filter(Boolean));
-  let common = 0;
-  ta.forEach(w => { if (tb.has(w)) common++; });
-  return common / Math.max(ta.size, tb.size, 1);
-}
-
-function bestMatch(productName) {
-  let best = null, bestScore = 0;
-  sheetProducts.forEach(sp => {
-    const s = matchScore(productName, sp.name);
-    if (s > bestScore) { bestScore = s; best = sp; }
-  });
-  return bestScore >= 0.5 ? best : null;
-}
-
-function autoMatchAll() {
-  products.forEach(p => {
-    if (!sheetMapping[p.id] || !sheetMapping[p.id].row) {
-      const match = bestMatch(p.name);
-      if (match) sheetMapping[p.id] = { row: match.row, sheetName: match.name };
-    }
-  });
-  saveMapping(true);
-  renderMappingTable();
-}
-
-function saveMapping(silent) {
-  localStorage.setItem('jcc_sheet_mapping', JSON.stringify(sheetMapping));
-  if (!silent) alert('Mapping saved!');
-}
-
-function updateMapping(productId, rowStr) {
-  const row  = parseInt(rowStr);
-  const sp   = sheetProducts.find(p => p.row === row);
-  if (row && sp) {
-    sheetMapping[productId] = { row, sheetName: sp.name };
-  } else {
-    delete sheetMapping[productId];
-  }
-}
-
-function renderMappingTable() {
-  const search = (document.getElementById('map-search').value || '').toLowerCase();
-  const tbody  = document.getElementById('mapping-body');
-  let matched = 0, total = 0;
-
-  const rows = products
-    .filter(p => !search || p.name.toLowerCase().includes(search))
-    .map(p => {
-      total++;
-      const m   = sheetMapping[p.id];
-      const sp  = m ? sheetProducts.find(s => s.row === m.row) : null;
-      if (m) matched++;
-
-      const options = sheetProducts.map(s =>
-        `<option value="${s.row}" ${m && m.row === s.row ? 'selected' : ''}>${s.name}</option>`
-      ).join('');
-
-      const priceCell = sp ? `$${sp.price.toFixed(2)}` : '<span style="color:#bbb">—</span>';
-      const qtyCell   = sp ? sp.qty : '<span style="color:#bbb">—</span>';
-
-      return `<tr>
-        <td><strong>${p.name}</strong></td>
-        <td><span style="font-size:0.78rem;background:#e3f2fd;color:#1565c0;padding:2px 7px;border-radius:8px">${(p.category||'').replace(/_/g,' ')}</span></td>
-        <td>
-          <select class="map-select ${m ? 'matched' : 'unmatched'}" onchange="updateMapping('${p.id}', this.value)">
-            <option value="">— Not mapped —</option>
-            ${options}
-          </select>
-        </td>
-        <td>${priceCell}</td>
-        <td>${qtyCell}</td>
-      </tr>`;
-    });
-
-  tbody.innerHTML = rows.join('');
-  document.getElementById('map-counts').textContent = `${matched} / ${total} mapped`;
-}
-
-// ── Pull prices & quantities from sheet ───────────────────────────────────────
-async function pullFromSheets() {
-  if (!sheetUrl) { alert('Connect to your Google Sheet first.'); return; }
-  if (!sheetProducts.length) { alert('No sheet data loaded. Click Connect first.'); return; }
-
-  let updatedCount = 0, skippedCount = 0;
-  const updated = [];
-
-  products.forEach(p => {
-    const m  = sheetMapping[p.id];
-    const sp = m ? sheetProducts.find(s => s.row === m.row) : null;
-    if (!sp) { skippedCount++; return; }
-
-    // Apply sheet values to product
-    if (!changes[p.id]) changes[p.id] = {};
-    if (sp.price !== (p.price || 0)) {
-      changes[p.id].price = sp.price;
-      updated.push(`${p.name}: price $${p.price} → $${sp.price}`);
-    }
-    if (sp.qty !== p.quantity) {
-      changes[p.id].qty = sp.qty;
-      updated.push(`${p.name}: qty ${p.quantity} → ${sp.qty}`);
-    }
-    if (Object.keys(changes[p.id]).length === 0) delete changes[p.id];
-    else updatedCount++;
-  });
-
-  renderTable();
-  updateChangesBar();
-
-  const summary = document.getElementById('pull-summary');
-  if (updatedCount > 0) {
-    summary.style.display = 'block';
-    summary.innerHTML = `<strong>✓ ${updatedCount} products updated</strong> (${skippedCount} skipped — not mapped).<br>
-      Review changes in the inventory table, then click <strong>Download Updated JSON</strong> to save.`;
-  } else {
-    summary.style.display = 'block';
-    summary.innerHTML = `<strong>✓ All prices and quantities already match your sheet.</strong> No changes needed.`;
-  }
-}
-
-// ── Push quantities to sheet ──────────────────────────────────────────────────
-async function pushToSheets() {
-  if (!sheetUrl) { alert('Connect to your Google Sheet first.'); return; }
-
-  const updates = [];
-  products.forEach(p => {
-    const m = sheetMapping[p.id];
-    if (!m) return;
-    const qty = changes[p.id]?.qty !== undefined ? changes[p.id].qty : p.quantity;
-    updates.push({ row: m.row, qty });
-  });
-
-  if (!updates.length) { alert('No mapped products to push.'); return; }
-
-  try {
-    const res  = await fetch(sheetUrl, {
-      method:  'POST',
-      body:    JSON.stringify({ updates }),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const data = await res.json();
-    if (data.success) {
-      alert(`✓ Pushed ${data.updated} inventory quantities to your Google Sheet.`);
-    } else {
-      alert('Error from sheet: ' + (data.error || 'Unknown error'));
-    }
-  } catch(e) {
-    alert('Could not reach the Apps Script: ' + e.message);
-  }
-}
-
-// ── Add New Product ──────────────────────────────────────────────────────────
-function openAddModal() {
-  // Reset all fields
-  document.getElementById('new-name').value        = '';
-  document.getElementById('new-category').value    = '';
-  document.getElementById('new-description').value = '';
-  document.getElementById('new-price').value       = '';
-  document.getElementById('new-quantity').value    = '0';
-  document.getElementById('new-image').value       = '';
-  document.getElementById('new-colorCount').value  = '1';
-  document.getElementById('new-requiresColor').checked  = false;
-  document.getElementById('new-madeToOrder').checked    = false;
-  document.getElementById('new-priceVaries').checked    = false;
-  document.getElementById('add-modal-error').style.display = 'none';
-  document.getElementById('add-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('new-name').focus();
-}
-
-function closeAddModal() {
-  document.getElementById('add-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function handleBackdropClick(e) {
-  if (e.target === document.getElementById('add-modal')) closeAddModal();
-}
-
-function saveNewProduct() {
-  const errEl = document.getElementById('add-modal-error');
-  errEl.style.display = 'none';
-
-  const name     = document.getElementById('new-name').value.trim();
-  const category = document.getElementById('new-category').value;
-
-  if (!name) {
-    errEl.textContent = 'Please enter a product name.';
-    errEl.style.display = 'block';
-    document.getElementById('new-name').focus();
-    return;
-  }
-  if (!category) {
-    errEl.textContent = 'Please select a category.';
-    errEl.style.display = 'block';
-    document.getElementById('new-category').focus();
-    return;
-  }
-
-  // Generate a unique ID from the name
-  const baseId = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  let id = baseId;
-  let suffix = 1;
-  while (products.some(p => p.id === id)) { id = `${baseId}-${suffix++}`; }
-
-  const priceVaries   = document.getElementById('new-priceVaries').checked;
-  const madeToOrder   = document.getElementById('new-madeToOrder').checked;
-  const requiresColor = document.getElementById('new-requiresColor').checked;
-  const colorCount    = Math.max(1, parseInt(document.getElementById('new-colorCount').value) || 1);
-  const quantity      = Math.max(0, parseInt(document.getElementById('new-quantity').value) || 0);
-  const priceRaw      = parseFloat(document.getElementById('new-price').value);
-  const price         = isNaN(priceRaw) ? 0 : Math.max(0, priceRaw);
-  const imageRaw      = document.getElementById('new-image').value.trim();
-  const descRaw       = document.getElementById('new-description').value.trim();
-  const description   = descRaw || `Custom 3D printed ${name}`;
-
-  const newProduct = {
-    id,
-    name,
-    description,
-    price,
-    quantity,
-    category,
-    requiresColor,
-    colorCount,
-    ...(imageRaw   && { image: imageRaw }),
-    ...(madeToOrder  && { madeToOrder: true }),
-    ...(priceVaries  && { priceVaries: true }),
-    _isNew: true   // marker so we can highlight it in the table
+function mapRow(r) {
+  return {
+    id:            r.id,
+    name:          r.name,
+    description:   r.description   || '',
+    price:         r.price          || 0,
+    quantity:      r.quantity       || 0,
+    category:      r.category       || '',
+    requiresColor: r.requires_color || false,
+    colorCount:    r.color_count    || 1,
+    madeToOrder:   r.made_to_order  || false,
+    priceVaries:   r.price_varies   || false,
+    priceEach:     r.price_each     || false,
+    images:        r.images         || [],
+    display_order: r.display_order  || 0,
   };
-
-  products.push(newProduct);
-  populateCategoryFilter();
-  // Switch filter to the new product's category so it's immediately visible
-  document.getElementById('filter-cat').value    = category;
-  document.getElementById('filter-search').value = '';
-  document.getElementById('filter-low').checked  = false;
-  renderTable();
-  updateChangesBar();
-  closeAddModal();
 }
 
-// ── Sort ─────────────────────────────────────────────────────────────────────
+function toRow(p) {
+  return {
+    id:             p.id,
+    name:           p.name,
+    description:    p.description,
+    price:          p.price,
+    quantity:       p.quantity,
+    category:       p.category,
+    requires_color: p.requiresColor,
+    color_count:    p.colorCount,
+    made_to_order:  p.madeToOrder,
+    price_varies:   p.priceVaries,
+    price_each:     p.priceEach,
+    images:         p.images,
+    display_order:  p.display_order || 0,
+  };
+}
+
+// ============================================================
+// STATS
+// ============================================================
+function updateStats() {
+  document.getElementById('stat-total').textContent   = products.length;
+  document.getElementById('stat-instock').textContent = products.filter(p => p.quantity > 3).length;
+  document.getElementById('stat-out').textContent     = products.filter(p => p.quantity === 0 && !p.madeToOrder).length;
+  document.getElementById('stat-low').textContent     = products.filter(p => p.quantity > 0 && p.quantity <= 3).length;
+}
+
+function populateCatFilter() {
+  const cats = [...new Set(products.map(p => p.category).filter(Boolean))].sort();
+  const sel = document.getElementById('cat-filter');
+  cats.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c; o.textContent = c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    sel.appendChild(o);
+  });
+}
+
+// ============================================================
+// TABLE
+// ============================================================
 function sortBy(key) {
   if (sortKey === key) sortAsc = !sortAsc;
   else { sortKey = key; sortAsc = true; }
   renderTable();
 }
 
-// ── Download updated products.json ───────────────────────────────────────────
-function downloadJSON() {
-  const updated = products.map(p => {
-    const copy = { ...p };
-    delete copy._isNew;  // strip internal marker
-    if (changes[p.id]?.qty         !== undefined) copy.quantity    = changes[p.id].qty;
-    if (changes[p.id]?.madeToOrder !== undefined) copy.madeToOrder = changes[p.id].madeToOrder;
-    if (changes[p.id]?.priceVaries !== undefined) copy.priceVaries = changes[p.id].priceVaries;
-    if (changes[p.id]?.priceEach   !== undefined) copy.priceEach   = changes[p.id].priceEach;
-    if (changes[p.id]?.price       !== undefined) copy.price       = changes[p.id].price;
-    return copy;
+function renderTable() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const cat    = document.getElementById('cat-filter').value;
+  const stock  = document.getElementById('stock-filter').value;
+
+  let rows = products.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search) && !p.category.toLowerCase().includes(search)) return false;
+    if (cat && p.category !== cat) return false;
+    if (stock === 'out' && (p.quantity > 0 || p.madeToOrder)) return false;
+    if (stock === 'low' && !(p.quantity > 0 && p.quantity <= 3)) return false;
+    if (stock === 'in'  && p.quantity <= 3) return false;
+    return true;
   });
 
-  const json = JSON.stringify({ products: updated }, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = 'products.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  rows.sort((a, b) => {
+    let av = a[sortKey], bv = b[sortKey];
+    if (typeof av === 'string') av = av.toLowerCase();
+    if (typeof bv === 'string') bv = bv.toLowerCase();
+    return sortAsc ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
+  });
 
+  const tbody = document.getElementById('product-tbody');
+  tbody.innerHTML = rows.map(p => {
+    const c   = changes[p.id] || {};
+    const qty  = c.quantity !== undefined ? c.quantity : p.quantity;
+    const price = c.price !== undefined ? c.price : p.price;
+    const priceEach = c.priceEach !== undefined ? c.priceEach : p.priceEach;
+    const mto = c.madeToOrder !== undefined ? c.madeToOrder : p.madeToOrder;
+    const rowClass = qty === 0 && !mto ? 'out-stock' : qty <= 3 && !mto ? 'low-stock' : '';
+
+    return `<tr class="${rowClass}" id="row-${p.id}">
+      <td><strong>${escHtml(p.name)}</strong></td>
+      <td><span class="cat-badge">${escHtml((p.category||'').replace(/_/g,' '))}</span></td>
+      <td>
+        $<input class="price-input ${c.price !== undefined ? 'changed' : ''}"
+          type="number" step="0.01" min="0" value="${price.toFixed(2)}"
+          onchange="markChange('${p.id}', 'price', parseFloat(this.value)||0); this.classList.add('changed')">
+      </td>
+      <td>
+        <input class="qty-input ${c.quantity !== undefined ? 'changed' : ''}"
+          type="number" min="0" value="${qty}"
+          onchange="markChange('${p.id}', 'quantity', parseInt(this.value)||0); this.classList.add('changed')">
+      </td>
+      <td>
+        <button class="toggle-btn ${priceEach ? 'toggle-on' : 'toggle-off'}"
+          onclick="toggleField('${p.id}', 'priceEach')">
+          ${priceEach ? 'Yes' : 'No'}
+        </button>
+      </td>
+      <td>
+        <button class="toggle-btn ${mto ? 'toggle-on' : 'toggle-off'}"
+          onclick="toggleField('${p.id}', 'madeToOrder')">
+          ${mto ? 'Yes' : 'No'}
+        </button>
+      </td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-blue btn-sm" onclick="openEditModal('${p.id}')">✏️ Edit</button>
+        <button class="btn btn-red btn-sm" onclick="askDelete('${p.id}')">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  updateChangesBar();
+  updateStats();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// INLINE CHANGES
+// ============================================================
+function markChange(id, field, value) {
+  if (!changes[id]) changes[id] = {};
+  // Compare with original
+  const p = products.find(x => x.id === id);
+  if (p && p[field] === value) {
+    delete changes[id][field];
+    if (!Object.keys(changes[id]).length) delete changes[id];
+  } else {
+    changes[id][field] = value;
+  }
+  updateChangesBar();
+}
+
+function toggleField(id, field) {
+  const p = products.find(x => x.id === id);
+  const cur = (changes[id]?.[field] !== undefined) ? changes[id][field] : p[field];
+  markChange(id, field, !cur);
+  renderTable();
+}
+
+function updateChangesBar() {
+  const n = Object.keys(changes).length;
+  const bar = document.getElementById('changes-bar');
+  const saveBtn = document.getElementById('save-btn');
+  if (n > 0) {
+    document.getElementById('changes-count').textContent = `${n} unsaved change${n === 1 ? '' : 's'}`;
+    bar.classList.add('visible');
+    saveBtn.style.display = '';
+  } else {
+    bar.classList.remove('visible');
+    saveBtn.style.display = 'none';
+  }
+}
+
+function discardChanges() {
   changes = {};
   renderTable();
-  updateChangesBar();
-  alert('Downloaded! Replace resources/products.json in your folder and push to GitHub to update your site.');
+}
+
+async function saveAllChanges() {
+  const ids = Object.keys(changes);
+  if (!ids.length) { toast('Nothing to save.'); return; }
+  toast('Saving…');
+  let saved = 0, errs = 0;
+  for (const id of ids) {
+    const delta = changes[id];
+    // Build Supabase column names
+    const patch = {};
+    if (delta.quantity !== undefined)   patch.quantity      = delta.quantity;
+    if (delta.price !== undefined)       patch.price         = delta.price;
+    if (delta.priceEach !== undefined)   patch.price_each    = delta.priceEach;
+    if (delta.madeToOrder !== undefined) patch.made_to_order = delta.madeToOrder;
+
+    try {
+      await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(id)}`, {
+        method: 'PATCH', body: JSON.stringify(patch)
+      });
+      // Apply locally
+      const p = products.find(x => x.id === id);
+      if (p) Object.assign(p, delta);
+      saved++;
+    } catch (e) {
+      console.error('Save failed for', id, e.message);
+      errs++;
+    }
+  }
+  changes = {};
+  renderTable();
+  toast(`✓ Saved ${saved} product${saved !== 1 ? 's' : ''}${errs ? ` (${errs} errors)` : ''}`, 3000);
+}
+
+// ============================================================
+// ADD / EDIT MODAL
+// ============================================================
+function openAddModal() {
+  editTarget    = null;
+  pendingImages = [];
+  uploadedUrls  = [];
+  document.getElementById('modal-title').textContent = 'Add Product';
+  document.getElementById('save-product-btn').textContent = 'Add Product';
+  document.getElementById('f-name').value        = '';
+  document.getElementById('f-price').value       = '';
+  document.getElementById('f-quantity').value    = '0';
+  document.getElementById('f-category').value    = '';
+  document.getElementById('f-colorCount').value  = '1';
+  document.getElementById('f-description').value = '';
+  document.getElementById('f-requiresColor').checked = false;
+  document.getElementById('f-madeToOrder').checked   = false;
+  document.getElementById('f-priceVaries').checked   = false;
+  document.getElementById('f-priceEach').checked     = false;
+  document.getElementById('img-preview').innerHTML   = '';
+  document.getElementById('img-upload-status').textContent = '';
+  document.getElementById('modal-error').style.display = 'none';
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('f-name').focus();
+}
+
+function openEditModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  editTarget    = p;
+  pendingImages = p.images.map(url => ({ url, existing: true }));
+  uploadedUrls  = [];
+
+  document.getElementById('modal-title').textContent = 'Edit Product';
+  document.getElementById('save-product-btn').textContent = 'Save Changes';
+  document.getElementById('f-name').value        = p.name;
+  document.getElementById('f-price').value       = p.price.toFixed(2);
+  document.getElementById('f-quantity').value    = p.quantity;
+  document.getElementById('f-category').value    = p.category;
+  document.getElementById('f-colorCount').value  = p.colorCount;
+  document.getElementById('f-description').value = p.description;
+  document.getElementById('f-requiresColor').checked = p.requiresColor;
+  document.getElementById('f-madeToOrder').checked   = p.madeToOrder;
+  document.getElementById('f-priceVaries').checked   = p.priceVaries;
+  document.getElementById('f-priceEach').checked     = p.priceEach;
+  document.getElementById('modal-error').style.display = 'none';
+  renderImgPreview();
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  editTarget = null;
+  pendingImages = [];
+  uploadedUrls  = [];
+}
+
+function handleModalBackdrop(e) {
+  if (e.target === document.getElementById('product-modal')) closeModal();
+}
+
+// ── Image handling ────────────────────────────────────────
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('upload-area').classList.add('dragging');
+}
+function handleDragLeave(e) {
+  document.getElementById('upload-area').classList.remove('dragging');
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-area').classList.remove('dragging');
+  queueFiles([...e.dataTransfer.files]);
+}
+function handleFileSelect(e) {
+  queueFiles([...e.target.files]);
+  e.target.value = '';
+}
+function queueFiles(files) {
+  files.filter(f => f.type.startsWith('image/')).forEach(file => {
+    const url = URL.createObjectURL(file);
+    pendingImages.push({ file, url, existing: false });
+  });
+  renderImgPreview();
+}
+function removeImage(idx) {
+  const img = pendingImages[idx];
+  if (img && !img.existing) URL.revokeObjectURL(img.url);
+  pendingImages.splice(idx, 1);
+  renderImgPreview();
+}
+function renderImgPreview() {
+  document.getElementById('img-preview').innerHTML = pendingImages.map((img, i) => `
+    <div class="img-thumb">
+      <img src="${img.url}" alt="">
+      <button onclick="removeImage(${i})">✕</button>
+    </div>`).join('');
+}
+
+async function uploadPendingImages(productId) {
+  const uploaded = [];
+  for (const img of pendingImages) {
+    if (img.existing) {
+      uploaded.push(img.url);
+      continue;
+    }
+    const ext  = img.file.name.split('.').pop() || 'jpg';
+    const path = `${productId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const res  = await fetch(`${STORAGE_API}/${path}`, {
+      method: 'POST',
+      headers: {
+        'apikey':        SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type':  img.file.type,
+      },
+      body: img.file
+    });
+    if (!res.ok) throw new Error(`Image upload failed: ${res.statusText}`);
+    uploaded.push(`${STORAGE_URL}/${path}`);
+  }
+  return uploaded;
+}
+
+async function saveProduct() {
+  const errEl = document.getElementById('modal-error');
+  errEl.style.display = 'none';
+
+  const name     = document.getElementById('f-name').value.trim();
+  const category = document.getElementById('f-category').value;
+  if (!name) {
+    errEl.textContent = 'Product name is required.';
+    errEl.style.display = 'block';
+    document.getElementById('f-name').focus();
+    return;
+  }
+  if (!category) {
+    errEl.textContent = 'Please select a category.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('save-product-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  document.getElementById('img-upload-status').textContent = 'Uploading images…';
+
+  try {
+    // Generate ID for new products
+    const id = editTarget
+      ? editTarget.id
+      : name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now();
+
+    const images = await uploadPendingImages(id);
+    document.getElementById('img-upload-status').textContent = '';
+
+    const row = {
+      id,
+      name,
+      description:    document.getElementById('f-description').value.trim() || `Custom 3D printed ${name}`,
+      price:          parseFloat(document.getElementById('f-price').value) || 0,
+      quantity:       parseInt(document.getElementById('f-quantity').value) || 0,
+      category,
+      requires_color: document.getElementById('f-requiresColor').checked,
+      color_count:    parseInt(document.getElementById('f-colorCount').value) || 1,
+      made_to_order:  document.getElementById('f-madeToOrder').checked,
+      price_varies:   document.getElementById('f-priceVaries').checked,
+      price_each:     document.getElementById('f-priceEach').checked,
+      images,
+      display_order:  editTarget ? (editTarget.display_order || 0) : products.length,
+    };
+
+    if (editTarget) {
+      // UPDATE
+      await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(id)}`, {
+        method: 'PATCH', body: JSON.stringify(row)
+      });
+      const idx = products.findIndex(x => x.id === id);
+      if (idx >= 0) products[idx] = mapRow(row);
+      toast('✓ Product updated!', 3000);
+    } else {
+      // INSERT
+      await sbFetch('/rest/v1/products', {
+        method: 'POST', body: JSON.stringify(row)
+      });
+      products.push(mapRow(row));
+      toast('✓ Product added!', 3000);
+    }
+
+    closeModal();
+    updateStats();
+    renderTable();
+  } catch (e) {
+    errEl.textContent = 'Error: ' + e.message;
+    errEl.style.display = 'block';
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = editTarget ? 'Save Changes' : 'Add Product';
+  }
+}
+
+// ============================================================
+// DELETE
+// ============================================================
+function askDelete(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  deleteTarget = id;
+  document.getElementById('confirm-msg').textContent = `Delete "${p.name}"? This cannot be undone.`;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirm() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  deleteTarget = null;
+}
+async function confirmDelete() {
+  if (!deleteTarget) return;
+  closeConfirm();
+  try {
+    await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(deleteTarget)}`, { method: 'DELETE' });
+    products = products.filter(p => p.id !== deleteTarget);
+    delete changes[deleteTarget];
+    renderTable();
+    updateStats();
+    toast('Product deleted.', 3000);
+  } catch (e) {
+    toast('Delete failed: ' + e.message, 5000);
+    console.error(e);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEET EXPORT (one-way push)
+// ============================================================
+function exportToSheet() {
+  const saved = localStorage.getItem('jcc_sheet_url') || '';
+  document.getElementById('sheet-url-input').value = saved;
+  document.getElementById('sheet-status').textContent = '';
+  document.getElementById('sheet-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSheetModal() {
+  document.getElementById('sheet-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleSheetBackdrop(e) {
+  if (e.target === document.getElementById('sheet-modal')) closeSheetModal();
+}
+
+async function pushToSheet() {
+  const url = document.getElementById('sheet-url-input').value.trim();
+  if (!url) { document.getElementById('sheet-status').textContent = 'Please enter the Apps Script URL.'; return; }
+  localStorage.setItem('jcc_sheet_url', url);
+  const status = document.getElementById('sheet-status');
+  status.textContent = 'Pushing…';
+
+  // Build row updates matching existing Apps Script format
+  const updates = products.map((p, i) => ({ row: i + 2, name: p.name, qty: p.quantity, price: p.price }));
+  try {
+    const res  = await fetch(url, { method: 'POST', body: JSON.stringify({ updates }) });
+    const data = await res.json();
+    if (data.success) {
+      status.innerHTML = `<span style="color:#2e7d32">✓ Pushed ${data.updated} rows to Google Sheet.</span>`;
+    } else {
+      status.innerHTML = `<span style="color:#c62828">Error: ${data.error || 'Unknown error'}</span>`;
+    }
+  } catch (e) {
+    status.innerHTML = `<span style="color:#c62828">Could not reach Apps Script: ${e.message}</span>`;
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer;
+function toast(msg, ms = 2000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms);
 }
 </script>
 </body>

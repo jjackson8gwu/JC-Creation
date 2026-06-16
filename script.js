@@ -48,33 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
 });
 
-// Load products from JSON, then optionally overlay live quantities from Google Sheets
+// Load products from Supabase
 async function loadProducts() {
   try {
-    const response = await fetch('../resources/products.json');
-    productsData = await response.json();
-
-    // If a Google Sheets URL is configured, fetch live inventory and merge it in
-    if (INVENTORY_SHEET_URL) {
-      try {
-        const sheetRes = await fetch(INVENTORY_SHEET_URL);
-        const sheetData = await sheetRes.json();
-        if (sheetData.ok && sheetData.inventory) {
-          productsData.products.forEach(p => {
-            // Try matching by product ID first, then by name
-            const liveQty = sheetData.inventory[p.id] !== undefined
-              ? sheetData.inventory[p.id]
-              : sheetData.inventory[p.name];
-            if (liveQty !== undefined) {
-              p.quantity = parseInt(liveQty) || 0;
-            }
-          });
-        }
-      } catch (sheetErr) {
-        console.warn('Could not fetch live inventory from Google Sheets:', sheetErr);
-        // Fall back gracefully to products.json quantities
-      }
-    }
+    productsData = await window.loadCatalog();
 
     const currentPage = getCurrentPageCategory();
     if (currentPage) {
@@ -115,12 +92,14 @@ function displayProducts(category) {
   if (!productsSection || !productsData) return;
 
   // Filter products by category, respecting madeToOrder / visibility rules
+  // Case-insensitive so admin-panel categories always match
+  const catLower = category.toLowerCase();
   const categoryProducts = productsData.products.filter(p => {
-    if (p.category !== category) return false;
+    if ((p.category || '').toLowerCase() !== catLower) return false;
     // Mystery Bag items are always shown (informational preview, not purchasable individually)
-    if (category === 'Mystery_Bag') return true;
+    if (catLower === 'mystery_bag') return true;
     // Always show: price-varies items and everything in Custom_Designs (even at qty=0)
-    if (p.priceVaries || category === 'Custom_Designs') return true;
+    if (p.priceVaries || catLower === 'custom_designs') return true;
     // Hide out-of-stock items unless explicitly marked as made-to-order
     if (p.quantity === 0 && !p.madeToOrder) return false;
     return true;
