@@ -220,6 +220,51 @@
     }
     #toast.show { opacity: 1; }
 
+
+    /* ── Tab navigation ─────────────────────────────────────── */
+    .tab-nav {
+      display: flex; gap: 0; margin-bottom: 20px;
+      background: white; border-radius: 12px;
+      overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .tab-btn {
+      flex: 1; padding: 14px 20px; border: none; background: white;
+      font-size: 1rem; font-weight: bold; cursor: pointer; color: #888;
+      border-bottom: 3px solid transparent; transition: all 0.2s;
+    }
+    .tab-btn.active { color: #1a4054; border-bottom-color: #1a4054; background: #f8fbfc; }
+    .tab-btn:hover:not(.active) { background: #f5f5f5; }
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    /* ── Orders table ────────────────────────────────────────── */
+    .pack-badge, .pay-badge {
+      padding: 4px 10px; border: none; border-radius: 12px;
+      font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap;
+    }
+    .pack-Pending   { background: #fff3e0; color: #e65100; }
+    .pack-Packaged  { background: #e3f2fd; color: #1565c0; }
+    .pack-Delivered { background: #e8f5e9; color: #2e7d32; }
+    .pay-Unpaid { background: #fce4ec; color: #c62828; }
+    .pay-Paid   { background: #e8f5e9; color: #2e7d32; }
+    .src-badge {
+      font-size: 0.7rem; padding: 2px 7px; border-radius: 8px; white-space: nowrap;
+    }
+    .src-in_person { background: #f3e5f5; color: #6a1b9a; }
+    .src-facebook  { background: #e3f2fd; color: #1565c0; }
+    .src-online    { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── Orders total bar ────────────────────────────────────── */
+    .orders-total-bar {
+      background: #1a4054; color: white; border-radius: 10px;
+      padding: 14px 20px; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .orders-total-bar .total-label { font-size: 0.88rem; opacity: 0.8; }
+    .orders-total-bar .total-value { font-size: 1.5rem; font-weight: bold; }
+    .orders-stats-bar { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
       th, td { padding: 8px 10px; }
@@ -240,14 +285,24 @@
 <!-- ═══════════════════════════════ ADMIN ═══════════════════════════════ -->
 <div id="admin-screen">
   <div class="admin-header">
-    <h1>📦 J&amp;C Creations — Inventory</h1>
-    <div class="admin-actions">
+    <h1>📦 J&amp;C Creations — Admin</h1>
+    <div class="admin-actions" id="inv-actions">
       <button class="btn btn-green" onclick="openAddModal()">＋ Add Product</button>
       <button class="btn btn-teal"  onclick="saveAllChanges()" id="save-btn" style="display:none">💾 Save Changes</button>
       <button class="btn btn-gray"  onclick="exportToSheet()">📊 Export to Sheet</button>
     </div>
+    <div class="admin-actions" id="ord-actions" style="display:none">
+      <button class="btn btn-green" onclick="openAddOrderModal()">＋ Add Order</button>
+    </div>
   </div>
 
+  <!-- Tab navigation -->
+  <div class="tab-nav">
+    <button class="tab-btn active" id="tab-inv" onclick="switchTab('inventory')">📦 Inventory</button>
+    <button class="tab-btn"        id="tab-ord" onclick="switchTab('orders')">📋 Orders</button>
+  </div>
+
+  <div class="tab-section active" id="tab-section-inventory">
   <!-- Stats -->
   <div class="stats-bar">
     <div class="stat-card">
@@ -299,7 +354,85 @@
       <tbody id="product-tbody"></tbody>
     </table>
   </div>
-</div>
+  </div><!-- end tab-section inventory -->
+
+  <!-- ═══════════ ORDERS TAB ═══════════ -->
+  <div class="tab-section" id="tab-section-orders">
+
+  <!-- Order stats -->
+  <div class="orders-stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Total Unpaid</div>
+      <div class="stat-value" id="ostat-unpaid" style="color:#c62828">$—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Unpaid Orders</div>
+      <div class="stat-value" id="ostat-unpaid-count">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">To Package</div>
+      <div class="stat-value" id="ostat-package" style="color:#e65100">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Orders</div>
+      <div class="stat-value" id="ostat-total">—</div>
+    </div>
+  </div>
+
+  <!-- Order filters -->
+  <div class="filter-bar">
+    <input type="text" id="o-search" placeholder="🔍 Search customer or item…" oninput="renderOrders()">
+    <select id="o-pack" onchange="renderOrders()">
+      <option value="">All Pack Status</option>
+      <option value="Pending">Pending</option>
+      <option value="Packaged">Packaged</option>
+      <option value="Delivered">Delivered</option>
+    </select>
+    <select id="o-pay" onchange="renderOrders()">
+      <option value="">All Payment</option>
+      <option value="Unpaid">Unpaid</option>
+      <option value="Paid">Paid</option>
+    </select>
+    <select id="o-source" onchange="renderOrders()">
+      <option value="">All Sources</option>
+      <option value="in_person">In-Person</option>
+      <option value="facebook">Facebook</option>
+      <option value="online">Online</option>
+    </select>
+    <button class="btn btn-gray btn-sm" onclick="clearOrderFilters()">✕ Clear</button>
+  </div>
+
+  <!-- Running total for filtered view -->
+  <div class="orders-total-bar" id="orders-total-bar">
+    <span class="total-label" id="orders-total-label">Showing all orders</span>
+    <span><span class="total-label">Total: </span><span class="total-value" id="orders-total-value">$0.00</span></span>
+  </div>
+
+  <!-- Orders table -->
+  <div class="table-wrap" style="margin-bottom:80px">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="oSortBy('order_date')">Date ↕</th>
+          <th onclick="oSortBy('customer_name')">Customer ↕</th>
+          <th>Contact</th>
+          <th>Source</th>
+          <th onclick="oSortBy('item_name')">Item ↕</th>
+          <th onclick="oSortBy('quantity')">Qty ↕</th>
+          <th onclick="oSortBy('unit_price')">Price ↕</th>
+          <th>Line Total</th>
+          <th>Pack Status</th>
+          <th>Pay Status</th>
+          <th>Notes</th>
+          <th>Del</th>
+        </tr>
+      </thead>
+      <tbody id="orders-tbody"></tbody>
+    </table>
+  </div>
+
+  </div><!-- end tab-section orders -->
+</div><!-- end admin-screen -->
 
 <!-- ═══════════════════ ADD / EDIT MODAL ════════════════════ -->
 <div class="modal-overlay" id="product-modal" onclick="handleModalBackdrop(event)">
@@ -985,6 +1118,282 @@ async function pushToSheet() {
   }
 }
 
+
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab) {
+  document.getElementById('tab-section-inventory').classList.toggle('active', tab === 'inventory');
+  document.getElementById('tab-section-orders').classList.toggle('active', tab === 'orders');
+  document.getElementById('tab-inv').classList.toggle('active', tab === 'inventory');
+  document.getElementById('tab-ord').classList.toggle('active', tab === 'orders');
+  document.getElementById('inv-actions').style.display = tab === 'inventory' ? '' : 'none';
+  document.getElementById('ord-actions').style.display = tab === 'orders'    ? '' : 'none';
+  if (tab === 'orders' && orders.length === 0) loadOrders();
+}
+
+// ============================================================
+// ORDERS — DATA
+// ============================================================
+let orders    = [];
+let oSortKey  = 'order_date';
+let oSortAsc  = false;   // newest first by default
+let selectedOrderProduct = null; // product object selected from suggestions
+
+async function loadOrders() {
+  toast('Loading orders…');
+  try {
+    const rows = await sbFetch('/rest/v1/orders?order=order_date.desc,created_at.desc&limit=2000');
+    orders = rows || [];
+    renderOrders();
+    updateOrderStats();
+    toast('✓ ' + orders.length + ' orders loaded', 2000);
+  } catch(e) {
+    toast('⚠ Could not load orders: ' + e.message, 5000);
+    console.error(e);
+  }
+}
+
+function updateOrderStats() {
+  const unpaidRows = orders.filter(o => o.pay_status === 'Unpaid');
+  const unpaidTotal = unpaidRows.reduce((s, o) => s + (o.quantity * o.unit_price), 0);
+  document.getElementById('ostat-unpaid').textContent       = '$' + unpaidTotal.toFixed(2);
+  document.getElementById('ostat-unpaid-count').textContent = unpaidRows.length;
+  document.getElementById('ostat-package').textContent      = orders.filter(o => o.pack_status === 'Pending').length;
+  document.getElementById('ostat-total').textContent        = orders.length;
+}
+
+// ============================================================
+// ORDERS — RENDER TABLE
+// ============================================================
+function oSortBy(key) {
+  if (oSortKey === key) oSortAsc = !oSortAsc;
+  else { oSortKey = key; oSortAsc = true; }
+  renderOrders();
+}
+
+function clearOrderFilters() {
+  document.getElementById('o-search').value = '';
+  document.getElementById('o-pack').value   = '';
+  document.getElementById('o-pay').value    = '';
+  document.getElementById('o-source').value = '';
+  renderOrders();
+}
+
+function renderOrders() {
+  const search = (document.getElementById('o-search').value || '').toLowerCase();
+  const pack   = document.getElementById('o-pack').value;
+  const pay    = document.getElementById('o-pay').value;
+  const source = document.getElementById('o-source').value;
+
+  let rows = orders.filter(o => {
+    if (search && !o.customer_name.toLowerCase().includes(search) && !o.item_name.toLowerCase().includes(search)) return false;
+    if (pack   && o.pack_status !== pack)   return false;
+    if (pay    && o.pay_status  !== pay)    return false;
+    if (source && o.source      !== source) return false;
+    return true;
+  });
+
+  rows.sort((a, b) => {
+    let av = a[oSortKey] || '', bv = b[oSortKey] || '';
+    if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); }
+    return oSortAsc ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
+  });
+
+  // Running total
+  const total = rows.reduce((s, o) => s + (o.quantity * o.unit_price), 0);
+  document.getElementById('orders-total-value').textContent = '$' + total.toFixed(2);
+  const active = [search, pack, pay, source].filter(Boolean);
+  document.getElementById('orders-total-label').textContent =
+    active.length ? `${rows.length} row${rows.length !== 1 ? 's' : ''} filtered` : `All ${rows.length} orders`;
+
+  const srcLabels = { in_person: 'In-Person', facebook: 'Facebook', online: 'Online' };
+  const packNext  = { Pending: 'Packaged', Packaged: 'Delivered', Delivered: 'Pending' };
+  const payNext   = { Unpaid: 'Paid', Paid: 'Unpaid' };
+
+  document.getElementById('orders-tbody').innerHTML = rows.length === 0
+    ? '<tr><td colspan="12" style="text-align:center;color:#aaa;padding:30px">No orders match these filters.</td></tr>'
+    : rows.map(o => {
+        const lineTotal = (o.quantity * o.unit_price).toFixed(2);
+        const src = o.source || 'in_person';
+        return `<tr>
+          <td style="white-space:nowrap">${o.order_date || ''}</td>
+          <td><strong>${escHtml(o.customer_name)}</strong></td>
+          <td style="font-size:0.8rem;color:#666">${escHtml(o.customer_contact || '')}</td>
+          <td><span class="src-badge src-${src}">${escHtml(srcLabels[src] || src)}</span></td>
+          <td>${escHtml(o.item_name)}</td>
+          <td style="text-align:center">${o.quantity}</td>
+          <td>$${(o.unit_price || 0).toFixed(2)}</td>
+          <td style="font-weight:bold">$${lineTotal}</td>
+          <td>
+            <button class="pack-badge pack-${o.pack_status}"
+              onclick="cycleOrderStatus('${o.id}','pack_status','${o.pack_status}','${packNext[o.pack_status]}')">
+              ${o.pack_status}
+            </button>
+          </td>
+          <td>
+            <button class="pay-badge pay-${o.pay_status}"
+              onclick="cycleOrderStatus('${o.id}','pay_status','${o.pay_status}','${payNext[o.pay_status]}')">
+              ${o.pay_status}
+            </button>
+          </td>
+          <td style="font-size:0.8rem;color:#666;max-width:120px;overflow:hidden;text-overflow:ellipsis">${escHtml(o.notes || '')}</td>
+          <td>
+            <button class="btn btn-red btn-sm" onclick="deleteOrder('${o.id}')">🗑</button>
+          </td>
+        </tr>`;
+      }).join('');
+}
+
+// Cycle through status values with one click
+async function cycleOrderStatus(id, field, currentVal, nextVal) {
+  const patch = {};
+  patch[field] = nextVal;
+  try {
+    await sbFetch(`/rest/v1/orders?id=eq.${encodeURIComponent(id)}`, {
+      method: 'PATCH', body: JSON.stringify(patch)
+    });
+    const o = orders.find(x => x.id === id);
+    if (o) o[field] = nextVal;
+    renderOrders();
+    updateOrderStats();
+  } catch(e) {
+    toast('Update failed: ' + e.message, 4000);
+  }
+}
+
+async function deleteOrder(id) {
+  if (!confirm('Delete this order line?')) return;
+  try {
+    await sbFetch(`/rest/v1/orders?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+    orders = orders.filter(o => o.id !== id);
+    renderOrders();
+    updateOrderStats();
+    toast('Order deleted.', 2000);
+  } catch(e) {
+    toast('Delete failed: ' + e.message, 4000);
+  }
+}
+
+// ============================================================
+// ADD ORDER MODAL
+// ============================================================
+function openAddOrderModal() {
+  selectedOrderProduct = null;
+  document.getElementById('o-customer').value = '';
+  document.getElementById('o-contact').value  = '';
+  document.getElementById('o-src').value      = 'in_person';
+  document.getElementById('o-item').value     = '';
+  document.getElementById('o-qty').value      = '1';
+  document.getElementById('o-price').value    = '';
+  document.getElementById('o-packst').value   = 'Pending';
+  document.getElementById('o-payst').value    = 'Unpaid';
+  document.getElementById('o-notes').value    = '';
+  document.getElementById('o-deduct').checked = true;
+  document.getElementById('o-item-suggestions').style.display = 'none';
+  document.getElementById('order-modal-error').style.display  = 'none';
+  // Default date = today
+  document.getElementById('o-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('order-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('o-customer').focus();
+}
+
+function closeOrderModal() {
+  document.getElementById('order-modal').classList.remove('open');
+  document.getElementById('o-item-suggestions').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function handleOrderBackdrop(e) {
+  if (e.target === document.getElementById('order-modal')) closeOrderModal();
+}
+
+// Item autocomplete from products list
+function filterOrderItems() {
+  const q    = document.getElementById('o-item').value.toLowerCase().trim();
+  const box  = document.getElementById('o-item-suggestions');
+  selectedOrderProduct = null;
+  if (!q) { box.style.display = 'none'; return; }
+  const matches = products.filter(p => p.name.toLowerCase().includes(q)).slice(0, 12);
+  if (!matches.length) { box.style.display = 'none'; return; }
+  box.innerHTML = matches.map(p =>
+    `<div style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0"
+      onmousedown="selectOrderProduct('${p.id}')">${escHtml(p.name)} — $${(p.price||0).toFixed(2)}</div>`
+  ).join('');
+  box.style.display = 'block';
+}
+
+function selectOrderProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  selectedOrderProduct = p;
+  document.getElementById('o-item').value  = p.name;
+  document.getElementById('o-price').value = (p.price || 0).toFixed(2);
+  document.getElementById('o-item-suggestions').style.display = 'none';
+}
+
+async function saveOrder() {
+  const errEl = document.getElementById('order-modal-error');
+  errEl.style.display = 'none';
+
+  const customer = document.getElementById('o-customer').value.trim();
+  const itemName = document.getElementById('o-item').value.trim();
+  const qty      = parseInt(document.getElementById('o-qty').value) || 1;
+  const price    = parseFloat(document.getElementById('o-price').value) || 0;
+
+  if (!customer) { errEl.textContent = 'Customer name is required.'; errEl.style.display = 'block'; return; }
+  if (!itemName) { errEl.textContent = 'Item name is required.';     errEl.style.display = 'block'; return; }
+
+  const btn = document.getElementById('save-order-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  try {
+    const row = {
+      customer_name:    customer,
+      customer_contact: document.getElementById('o-contact').value.trim(),
+      source:           document.getElementById('o-src').value,
+      item_name:        itemName,
+      item_id:          selectedOrderProduct ? selectedOrderProduct.id : '',
+      quantity:         qty,
+      unit_price:       price,
+      pack_status:      document.getElementById('o-packst').value,
+      pay_status:       document.getElementById('o-payst').value,
+      notes:            document.getElementById('o-notes').value.trim(),
+      order_date:       document.getElementById('o-date').value,
+    };
+
+    const saved = await sbFetch('/rest/v1/orders', { method: 'POST', body: JSON.stringify(row) });
+    if (saved && saved[0]) orders.unshift(saved[0]);
+
+    // Optionally deduct inventory
+    if (document.getElementById('o-deduct').checked && selectedOrderProduct) {
+      const p = products.find(x => x.id === selectedOrderProduct.id);
+      if (p) {
+        const newQty = Math.max(0, p.quantity - qty);
+        await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(p.id)}`, {
+          method: 'PATCH', body: JSON.stringify({ quantity: newQty })
+        });
+        p.quantity = newQty;
+        renderTable();
+        updateStats();
+      }
+    }
+
+    renderOrders();
+    updateOrderStats();
+    closeOrderModal();
+    toast('✓ Order saved!', 3000);
+  } catch(e) {
+    errEl.textContent = 'Error: ' + e.message;
+    errEl.style.display = 'block';
+    console.error(e);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Save Order';
+  }
+}
+
 // ============================================================
 // TOAST
 // ============================================================
@@ -997,5 +1406,78 @@ function toast(msg, ms = 2000) {
   toastTimer = setTimeout(() => el.classList.remove('show'), ms);
 }
 </script>
+
+<!-- ═══════════════════ ADD ORDER MODAL ════════════════════ -->
+<div class="modal-overlay" id="order-modal" onclick="handleOrderBackdrop(event)">
+  <div class="modal-box" style="max-width:560px">
+    <h2>➕ Add Order</h2>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Customer Name *</label>
+        <input type="text" id="o-customer" placeholder="e.g. Jane Smith">
+      </div>
+      <div class="form-group">
+        <label>Contact (phone / FB / email)</label>
+        <input type="text" id="o-contact" placeholder="Optional">
+      </div>
+      <div class="form-group">
+        <label>Source</label>
+        <select id="o-src">
+          <option value="in_person">In-Person</option>
+          <option value="facebook">Facebook</option>
+          <option value="online">Online</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Item *</label>
+        <input type="text" id="o-item" placeholder="Start typing to search…" oninput="filterOrderItems()" autocomplete="off">
+        <div id="o-item-suggestions" style="border:1px solid #ddd;border-radius:6px;max-height:160px;overflow-y:auto;display:none;background:white;position:relative;z-index:10;margin-top:2px;font-size:0.88rem"></div>
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" id="o-qty" min="1" value="1">
+      </div>
+      <div class="form-group">
+        <label>Price Each ($)</label>
+        <input type="number" id="o-price" step="0.01" min="0" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label>Pack Status</label>
+        <select id="o-packst">
+          <option value="Pending">Pending</option>
+          <option value="Packaged">Packaged</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Payment Status</label>
+        <select id="o-payst">
+          <option value="Unpaid">Unpaid</option>
+          <option value="Paid">Paid</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="o-date">
+      </div>
+      <div class="form-group full">
+        <label>Notes</label>
+        <input type="text" id="o-notes" placeholder="Optional">
+      </div>
+      <div class="form-group full">
+        <label class="checkbox-row">
+          <input type="checkbox" id="o-deduct" checked>
+          Deduct quantity from inventory when saving
+        </label>
+      </div>
+    </div>
+    <div class="modal-error" id="order-modal-error"></div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" onclick="closeOrderModal()">Cancel</button>
+      <button class="btn btn-green" onclick="saveOrder()" id="save-order-btn">Save Order</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
