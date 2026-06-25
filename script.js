@@ -243,9 +243,15 @@ function createProductHTML(product, category) {
     actionHTML = `<button onclick="openQuoteModal('${safeName}')" class="add-to-cart-btn request-quote-btn">Request a Quote</button>`;
   } else {
     const maxQty = product.quantity > 0 ? product.quantity : 99;
-    const addFn  = product.requiresColor
-      ? `openColorSelection('${product.name}', ${product.price}, this, ${product.colorCount || 1}, '${product.id}')`
-      : `addToCart('${product.name}', ${product.price}, this, '${product.id}')`;
+    const safeId = (product.id || '').replace(/'/g, "\\'");
+    let addFn;
+    if (product.customOptions && product.customOptions.length > 0) {
+      addFn = `openOptionsSelection('${safeId}', this)`;
+    } else if (product.requiresColor) {
+      addFn = `openColorSelection('${product.name.replace(/'/g,"\\'")}', ${product.price}, this, ${product.colorCount || 1}, '${safeId}')`;
+    } else {
+      addFn = `addToCart('${product.name.replace(/'/g,"\\'")}', ${product.price}, this, '${safeId}')`;
+    }
     actionHTML = `
       <div class="quantity-controls">
         <button onclick="decreaseQuantity(this)">-</button>
@@ -594,6 +600,114 @@ function openColorSelection(itemName, price, buttonElement, colorCount = 1, item
   document.body.style.overflow = "hidden";
 }
 
+// ── Custom Options Selection (Intensity / Size / Style / etc.) ───────────────
+
+let pendingOptionsItem = null;
+
+function injectOptionsModal() {
+  if (document.getElementById('options-selection-modal')) return;
+  const modal = document.createElement('div');
+  modal.id = 'options-selection-modal';
+  modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;align-items:center;justify-content:center;overflow-y:auto;padding:20px';
+  modal.innerHTML = `
+    <div style="background:white;border-radius:16px;padding:28px;max-width:460px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.25)">
+      <h2 style="color:#1a4054;margin-bottom:6px;font-size:1.3rem">Select Options</h2>
+      <h3 id="options-product-name" style="margin-bottom:20px;font-size:1rem;color:#555;font-weight:normal"></h3>
+      <div id="options-selects-container"></div>
+      <div style="display:flex;gap:10px;margin-top:22px;justify-content:flex-end">
+        <button onclick="closeOptionsSelection()"
+          style="padding:10px 20px;border-radius:8px;border:2px solid #ccc;background:white;cursor:pointer;font-size:14px">
+          Cancel
+        </button>
+        <button onclick="confirmOptionsSelection()"
+          style="padding:10px 22px;border-radius:8px;background:#D2762B;color:white;border:none;font-weight:bold;cursor:pointer;font-size:14px">
+          Add to Cart
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function openOptionsSelection(itemId, buttonElement) {
+  if (!productsData) return;
+  const product = productsData.products.find(p => p.id === itemId);
+  if (!product) return;
+
+  const quantityInput = buttonElement.parentNode.querySelector('.quantity-input');
+  const quantity = parseInt(quantityInput.value) || 1;
+
+  pendingOptionsItem = { product, quantity, buttonElement };
+
+  injectOptionsModal();
+
+  document.getElementById('options-product-name').textContent = product.name;
+
+  const container = document.getElementById('options-selects-container');
+  container.innerHTML = product.customOptions.map((opt, idx) => `
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-weight:bold;margin-bottom:6px;color:#1a4054">${opt.label}</label>
+      <select id="opt-sel-${idx}"
+        style="width:100%;padding:9px 12px;border:2px solid #ddd;border-radius:8px;font-size:14px">
+        <option value="">— Select ${opt.label} —</option>
+        ${opt.values.map(v => `<option value="${v}">${v}</option>`).join('')}
+      </select>
+    </div>`).join('');
+
+  const modal = document.getElementById('options-selection-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOptionsSelection() {
+  const modal = document.getElementById('options-selection-modal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+  pendingOptionsItem = null;
+}
+
+function confirmOptionsSelection() {
+  if (!pendingOptionsItem) return;
+  const { product, quantity, buttonElement } = pendingOptionsItem;
+  const selections = {};
+
+  for (let i = 0; i < product.customOptions.length; i++) {
+    const el  = document.getElementById(`opt-sel-${i}`);
+    const val = el ? el.value : '';
+    if (!val) {
+      alert(`Please select a ${product.customOptions[i].label} before adding to cart.`);
+      return;
+    }
+    selections[product.customOptions[i].label] = val;
+  }
+
+  const selKey = JSON.stringify(selections);
+  const existIdx = cart.findIndex(item =>
+    item.id === product.id && JSON.stringify(item.selections || {}) === selKey
+  );
+
+  if (existIdx !== -1) {
+    cart[existIdx].quantity += quantity;
+  } else {
+    cart.push({
+      id:         product.id,
+      name:       product.name,
+      price:      product.price,
+      quantity,
+      selections,
+    });
+  }
+
+  buttonElement.parentNode.querySelector('.quantity-input').value = 1;
+  saveCart(cart);
+  updateCartDisplay();
+
+  const selText = Object.entries(selections).map(([k,v]) => `${k}: ${v}`).join(', ');
+  showNotification(`${quantity} x ${product.name} (${selText}) added to cart!`);
+  closeOptionsSelection();
+}
+
+// ── End Custom Options ────────────────────────────────────────────────────────
+
 function closeColorSelection() {
   const modal = document.getElementById("color-selection-modal");
   modal.classList.remove("show");
@@ -722,7 +836,10 @@ function updateCartDisplay() {
         total += itemTotal;
         
         let colorDisplay = '';
-        if (item.colors) {
+        if (item.selections && Object.keys(item.selections).length > 0) {
+          const selText = Object.entries(item.selections).map(([k,v]) => `${k}: ${v}`).join(', ');
+          colorDisplay = `<div class="item-color">${selText}</div>`;
+        } else if (item.colors) {
           colorDisplay = `<div class="item-color">Color${item.colorCount >= 2 ? 's' : ''}: ${item.colors.display}</div>`;
         } else if (item.color) {
           colorDisplay = `<div class="item-color">Color: ${item.color}</div>`;
@@ -760,7 +877,9 @@ function updateCartDisplay() {
       total += itemTotal;
       
       let colorInfo = '';
-      if (item.colors) {
+      if (item.selections && Object.keys(item.selections).length > 0) {
+        colorInfo = ' - ' + Object.entries(item.selections).map(([k,v]) => `${k}: ${v}`).join(', ');
+      } else if (item.colors) {
         if (item.colorCount >= 2) {
           colorInfo = ` - Colors: Primary: ${item.colors.primary}, Secondary: ${item.colors.secondary}`;
         } else {
@@ -769,7 +888,7 @@ function updateCartDisplay() {
       } else if (item.color) {
         colorInfo = ` - Color: ${item.color}`;
       }
-      
+
       formText += `${item.name}${colorInfo} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
     });
     

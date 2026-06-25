@@ -492,6 +492,19 @@
         <label class="checkbox-row"><input type="checkbox" id="f-madeToOrder"> Made to order</label>
         <label class="checkbox-row"><input type="checkbox" id="f-priceVaries"> Price varies</label>
         <label class="checkbox-row"><input type="checkbox" id="f-priceEach"> Price is "each"</label>
+        <label class="checkbox-row"><input type="checkbox" id="f-hasOptions" onchange="toggleOptionsBuilder()"> Has custom options (size, intensity, style…)</label>
+      </div>
+
+      <!-- Custom Options Builder -->
+      <div class="form-group full" id="options-builder" style="display:none">
+        <label style="font-weight:bold;margin-bottom:8px;display:block">
+          Custom Option Groups
+          <small style="color:#888;font-weight:normal"> — e.g. "Intensity" with values Low / Medium / High</small>
+        </label>
+        <div id="admin-option-groups"></div>
+        <button type="button" class="btn btn-blue btn-sm" onclick="addAdminOptionGroup()" style="margin-top:8px">
+          + Add Option Group
+        </button>
       </div>
 
       <!-- Image upload -->
@@ -604,6 +617,87 @@ let editTarget   = null;     // product being edited (null = adding)
 let pendingImages = [];       // {file, url, existing} while editing modal
 let uploadedUrls  = [];       // final public URLs for the product being saved
 
+// ── Custom Options Builder ──────────────────────────────────────────────────
+let adminOptionsArr = []; // [{label:'Intensity', values:['Low','Medium','High']}]
+
+function toggleOptionsBuilder() {
+  const checked = document.getElementById('f-hasOptions').checked;
+  document.getElementById('options-builder').style.display = checked ? '' : 'none';
+  if (checked && adminOptionsArr.length === 0) {
+    adminOptionsArr = [{ label: '', values: [] }];
+    renderAdminOptionGroups();
+  }
+}
+
+function addAdminOptionGroup() {
+  adminOptionsArr.push({ label: '', values: [] });
+  renderAdminOptionGroups();
+}
+
+function removeAdminOptionGroup(idx) {
+  adminOptionsArr.splice(idx, 1);
+  renderAdminOptionGroups();
+}
+
+function addAdminOptionValue(idx) {
+  const input = document.getElementById(`adm-val-input-${idx}`);
+  const val = input ? input.value.trim() : '';
+  if (!val) return;
+  if (!adminOptionsArr[idx].values.includes(val)) {
+    adminOptionsArr[idx].values.push(val);
+    renderAdminOptionGroups();
+  }
+  setTimeout(() => {
+    const inp = document.getElementById(`adm-val-input-${idx}`);
+    if (inp) inp.focus();
+  }, 0);
+}
+
+function removeAdminOptionValue(idx, vidx) {
+  adminOptionsArr[idx].values.splice(vidx, 1);
+  renderAdminOptionGroups();
+}
+
+function renderAdminOptionGroups() {
+  const list = document.getElementById('admin-option-groups');
+  if (!list) return;
+  list.innerHTML = adminOptionsArr.map((grp, idx) => `
+    <div style="border:1px solid #ddd;border-radius:8px;padding:12px;margin-bottom:8px;background:#f9fbfc">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+        <input type="text" placeholder="Option name (e.g. Intensity, Size, Style)"
+          value="${(grp.label || '').replace(/"/g,'&quot;')}"
+          style="flex:1;padding:7px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:13px"
+          oninput="adminOptionsArr[${idx}].label=this.value">
+        <button type="button" class="btn btn-red btn-sm"
+          onclick="removeAdminOptionGroup(${idx})" title="Remove this option">✕</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;min-height:24px;margin-bottom:8px">
+        ${(grp.values || []).map((v, vidx) => `
+          <span style="background:#e3f2fd;color:#1565c0;padding:3px 10px 3px 12px;border-radius:12px;font-size:13px;display:inline-flex;align-items:center;gap:4px">
+            ${v}
+            <button type="button" onclick="removeAdminOptionValue(${idx},${vidx})"
+              style="background:none;border:none;cursor:pointer;color:#1565c0;font-size:14px;padding:0;line-height:1;font-weight:bold">&times;</button>
+          </span>`).join('')}
+        ${grp.values.length === 0 ? '<span style="color:#bbb;font-size:12px">No values yet — add some below</span>' : ''}
+      </div>
+      <div style="display:flex;gap:6px">
+        <input type="text" id="adm-val-input-${idx}" placeholder="Type a value and press Enter or + Add"
+          style="flex:1;padding:6px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:13px"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();addAdminOptionValue(${idx})}">
+        <button type="button" class="btn btn-teal btn-sm"
+          onclick="addAdminOptionValue(${idx})">+ Add</button>
+      </div>
+    </div>`).join('');
+}
+
+function getAdminCustomOptions() {
+  if (!document.getElementById('f-hasOptions').checked) return [];
+  return adminOptionsArr
+    .filter(g => (g.label || '').trim())
+    .map(g => ({ label: g.label.trim(), values: g.values }));
+}
+// ── End Custom Options Builder ──────────────────────────────────────────────
+
 async function sbFetch(path, opts = {}) {
   const res = await fetch(`${SUPABASE_URL}${path}`, {
     ...opts,
@@ -643,13 +737,14 @@ function mapRow(r) {
     price:         r.price          || 0,
     quantity:      r.quantity       || 0,
     category:      r.category       || '',
-    requiresColor: r.requires_color || false,
-    colorCount:    r.color_count    || 1,
-    madeToOrder:   r.made_to_order  || false,
-    priceVaries:   r.price_varies   || false,
-    priceEach:     r.price_each     || false,
-    images:        r.images         || [],
-    display_order: r.display_order  || 0,
+    requiresColor: r.requires_color  || false,
+    colorCount:    r.color_count     || 1,
+    madeToOrder:   r.made_to_order   || false,
+    priceVaries:   r.price_varies    || false,
+    priceEach:     r.price_each      || false,
+    images:        r.images          || [],
+    customOptions: r.custom_options  || [],
+    display_order: r.display_order   || 0,
   };
 }
 
@@ -667,6 +762,7 @@ function toRow(p) {
     price_varies:   p.priceVaries,
     price_each:     p.priceEach,
     images:         p.images,
+    custom_options: p.customOptions || [],
     display_order:  p.display_order || 0,
   };
 }
@@ -863,6 +959,10 @@ function openAddModal() {
   document.getElementById('f-madeToOrder').checked   = false;
   document.getElementById('f-priceVaries').checked   = false;
   document.getElementById('f-priceEach').checked     = false;
+  document.getElementById('f-hasOptions').checked    = false;
+  document.getElementById('options-builder').style.display = 'none';
+  adminOptionsArr = [];
+  document.getElementById('admin-option-groups').innerHTML = '';
   document.getElementById('img-preview').innerHTML   = '';
   document.getElementById('img-upload-status').textContent = '';
   document.getElementById('modal-error').style.display = 'none';
@@ -890,6 +990,12 @@ function openEditModal(id) {
   document.getElementById('f-madeToOrder').checked   = p.madeToOrder;
   document.getElementById('f-priceVaries').checked   = p.priceVaries;
   document.getElementById('f-priceEach').checked     = p.priceEach;
+  // Populate custom options builder
+  const opts = p.customOptions || [];
+  adminOptionsArr = JSON.parse(JSON.stringify(opts));
+  document.getElementById('f-hasOptions').checked = opts.length > 0;
+  document.getElementById('options-builder').style.display = opts.length > 0 ? '' : 'none';
+  renderAdminOptionGroups();
   document.getElementById('modal-error').style.display = 'none';
   renderImgPreview();
   document.getElementById('product-modal').classList.add('open');
@@ -1015,6 +1121,7 @@ async function saveProduct() {
       price_varies:   document.getElementById('f-priceVaries').checked,
       price_each:     document.getElementById('f-priceEach').checked,
       images,
+      custom_options: getAdminCustomOptions(),
       display_order:  editTarget ? (editTarget.display_order || 0) : products.length,
     };
 

@@ -18,12 +18,13 @@
       price:          row.price          || 0,
       quantity:       row.quantity       || 0,
       category:       row.category       || '',
-      requiresColor:  row.requires_color || false,
-      colorCount:     row.color_count    || 1,
-      madeToOrder:    row.made_to_order  || false,
-      priceVaries:    row.price_varies   || false,
-      priceEach:      row.price_each     || false,
-      images:         row.images         || [],
+      requiresColor:  row.requires_color  || false,
+      colorCount:     row.color_count     || 1,
+      madeToOrder:    row.made_to_order   || false,
+      priceVaries:    row.price_varies    || false,
+      priceEach:      row.price_each      || false,
+      images:         row.images          || [],
+      customOptions:  row.custom_options  || [],
     };
   }
 
