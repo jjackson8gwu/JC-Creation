@@ -294,12 +294,17 @@
     <div class="admin-actions" id="ord-actions" style="display:none">
       <button class="btn btn-green" onclick="openAddOrderModal()">＋ Add Order</button>
     </div>
+    <div class="admin-actions" id="promo-actions" style="display:none">
+      <button class="btn btn-green" onclick="openAddPromoModal()">＋ New Promo Code</button>
+      <button class="btn btn-gray"  onclick="toggleRedemptionLog()" id="redlog-btn">📜 Redemption Log</button>
+    </div>
   </div>
 
   <!-- Tab navigation -->
   <div class="tab-nav">
     <button class="tab-btn active" id="tab-inv" onclick="switchTab('inventory')">📦 Inventory</button>
     <button class="tab-btn"        id="tab-ord" onclick="switchTab('orders')">📋 Orders</button>
+    <button class="tab-btn"        id="tab-promo" onclick="switchTab('promos')">🏷️ Promo Codes</button>
   </div>
 
   <div class="tab-section active" id="tab-section-inventory">
@@ -432,7 +437,154 @@
   </div>
 
   </div><!-- end tab-section orders -->
+
+  <!-- ═══════════ PROMO CODES TAB ═══════════ -->
+  <div class="tab-section" id="tab-section-promos">
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">Active Codes</div>
+        <div class="stat-value" id="promo-stat-active">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Redemptions</div>
+        <div class="stat-value" id="promo-stat-uses">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Discounted</div>
+        <div class="stat-value" id="promo-stat-saved">$0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Expired / Off</div>
+        <div class="stat-value" id="promo-stat-dead">0</div>
+      </div>
+    </div>
+
+    <!-- Promo codes table -->
+    <div class="table-wrap" id="promo-table-wrap" style="margin-bottom:80px">
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Discount</th>
+            <th>Min Order</th>
+            <th>Applies To</th>
+            <th>Uses</th>
+            <th>Expires</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Del</th>
+          </tr>
+        </thead>
+        <tbody id="promos-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Redemption log (hidden by default) -->
+    <div class="table-wrap" id="redemption-log-wrap" style="display:none;margin-bottom:80px">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Code</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Subtotal</th>
+            <th>Discount</th>
+            <th>Total Paid</th>
+          </tr>
+        </thead>
+        <tbody id="redemptions-tbody"></tbody>
+      </table>
+    </div>
+
+  </div><!-- end tab-section promos -->
 </div><!-- end admin-screen -->
+
+<!-- ═══════════════════ PROMO CODE MODAL ════════════════════ -->
+<div class="modal-overlay" id="promo-modal" onclick="handlePromoBackdrop(event)">
+  <div class="modal-box" style="max-width:560px">
+    <h2 id="promo-modal-title">New Promo Code</h2>
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Code *</label>
+        <input type="text" id="p-code" placeholder="e.g. SAVE20"
+               style="text-transform:uppercase;font-weight:bold;letter-spacing:0.05em">
+      </div>
+
+      <div class="form-group">
+        <label>Internal Description</label>
+        <input type="text" id="p-description" placeholder="e.g. August SimpleText blast">
+      </div>
+
+      <div class="form-group">
+        <label>Discount Type *</label>
+        <select id="p-type" onchange="updatePromoValueHint()">
+          <option value="percent">Percentage off (%)</option>
+          <option value="fixed">Dollar amount off ($)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="p-value-label">Discount Value (%) *</label>
+        <input type="number" id="p-value" step="0.01" min="0" placeholder="20">
+      </div>
+
+      <div class="form-group">
+        <label>Minimum Order ($)</label>
+        <input type="number" id="p-minorder" step="0.01" min="0" value="0" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Max Total Uses <small style="color:#888;font-weight:normal">(0 = unlimited)</small></label>
+        <input type="number" id="p-maxuses" min="0" value="0" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Expires On <small style="color:#888;font-weight:normal">(blank = never)</small></label>
+        <input type="date" id="p-expires">
+      </div>
+
+      <div class="form-group">
+        <label>Applies To</label>
+        <select id="p-category">
+          <option value="">Entire cart (all products)</option>
+          <option value="1_dollar_minis">$1 Minis</option>
+          <option value="2_dollar_minis">$2 Minis</option>
+          <option value="3_dollar_minis">$3 Minis</option>
+          <option value="4_dollar_minis">$4 Minis</option>
+          <option value="Pen_Holders">Pen Holders</option>
+          <option value="Fan_Art">Fan Art</option>
+          <option value="Custom_Designs">Custom Designs</option>
+          <option value="Dragons_and_Animals">Dragons &amp; Animals</option>
+          <option value="Fidgets">Fidgets</option>
+          <option value="Pokeballs">Pokeballs</option>
+          <option value="Clickers">Clickers</option>
+          <option value="Keychains">Keychains</option>
+          <option value="Mystery_Bag">Mystery Bag</option>
+          <option value="Seasonal">Seasonal</option>
+        </select>
+      </div>
+
+      <div class="form-group full" style="padding:4px 0">
+        <label class="checkbox-row"><input type="checkbox" id="p-active" checked> Active (customers can use this code)</label>
+      </div>
+
+      <div class="form-group full" style="background:#f0f7f8;border-radius:8px;padding:12px;font-size:0.85rem;color:#1a4054">
+        <strong>Preview:</strong> <span id="promo-preview">—</span>
+      </div>
+
+    </div>
+
+    <div class="modal-error" id="promo-error"></div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" onclick="closePromoModal()">Cancel</button>
+      <button class="btn btn-green" onclick="savePromo()" id="save-promo-btn">Save Code</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════ ADD / EDIT MODAL ════════════════════ -->
 <div class="modal-overlay" id="product-modal" onclick="handleModalBackdrop(event)">
@@ -1233,12 +1385,317 @@ async function pushToSheet() {
 function switchTab(tab) {
   document.getElementById('tab-section-inventory').classList.toggle('active', tab === 'inventory');
   document.getElementById('tab-section-orders').classList.toggle('active', tab === 'orders');
+  document.getElementById('tab-section-promos').classList.toggle('active', tab === 'promos');
   document.getElementById('tab-inv').classList.toggle('active', tab === 'inventory');
   document.getElementById('tab-ord').classList.toggle('active', tab === 'orders');
-  document.getElementById('inv-actions').style.display = tab === 'inventory' ? '' : 'none';
-  document.getElementById('ord-actions').style.display = tab === 'orders'    ? '' : 'none';
+  document.getElementById('tab-promo').classList.toggle('active', tab === 'promos');
+  document.getElementById('inv-actions').style.display   = tab === 'inventory' ? '' : 'none';
+  document.getElementById('ord-actions').style.display   = tab === 'orders'    ? '' : 'none';
+  document.getElementById('promo-actions').style.display = tab === 'promos'    ? '' : 'none';
   if (tab === 'orders' && orders.length === 0) loadOrders();
+  if (tab === 'promos' && promos.length === 0) loadPromos();
 }
+
+// ============================================================
+// PROMO CODES
+// ============================================================
+let promos      = [];
+let redemptions = [];
+let promoEditTarget = null;
+
+async function loadPromos() {
+  toast('Loading promo codes…');
+  try {
+    promos = await sbFetch('/rest/v1/promo_codes?order=created_at.desc&limit=500') || [];
+    renderPromos();
+    updatePromoStats();
+    loadRedemptions();
+    toast('✓ ' + promos.length + ' promo code' + (promos.length !== 1 ? 's' : '') + ' loaded', 2000);
+  } catch (e) {
+    console.error(e);
+    toast('⚠️ Could not load promo codes — did you run promo_codes_schema.sql?', 6000);
+  }
+}
+
+async function loadRedemptions() {
+  try {
+    redemptions = await sbFetch('/rest/v1/promo_redemptions?order=redeemed_at.desc&limit=1000') || [];
+    renderRedemptions();
+    updatePromoStats();
+  } catch (e) { console.error('Redemptions load failed', e); }
+}
+
+function promoIsExpired(p) {
+  if (!p.expires_at) return false;
+  // Compare date-only to avoid timezone drift
+  const today = new Date().toISOString().slice(0, 10);
+  return p.expires_at < today;
+}
+
+function promoIsMaxedOut(p) {
+  return p.max_uses > 0 && (p.uses_count || 0) >= p.max_uses;
+}
+
+function promoStatus(p) {
+  if (!p.active)          return { label: 'Inactive', cls: 'toggle-off' };
+  if (promoIsExpired(p))  return { label: 'Expired',  cls: 'toggle-off' };
+  if (promoIsMaxedOut(p)) return { label: 'Used Up',  cls: 'toggle-off' };
+  return { label: 'Active', cls: 'toggle-on' };
+}
+
+function discountLabel(p) {
+  return p.discount_type === 'percent'
+    ? `${parseFloat(p.discount_value)}% off`
+    : `$${parseFloat(p.discount_value).toFixed(2)} off`;
+}
+
+function renderPromos() {
+  const tb = document.getElementById('promos-tbody');
+  if (!promos.length) {
+    tb.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999">No promo codes yet. Click "＋ New Promo Code" to create one.</td></tr>';
+    return;
+  }
+  tb.innerHTML = promos.map(p => {
+    const st = promoStatus(p);
+    const usesText = p.max_uses > 0
+      ? `${p.uses_count || 0} / ${p.max_uses}`
+      : `${p.uses_count || 0}`;
+    const catText = p.category
+      ? p.category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+      : 'Entire cart';
+    return `
+      <tr>
+        <td><strong style="letter-spacing:0.05em;font-family:monospace;font-size:1rem">${p.code}</strong></td>
+        <td style="color:#666;font-size:0.85rem">${p.description || '—'}</td>
+        <td><strong>${discountLabel(p)}</strong></td>
+        <td>${p.min_order > 0 ? '$' + parseFloat(p.min_order).toFixed(2) : '—'}</td>
+        <td><span class="cat-badge">${catText}</span></td>
+        <td>${usesText}</td>
+        <td>${p.expires_at || 'Never'}</td>
+        <td><button class="toggle-btn ${st.cls}" onclick="togglePromoActive('${p.id}')">${st.label}</button></td>
+        <td><button class="btn btn-blue btn-sm" onclick="openEditPromoModal('${p.id}')">Edit</button></td>
+        <td><button class="btn btn-red btn-sm" onclick="deletePromo('${p.id}')">✕</button></td>
+      </tr>`;
+  }).join('');
+}
+
+function renderRedemptions() {
+  const tb = document.getElementById('redemptions-tbody');
+  if (!redemptions.length) {
+    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#999">No redemptions recorded yet.</td></tr>';
+    return;
+  }
+  tb.innerHTML = redemptions.map(r => `
+    <tr>
+      <td>${(r.redeemed_at || '').slice(0, 10)}</td>
+      <td><strong style="font-family:monospace">${r.code}</strong></td>
+      <td>${r.customer_name || '—'}</td>
+      <td style="font-size:0.85rem;color:#666">${r.customer_email || '—'}</td>
+      <td>$${parseFloat(r.order_subtotal || 0).toFixed(2)}</td>
+      <td style="color:#2e7d32;font-weight:bold">−$${parseFloat(r.discount_amount || 0).toFixed(2)}</td>
+      <td><strong>$${parseFloat(r.order_total || 0).toFixed(2)}</strong></td>
+    </tr>`).join('');
+}
+
+function updatePromoStats() {
+  const active = promos.filter(p => promoStatus(p).label === 'Active').length;
+  const dead   = promos.length - active;
+  const uses   = redemptions.length;
+  const saved  = redemptions.reduce((s, r) => s + parseFloat(r.discount_amount || 0), 0);
+  document.getElementById('promo-stat-active').textContent = active;
+  document.getElementById('promo-stat-uses').textContent   = uses;
+  document.getElementById('promo-stat-saved').textContent  = '$' + saved.toFixed(0);
+  document.getElementById('promo-stat-dead').textContent   = dead;
+}
+
+function toggleRedemptionLog() {
+  const log   = document.getElementById('redemption-log-wrap');
+  const table = document.getElementById('promo-table-wrap');
+  const btn   = document.getElementById('redlog-btn');
+  const showing = log.style.display !== 'none';
+  log.style.display   = showing ? 'none' : '';
+  table.style.display = showing ? '' : 'none';
+  btn.textContent     = showing ? '📜 Redemption Log' : '🏷️ Back to Codes';
+}
+
+// ── Modal ───────────────────────────────────────────────────
+function updatePromoValueHint() {
+  const type = document.getElementById('p-type').value;
+  document.getElementById('p-value-label').textContent =
+    type === 'percent' ? 'Discount Value (%) *' : 'Discount Value ($) *';
+  updatePromoPreview();
+}
+
+function updatePromoPreview() {
+  const code = (document.getElementById('p-code').value || 'CODE').toUpperCase();
+  const type = document.getElementById('p-type').value;
+  const val  = parseFloat(document.getElementById('p-value').value) || 0;
+  const min  = parseFloat(document.getElementById('p-minorder').value) || 0;
+  const cat  = document.getElementById('p-category').value;
+  const disc = type === 'percent' ? `${val}% off` : `$${val.toFixed(2)} off`;
+  const scope = cat ? cat.replace(/_/g, ' ') + ' items' : 'their whole order';
+  const minTxt = min > 0 ? ` on orders over $${min.toFixed(2)}` : '';
+  document.getElementById('promo-preview').textContent =
+    `Customer enters "${code}" and gets ${disc} ${scope}${minTxt}.`;
+}
+
+function openAddPromoModal() {
+  promoEditTarget = null;
+  document.getElementById('promo-modal-title').textContent = 'New Promo Code';
+  document.getElementById('save-promo-btn').textContent = 'Create Code';
+  document.getElementById('p-code').value        = '';
+  document.getElementById('p-description').value = '';
+  document.getElementById('p-type').value        = 'percent';
+  document.getElementById('p-value').value       = '';
+  document.getElementById('p-minorder').value    = '0';
+  document.getElementById('p-maxuses').value     = '0';
+  document.getElementById('p-expires').value     = '';
+  document.getElementById('p-category').value    = '';
+  document.getElementById('p-active').checked    = true;
+  document.getElementById('promo-error').style.display = 'none';
+  updatePromoValueHint();
+  document.getElementById('promo-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('p-code').focus();
+}
+
+function openEditPromoModal(id) {
+  const p = promos.find(x => x.id === id);
+  if (!p) return;
+  promoEditTarget = p;
+  document.getElementById('promo-modal-title').textContent = 'Edit Promo Code';
+  document.getElementById('save-promo-btn').textContent = 'Save Changes';
+  document.getElementById('p-code').value        = p.code;
+  document.getElementById('p-description').value = p.description || '';
+  document.getElementById('p-type').value        = p.discount_type;
+  document.getElementById('p-value').value       = p.discount_value;
+  document.getElementById('p-minorder').value    = p.min_order || 0;
+  document.getElementById('p-maxuses').value     = p.max_uses || 0;
+  document.getElementById('p-expires').value     = p.expires_at || '';
+  document.getElementById('p-category').value    = p.category || '';
+  document.getElementById('p-active').checked    = p.active;
+  document.getElementById('promo-error').style.display = 'none';
+  updatePromoValueHint();
+  document.getElementById('promo-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePromoModal() {
+  document.getElementById('promo-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  promoEditTarget = null;
+}
+
+function handlePromoBackdrop(e) {
+  if (e.target === document.getElementById('promo-modal')) closePromoModal();
+}
+
+async function savePromo() {
+  const errEl = document.getElementById('promo-error');
+  errEl.style.display = 'none';
+
+  const code = (document.getElementById('p-code').value || '').trim().toUpperCase();
+  const val  = parseFloat(document.getElementById('p-value').value);
+  const type = document.getElementById('p-type').value;
+
+  if (!code) {
+    errEl.textContent = 'Promo code is required.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!/^[A-Z0-9_-]+$/.test(code)) {
+    errEl.textContent = 'Code can only contain letters, numbers, dashes and underscores (no spaces).';
+    errEl.style.display = 'block'; return;
+  }
+  if (isNaN(val) || val <= 0) {
+    errEl.textContent = 'Discount value must be greater than zero.';
+    errEl.style.display = 'block'; return;
+  }
+  if (type === 'percent' && val > 100) {
+    errEl.textContent = 'A percentage discount cannot exceed 100%.';
+    errEl.style.display = 'block'; return;
+  }
+  // Duplicate check (skip the row we're editing)
+  const dupe = promos.find(p => p.code === code && (!promoEditTarget || p.id !== promoEditTarget.id));
+  if (dupe) {
+    errEl.textContent = `Code "${code}" already exists. Pick a different one.`;
+    errEl.style.display = 'block'; return;
+  }
+
+  const btn = document.getElementById('save-promo-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const row = {
+    code,
+    description:    document.getElementById('p-description').value.trim(),
+    discount_type:  type,
+    discount_value: val,
+    min_order:      parseFloat(document.getElementById('p-minorder').value) || 0,
+    max_uses:       parseInt(document.getElementById('p-maxuses').value) || 0,
+    category:       document.getElementById('p-category').value,
+    expires_at:     document.getElementById('p-expires').value || null,
+    active:         document.getElementById('p-active').checked,
+  };
+
+  try {
+    if (promoEditTarget) {
+      await sbFetch(`/rest/v1/promo_codes?id=eq.${promoEditTarget.id}`, {
+        method: 'PATCH', body: JSON.stringify(row)
+      });
+      Object.assign(promoEditTarget, row);
+      toast('✓ Promo code updated!', 3000);
+    } else {
+      row.uses_count = 0;
+      await sbFetch('/rest/v1/promo_codes', { method: 'POST', body: JSON.stringify(row) });
+      toast('✓ Promo code created!', 3000);
+      await loadPromos();
+    }
+    closePromoModal();
+    renderPromos();
+    updatePromoStats();
+  } catch (e) {
+    errEl.textContent = 'Error: ' + e.message;
+    errEl.style.display = 'block';
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = promoEditTarget ? 'Save Changes' : 'Create Code';
+  }
+}
+
+async function togglePromoActive(id) {
+  const p = promos.find(x => x.id === id);
+  if (!p) return;
+  const next = !p.active;
+  try {
+    await sbFetch(`/rest/v1/promo_codes?id=eq.${id}`, {
+      method: 'PATCH', body: JSON.stringify({ active: next })
+    });
+    p.active = next;
+    renderPromos();
+    updatePromoStats();
+  } catch (e) { toast('⚠️ ' + e.message, 4000); }
+}
+
+async function deletePromo(id) {
+  const p = promos.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Delete promo code "${p.code}"?\n\nThis cannot be undone. Past redemptions stay in the log.`)) return;
+  try {
+    await sbFetch(`/rest/v1/promo_codes?id=eq.${id}`, { method: 'DELETE' });
+    promos = promos.filter(x => x.id !== id);
+    renderPromos();
+    updatePromoStats();
+    toast('✓ Promo code deleted', 2500);
+  } catch (e) { toast('⚠️ ' + e.message, 4000); }
+}
+
+// Live preview wiring
+document.addEventListener('DOMContentLoaded', () => {
+  ['p-code','p-value','p-minorder','p-category'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updatePromoPreview);
+  });
+});
 
 // ============================================================
 // ORDERS — DATA

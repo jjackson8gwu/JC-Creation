@@ -20,6 +20,178 @@ const INVENTORY_SHEET_URL = '';   // e.g. 'https://script.google.com/macros/s/AB
 // Color selection variables
 let pendingItem = null;
 
+// ── Promo code state ────────────────────────────────────────────────────────
+// appliedPromo = the validated promo row from Supabase, or null.
+let appliedPromo = null;
+
+// Look up which category a cart item belongs to (for category-scoped codes).
+function cartItemCategory(item) {
+  if (!productsData || !item.id) return '';
+  const p = productsData.products.find(x => x.id === item.id);
+  return p ? (p.category || '') : '';
+}
+
+// Subtotal the promo actually applies to (whole cart, or one category).
+function promoEligibleSubtotal(promo) {
+  if (!promo || !promo.category) {
+    return cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  }
+  const target = promo.category.toLowerCase();
+  return cart.reduce((s, i) => {
+    return cartItemCategory(i).toLowerCase() === target
+      ? s + i.price * i.quantity
+      : s;
+  }, 0);
+}
+
+// Returns { discount, subtotal, total } for the current cart + applied promo.
+function calcCartTotals() {
+  const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  let discount = 0;
+
+  if (appliedPromo) {
+    const eligible = promoEligibleSubtotal(appliedPromo);
+    if (appliedPromo.discount_type === 'percent') {
+      discount = eligible * (parseFloat(appliedPromo.discount_value) / 100);
+    } else {
+      discount = Math.min(parseFloat(appliedPromo.discount_value), eligible);
+    }
+    // Never discount below zero, never exceed the cart
+    discount = Math.max(0, Math.min(discount, subtotal));
+  }
+
+  return {
+    subtotal,
+    discount,
+    total: Math.max(0, subtotal - discount),
+  };
+}
+
+// Validates a code against all the rules. Returns {ok:true, promo} or {ok:false, reason}.
+async function validatePromoCode(rawCode) {
+  const code = (rawCode || '').trim().toUpperCase();
+  if (!code) return { ok: false, reason: 'Please enter a promo code.' };
+  if (typeof window.lookupPromoCode !== 'function') {
+    return { ok: false, reason: 'Promo codes are unavailable right now.' };
+  }
+
+  let promo;
+  try {
+    promo = await window.lookupPromoCode(code);
+  } catch (e) {
+    console.error(e);
+    return { ok: false, reason: 'Could not check that code. Please try again.' };
+  }
+
+  if (!promo)        return { ok: false, reason: 'That code isn’t valid.' };
+  if (!promo.active) return { ok: false, reason: 'That code is no longer active.' };
+
+  if (promo.expires_at) {
+    const today = new Date().toISOString().slice(0, 10);
+    if (promo.expires_at < today) return { ok: false, reason: 'That code has expired.' };
+  }
+
+  if (promo.max_uses > 0 && (promo.uses_count || 0) >= promo.max_uses) {
+    return { ok: false, reason: 'That code has reached its usage limit.' };
+  }
+
+  const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  if (promo.min_order > 0 && subtotal < parseFloat(promo.min_order)) {
+    const need = (parseFloat(promo.min_order) - subtotal).toFixed(2);
+    return { ok: false, reason: `Requires a $${parseFloat(promo.min_order).toFixed(2)} minimum — add $${need} more.` };
+  }
+
+  if (promo.category && promoEligibleSubtotal(promo) <= 0) {
+    const pretty = promo.category.replace(/_/g, ' ');
+    return { ok: false, reason: `This code only applies to ${pretty} items.` };
+  }
+
+  return { ok: true, promo };
+}
+
+async function applyPromoCode() {
+  const input  = document.getElementById('promo-code-input');
+  const msgEl  = document.getElementById('promo-message');
+  const btn    = document.getElementById('apply-promo-btn');
+  if (!input) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+  msgEl.textContent = '';
+
+  const result = await validatePromoCode(input.value);
+
+  btn.disabled = false;
+  btn.textContent = 'Apply';
+
+  if (!result.ok) {
+    appliedPromo = null;
+    msgEl.style.color = '#c62828';
+    msgEl.textContent = result.reason;
+    updateCartDisplay();
+    return;
+  }
+
+  appliedPromo = result.promo;
+  msgEl.style.color = '#2e7d32';
+  msgEl.textContent = `✓ Code "${appliedPromo.code}" applied!`;
+  input.value = appliedPromo.code;
+  updateCartDisplay();
+}
+
+function removePromoCode() {
+  appliedPromo = null;
+  const input = document.getElementById('promo-code-input');
+  const msgEl = document.getElementById('promo-message');
+  if (input) input.value = '';
+  if (msgEl)  msgEl.textContent = '';
+  updateCartDisplay();
+}
+
+// Re-checks the applied code after the cart changes (qty/removal can break
+// a minimum-order or category rule). Silently drops it if it no longer fits.
+async function revalidateAppliedPromo() {
+  if (!appliedPromo) return;
+  const result = await validatePromoCode(appliedPromo.code);
+  if (!result.ok) {
+    appliedPromo = null;
+    const msgEl = document.getElementById('promo-message');
+    if (msgEl) {
+      msgEl.style.color = '#c62828';
+      msgEl.textContent = result.reason + ' Code removed.';
+    }
+    updateCartDisplay();
+  }
+}
+
+// Injects the promo input into the checkout modal (so we don't have to edit
+// every HTML page). Runs once, the first time the cart is opened.
+function injectPromoUI() {
+  if (document.getElementById('promo-box')) return;
+  const totalEl = document.getElementById('cart-total');
+  if (!totalEl || !totalEl.parentNode) return;
+
+  const box = document.createElement('div');
+  box.id = 'promo-box';
+  box.style.cssText = 'margin:14px 0;padding:14px;border:1px dashed #bbb;border-radius:10px;background:#fafafa';
+  box.innerHTML = `
+    <label style="display:block;font-weight:bold;font-size:0.9rem;margin-bottom:8px;color:#1a4054">
+      Have a promo code?
+    </label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input type="text" id="promo-code-input" placeholder="Enter code"
+        style="flex:1;min-width:130px;padding:9px 12px;border:2px solid #ddd;border-radius:8px;font-size:14px;text-transform:uppercase;letter-spacing:0.05em"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode()}">
+      <button type="button" id="apply-promo-btn" onclick="applyPromoCode()"
+        style="padding:9px 20px;border:none;border-radius:8px;background:#D2762B;color:white;font-weight:bold;cursor:pointer;font-size:14px">
+        Apply
+      </button>
+    </div>
+    <div id="promo-message" style="font-size:0.85rem;margin-top:8px;min-height:18px"></div>`;
+
+  totalEl.parentNode.insertBefore(box, totalEl);
+}
+
 // Available colors list
 const availableColors = [
   'Amolen-Black-Red', 'Bambu_Green', 'Black', 'Blue-Gray', 'Blue', 'BrightGreen',
@@ -479,9 +651,27 @@ function initializeEventListeners() {
         });
 
         if (res.ok) {
+          // ── 3. Log the promo redemption (best-effort, non-blocking) ────────
+          if (appliedPromo && typeof window.recordPromoRedemption === 'function') {
+            const t = calcCartTotals();
+            window.recordPromoRedemption({
+              code:            appliedPromo.code,
+              customer_name:   formData.get('name')  || '',
+              customer_email:  formData.get('email') || '',
+              order_subtotal:  Number(t.subtotal.toFixed(2)),
+              discount_amount: Number(t.discount.toFixed(2)),
+              order_total:     Number(t.total.toFixed(2)),
+            });
+          }
+
           alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
           cart = [];
           saveCart(cart);
+          appliedPromo = null;
+          const promoInput = document.getElementById('promo-code-input');
+          const promoMsg   = document.getElementById('promo-message');
+          if (promoInput) promoInput.value = '';
+          if (promoMsg)   promoMsg.textContent = '';
           updateCartDisplay();
           closeOrderForm();
           checkoutForm.reset();
@@ -860,9 +1050,33 @@ function updateCartDisplay() {
       
       cartHTML += "</div>";
       cartDisplay.innerHTML = cartHTML;
-      
+
+      injectPromoUI();
+
       if (cartTotal) {
-        cartTotal.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+        const t = calcCartTotals();
+        if (t.discount > 0 && appliedPromo) {
+          const scope = appliedPromo.category
+            ? ` (${appliedPromo.category.replace(/_/g, ' ')})`
+            : '';
+          cartTotal.innerHTML = `
+            <div style="display:flex;justify-content:space-between;padding:4px 0;color:#555">
+              <span>Subtotal:</span><span>$${t.subtotal.toFixed(2)}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;color:#2e7d32;font-weight:bold">
+              <span>
+                Discount — ${appliedPromo.code}${scope}
+                <button type="button" onclick="removePromoCode()" title="Remove code"
+                  style="background:none;border:none;color:#c62828;cursor:pointer;font-size:0.85rem;padding:0 0 0 6px;text-decoration:underline">remove</button>
+              </span>
+              <span>−$${t.discount.toFixed(2)}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0 0;border-top:2px solid #ddd;margin-top:6px;font-size:1.1rem">
+              <strong>Total:</strong><strong>$${t.total.toFixed(2)}</strong>
+            </div>`;
+        } else {
+          cartTotal.innerHTML = `<strong>Total: $${t.subtotal.toFixed(2)}</strong>`;
+        }
       }
     }
   }
@@ -891,9 +1105,32 @@ function updateCartDisplay() {
 
       formText += `${item.name}${colorInfo} - Quantity: ${item.quantity} - Price: $${item.price.toFixed(2)} each - Subtotal: $${itemTotal.toFixed(2)}\n`;
     });
-    
-    formText += `\nTOTAL: $${total.toFixed(2)}`;
+
+    const t = calcCartTotals();
+    if (t.discount > 0 && appliedPromo) {
+      const scope = appliedPromo.category ? ` (${appliedPromo.category.replace(/_/g, ' ')} only)` : '';
+      const desc  = appliedPromo.discount_type === 'percent'
+        ? `${parseFloat(appliedPromo.discount_value)}% off`
+        : `$${parseFloat(appliedPromo.discount_value).toFixed(2)} off`;
+      formText += `\nSUBTOTAL: $${t.subtotal.toFixed(2)}`;
+      formText += `\nPROMO CODE: ${appliedPromo.code} — ${desc}${scope}`;
+      formText += `\nDISCOUNT: -$${t.discount.toFixed(2)}`;
+      formText += `\nTOTAL: $${t.total.toFixed(2)}`;
+    } else {
+      formText += `\nTOTAL: $${t.subtotal.toFixed(2)}`;
+    }
     cartItemsForm.value = formText;
+  }
+
+  // Mirror the promo into hidden form fields so it lands in the Formspree email
+  const promoField    = document.getElementById('promo-code-field');
+  const discountField = document.getElementById('discount-amount-field');
+  const totalField    = document.getElementById('order-total-field');
+  if (promoField || discountField || totalField) {
+    const t2 = calcCartTotals();
+    if (promoField)    promoField.value    = appliedPromo ? appliedPromo.code : '';
+    if (discountField) discountField.value = t2.discount.toFixed(2);
+    if (totalField)    totalField.value    = t2.total.toFixed(2);
   }
   
   updateMobileCartCount();
@@ -905,7 +1142,8 @@ function removeFromCart(index) {
   cart.splice(index, 1);
   saveCart(cart);
   updateCartDisplay();
-  
+  revalidateAppliedPromo();
+
   let colorDisplay = '';
   if (removedItem.colors) {
     colorDisplay = ` (${removedItem.colors.display})`;
@@ -934,9 +1172,28 @@ function closeCheckout() {
   }
 }
 
+// Adds hidden promo fields to the checkout form once, so the promo code,
+// discount and final total all appear as their own lines in the order email.
+function injectPromoFormFields() {
+  const form = document.getElementById('checkout-form');
+  if (!form || document.getElementById('promo-code-field')) return;
+  [
+    ['promo-code-field',      'promo_code'],
+    ['discount-amount-field', 'discount_amount'],
+    ['order-total-field',     'order_total'],
+  ].forEach(([id, name]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.id   = id;
+    input.name = name;
+    form.appendChild(input);
+  });
+}
+
 function openOrderForm() {
   const modal = document.getElementById("order-modal");
   if (modal) {
+    injectPromoFormFields();
     updateCartDisplay();
     modal.classList.add("show");
     document.body.style.overflow = "hidden";

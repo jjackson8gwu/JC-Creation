@@ -28,16 +28,46 @@
     };
   }
 
+  const authHeaders = {
+    'apikey':        SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+  };
+
   window.loadCatalog = async function () {
     const url = `${REST_URL}?order=display_order.asc,name.asc&limit=1000`;
-    const res  = await fetch(url, {
-      headers: {
-        'apikey':        SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-      }
-    });
+    const res  = await fetch(url, { headers: authHeaders });
     if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
     const rows = await res.json();
     return { products: rows.map(mapRow) };
+  };
+
+  // ── Promo codes ───────────────────────────────────────────────────────────
+  // Looks up a single code. Returns the row, or null if not found.
+  window.lookupPromoCode = async function (code) {
+    const clean = (code || '').trim().toUpperCase();
+    if (!clean) return null;
+    const url = `${SUPABASE_URL}/rest/v1/promo_codes?code=eq.${encodeURIComponent(clean)}&limit=1`;
+    const res = await fetch(url, { headers: authHeaders });
+    if (!res.ok) throw new Error(`Promo lookup failed: ${res.status}`);
+    const rows = await res.json();
+    return rows.length ? rows[0] : null;
+  };
+
+  // Records a redemption and bumps the usage counter. Best-effort.
+  window.recordPromoRedemption = async function (payload) {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/promo_redemptions`, {
+        method: 'POST',
+        headers: { ...authHeaders, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_promo_use`, {
+        method: 'POST',
+        headers: { ...authHeaders, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ promo_code: payload.code }),
+      });
+    } catch (e) {
+      console.error('Promo redemption logging failed:', e);
+    }
   };
 })();
