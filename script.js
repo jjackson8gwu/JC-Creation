@@ -629,19 +629,15 @@ function initializeEventListeners() {
       const submitBtn = checkoutForm.querySelector('button[type="submit"], input[type="submit"]');
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
 
-      // ── 1. Fire inventory update (best-effort, non-blocking) ──────────────
+      // NOTE: inventory is deducted only AFTER Formspree confirms the order.
+      // Deducting first meant every failed submission silently ate stock.
       const orderItems = cart.map(item => ({
         id:       item.id || '',
         name:     item.name,
         quantity: item.quantity
       }));
-      fetch('/.netlify/functions/update-inventory', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ items: orderItems })
-      }).catch(err => console.warn('Inventory update failed (non-critical):', err));
 
-      // ── 2. Submit order form to Formspree via AJAX ────────────────────────
+      // ── Submit order form to Formspree via AJAX ───────────────────────────
       try {
         const formData = new FormData(checkoutForm);
         const res = await fetch(checkoutForm.action, {
@@ -651,7 +647,14 @@ function initializeEventListeners() {
         });
 
         if (res.ok) {
-          // ── 3. Log the promo redemption (best-effort, non-blocking) ────────
+          // ── Deduct inventory (best-effort, non-blocking) ──────────────────
+          fetch('/.netlify/functions/update-inventory', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ items: orderItems })
+          }).catch(err => console.warn('Inventory update failed (non-critical):', err));
+
+          // ── Log the promo redemption (best-effort, non-blocking) ──────────
           if (appliedPromo && typeof window.recordPromoRedemption === 'function') {
             const t = calcCartTotals();
             window.recordPromoRedemption({
@@ -676,15 +679,48 @@ function initializeEventListeners() {
           closeOrderForm();
           checkoutForm.reset();
         } else {
-          const data = await res.json().catch(() => ({}));
-          const msg  = data.errors ? data.errors.map(err => err.message).join(', ') : 'Unknown error';
-          alert(`There was a problem submitting your order: ${msg}. Please try again.`);
+          // Formspree reports failures in several different shapes. Read the
+          // body once as text, then try each shape so we never lose the reason.
+          const raw = await res.text().catch(() => '');
+          let parsed = null;
+          try { parsed = JSON.parse(raw); } catch (_) { /* not JSON */ }
+
+          let msg = '';
+          if (parsed) {
+            if (Array.isArray(parsed.errors)) {
+              msg = parsed.errors.map(e => e.message || e.field || String(e)).join(', ');
+            } else if (typeof parsed.error === 'string') {
+              msg = parsed.error;                       // most common shape
+            } else if (typeof parsed.message === 'string') {
+              msg = parsed.message;
+            }
+          }
+          if (!msg) msg = raw.slice(0, 200);
+          if (!msg) msg = `HTTP ${res.status} ${res.statusText}`;
+
+          // Full detail for diagnosis — visible in the browser console.
+          console.error('Formspree rejected the order:', {
+            status: res.status, statusText: res.statusText, body: raw
+          });
+
+          // Friendlier wording for the failures that actually happen.
+          let friendly = `There was a problem submitting your order: ${msg}`;
+          if (res.status === 429 || /limit/i.test(msg)) {
+            friendly = 'Our order form has hit its monthly submission limit. ' +
+                       'Please contact us directly and we\'ll take your order right away — sorry about that!';
+          } else if (res.status === 403 || /disabled|deactivat|not found/i.test(msg)) {
+            friendly = 'Our order form is temporarily unavailable. ' +
+                       'Please contact us directly and we\'ll take your order — sorry about that!';
+          } else {
+            friendly += '. Please try again.';
+          }
+          alert(friendly);
         }
       } catch (err) {
         console.error('Order submission error:', err);
         alert('Could not submit your order. Please check your connection and try again.');
       } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Place Order'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Order'; }
       }
     });
   }
