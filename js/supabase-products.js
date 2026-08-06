@@ -53,13 +53,39 @@
     return rows.length ? rows[0] : null;
   };
 
+  // How many times this email has already redeemed this code.
+  // Uses a HEAD request with an exact count so we never download the rows.
+  window.countCustomerRedemptions = async function (code, email) {
+    const c = (code  || '').trim().toUpperCase();
+    const e = (email || '').trim().toLowerCase();
+    if (!c || !e) return 0;
+    const url = `${SUPABASE_URL}/rest/v1/promo_redemptions`
+              + `?code=eq.${encodeURIComponent(c)}`
+              + `&customer_email=eq.${encodeURIComponent(e)}`
+              + `&select=id`;
+    const res = await fetch(url, {
+      method: 'HEAD',
+      headers: { ...authHeaders, 'Prefer': 'count=exact', 'Range': '0-0' },
+    });
+    if (!res.ok) throw new Error(`Redemption count failed: ${res.status}`);
+    // Content-Range comes back as "0-0/12" — the part after the slash is the count.
+    const range = res.headers.get('content-range') || '';
+    const total = parseInt(range.split('/')[1], 10);
+    return isNaN(total) ? 0 : total;
+  };
+
   // Records a redemption and bumps the usage counter. Best-effort.
   window.recordPromoRedemption = async function (payload) {
     try {
+      // Store the email lowercase so per-customer counting is case-insensitive.
+      const body = {
+        ...payload,
+        customer_email: (payload.customer_email || '').trim().toLowerCase(),
+      };
       await fetch(`${SUPABASE_URL}/rest/v1/promo_redemptions`, {
         method: 'POST',
         headers: { ...authHeaders, 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(body),
       });
       await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_promo_use`, {
         method: 'POST',

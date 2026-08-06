@@ -109,6 +109,52 @@ async function validatePromoCode(rawCode) {
   return { ok: true, promo };
 }
 
+// Checks the per-customer cap for a given email. The customer's email isn't
+// known when the code is applied in the cart, so this runs later — as soon as
+// they type their email on the order form, and again right before submitting.
+// Returns { ok:true } or { ok:false, reason }.
+async function checkPerCustomerLimit(promo, email) {
+  if (!promo) return { ok: true };
+  const limit = parseInt(promo.max_uses_per_customer) || 0;
+  if (limit <= 0) return { ok: true };
+
+  const addr = (email || '').trim().toLowerCase();
+  if (!addr || !addr.includes('@')) return { ok: true }; // nothing to check yet
+  if (typeof window.countCustomerRedemptions !== 'function') return { ok: true };
+
+  let used;
+  try {
+    used = await window.countCustomerRedemptions(promo.code, addr);
+  } catch (e) {
+    console.warn('Per-customer limit check failed, allowing:', e);
+    return { ok: true }; // never block a real order on a lookup failure
+  }
+
+  if (used >= limit) {
+    const times = limit === 1 ? 'once' : `${limit} times`;
+    return {
+      ok: false,
+      reason: `You've already used code "${promo.code}" ${used === 1 ? 'once' : used + ' times'}. ` +
+              `This code is limited to ${times} per customer.`
+    };
+  }
+  return { ok: true };
+}
+
+// Live check when the customer fills in their email on the order form, so they
+// find out before filling in the rest of the form.
+async function checkPromoAgainstEmail() {
+  if (!appliedPromo) return;
+  const emailEl = document.querySelector('#checkout-form input[name="email"]');
+  if (!emailEl) return;
+  const result = await checkPerCustomerLimit(appliedPromo, emailEl.value);
+  if (!result.ok) {
+    appliedPromo = null;
+    updateCartDisplay();
+    alert(result.reason + '\n\nThe discount has been removed from your order.');
+  }
+}
+
 async function applyPromoCode() {
   const input  = document.getElementById('promo-code-input');
   const msgEl  = document.getElementById('promo-message');
@@ -628,6 +674,22 @@ function initializeEventListeners() {
       // Disable submit button to prevent double-submission
       const submitBtn = checkoutForm.querySelector('button[type="submit"], input[type="submit"]');
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
+
+      // ── Final per-customer promo check (authoritative) ────────────────────
+      // Runs before anything is sent, so a maxed-out code can't slip through
+      // by editing the email after applying the discount.
+      if (appliedPromo) {
+        const emailVal = (checkoutForm.querySelector('input[name="email"]') || {}).value || '';
+        const limitCheck = await checkPerCustomerLimit(appliedPromo, emailVal);
+        if (!limitCheck.ok) {
+          appliedPromo = null;
+          updateCartDisplay();
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Order'; }
+          alert(limitCheck.reason +
+                '\n\nThe discount has been removed. Please review your new total and submit again.');
+          return;
+        }
+      }
 
       // NOTE: inventory is deducted only AFTER Formspree confirms the order.
       // Deducting first meant every failed submission silently ate stock.
@@ -1230,6 +1292,12 @@ function openOrderForm() {
   const modal = document.getElementById("order-modal");
   if (modal) {
     injectPromoFormFields();
+    // Verify the per-customer cap as soon as we know who they are.
+    const emailEl = document.querySelector('#checkout-form input[name="email"]');
+    if (emailEl && !emailEl.dataset.promoCheckBound) {
+      emailEl.dataset.promoCheckBound = '1';
+      emailEl.addEventListener('blur', checkPromoAgainstEmail);
+    }
     updateCartDisplay();
     modal.classList.add("show");
     document.body.style.overflow = "hidden";

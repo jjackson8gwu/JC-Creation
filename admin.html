@@ -471,6 +471,7 @@
             <th>Min Order</th>
             <th>Applies To</th>
             <th>Uses</th>
+            <th>Per Customer</th>
             <th>Expires</th>
             <th>Status</th>
             <th>Edit</th>
@@ -540,6 +541,11 @@
       <div class="form-group">
         <label>Max Total Uses <small style="color:#888;font-weight:normal">(0 = unlimited)</small></label>
         <input type="number" id="p-maxuses" min="0" value="0" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Max Uses Per Customer <small style="color:#888;font-weight:normal">(0 = unlimited)</small></label>
+        <input type="number" id="p-maxpercustomer" min="0" value="0" placeholder="0">
       </div>
 
       <div class="form-group">
@@ -1452,7 +1458,7 @@ function discountLabel(p) {
 function renderPromos() {
   const tb = document.getElementById('promos-tbody');
   if (!promos.length) {
-    tb.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999">No promo codes yet. Click "＋ New Promo Code" to create one.</td></tr>';
+    tb.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:30px;color:#999">No promo codes yet. Click "＋ New Promo Code" to create one.</td></tr>';
     return;
   }
   tb.innerHTML = promos.map(p => {
@@ -1471,6 +1477,7 @@ function renderPromos() {
         <td>${p.min_order > 0 ? '$' + parseFloat(p.min_order).toFixed(2) : '—'}</td>
         <td><span class="cat-badge">${catText}</span></td>
         <td>${usesText}</td>
+        <td>${p.max_uses_per_customer > 0 ? p.max_uses_per_customer + '×' : 'Unlimited'}</td>
         <td>${p.expires_at || 'Never'}</td>
         <td><button class="toggle-btn ${st.cls}" onclick="togglePromoActive('${p.id}')">${st.label}</button></td>
         <td><button class="btn btn-blue btn-sm" onclick="openEditPromoModal('${p.id}')">Edit</button></td>
@@ -1532,11 +1539,15 @@ function updatePromoPreview() {
   const val  = parseFloat(document.getElementById('p-value').value) || 0;
   const min  = parseFloat(document.getElementById('p-minorder').value) || 0;
   const cat  = document.getElementById('p-category').value;
+  const perCust = parseInt(document.getElementById('p-maxpercustomer').value) || 0;
   const disc = type === 'percent' ? `${val}% off` : `$${val.toFixed(2)} off`;
   const scope = cat ? cat.replace(/_/g, ' ') + ' items' : 'their whole order';
   const minTxt = min > 0 ? ` on orders over $${min.toFixed(2)}` : '';
+  const perTxt = perCust > 0
+    ? ` Each customer can use it ${perCust === 1 ? 'once' : perCust + ' times'}.`
+    : '';
   document.getElementById('promo-preview').textContent =
-    `Customer enters "${code}" and gets ${disc} ${scope}${minTxt}.`;
+    `Customer enters "${code}" and gets ${disc} ${scope}${minTxt}.${perTxt}`;
 }
 
 function openAddPromoModal() {
@@ -1549,6 +1560,7 @@ function openAddPromoModal() {
   document.getElementById('p-value').value       = '';
   document.getElementById('p-minorder').value    = '0';
   document.getElementById('p-maxuses').value     = '0';
+  document.getElementById('p-maxpercustomer').value = '0';
   document.getElementById('p-expires').value     = '';
   document.getElementById('p-category').value    = '';
   document.getElementById('p-active').checked    = true;
@@ -1571,6 +1583,7 @@ function openEditPromoModal(id) {
   document.getElementById('p-value').value       = p.discount_value;
   document.getElementById('p-minorder').value    = p.min_order || 0;
   document.getElementById('p-maxuses').value     = p.max_uses || 0;
+  document.getElementById('p-maxpercustomer').value = p.max_uses_per_customer || 0;
   document.getElementById('p-expires').value     = p.expires_at || '';
   document.getElementById('p-category').value    = p.category || '';
   document.getElementById('p-active').checked    = p.active;
@@ -1631,6 +1644,7 @@ async function savePromo() {
     discount_value: val,
     min_order:      parseFloat(document.getElementById('p-minorder').value) || 0,
     max_uses:       parseInt(document.getElementById('p-maxuses').value) || 0,
+    max_uses_per_customer: parseInt(document.getElementById('p-maxpercustomer').value) || 0,
     category:       document.getElementById('p-category').value,
     expires_at:     document.getElementById('p-expires').value || null,
     active:         document.getElementById('p-active').checked,
@@ -1691,7 +1705,7 @@ async function deletePromo(id) {
 
 // Live preview wiring
 document.addEventListener('DOMContentLoaded', () => {
-  ['p-code','p-value','p-minorder','p-category'].forEach(id => {
+  ['p-code','p-value','p-minorder','p-category','p-maxpercustomer'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', updatePromoPreview);
   });
