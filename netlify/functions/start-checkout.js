@@ -74,7 +74,7 @@ exports.handler = async (event) => {
     if (reservation.error) return json(409, { error: reservation.error });
     stage = 'Stripe session creation';
     const params = new URLSearchParams({
-      mode: 'payment', 'payment_method_types[0]': 'card',
+      mode: 'payment', 'allowed_payment_method_types[0]': 'card',
       success_url: `${returnUrl}?checkout=returned`, cancel_url: `${returnUrl}?checkout=canceled`,
       'metadata[reservation_id]': requestId, expires_at: String(reservation.expires_at),
       'automatic_tax[enabled]': process.env.STRIPE_AUTOMATIC_TAX === 'true' ? 'true' : 'false',
@@ -89,6 +89,7 @@ exports.handler = async (event) => {
     });
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST', headers: { Authorization: `Bearer ${key.trim()}`, 'Idempotency-Key': requestId,
+        'Stripe-Version': '2026-10-28.endive',
         'Content-Type': 'application/x-www-form-urlencoded' }, body: params
     });
     const session = await response.json();
