@@ -3,9 +3,26 @@ const { json, rpc } = require('../lib/checkout');
 exports.handler = async (event) => {
   const { STRIPE_SECRET_KEY: key, STRIPE_WEBHOOK_SECRET: webhook, STRIPE_CHECKOUT_ORIGIN: origin,
     STRIPE_PICKUP_PRODUCTS: products, STRIPE_PICKUP_ENABLED: enabled } = process.env;
-  const available = enabled === 'true' && Boolean(key && webhook && origin && products &&
-    process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY);
-  if (event.httpMethod === 'GET') return json(200, { available });
+  const missing = Object.entries({
+    STRIPE_SECRET_KEY: key,
+    STRIPE_WEBHOOK_SECRET: webhook,
+    STRIPE_CHECKOUT_ORIGIN: origin,
+    STRIPE_PICKUP_PRODUCTS: products,
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY
+  }).filter(([, value]) => !value).map(([name]) => name);
+  const enabledExactly = enabled === 'true';
+  const available = enabledExactly && missing.length === 0;
+  if (event.httpMethod === 'GET') {
+    const preview = event.rawUrl?.startsWith('https://deploy-preview-2--jccreations.netlify.app/');
+    if (!available && preview) {
+      const problems = [...missing];
+      if (!enabledExactly) problems.push('STRIPE_PICKUP_ENABLED must be exactly true');
+      console.warn('Checkout preview configuration:', problems.join(', '));
+      return json(200, { available, configurationIssues: problems });
+    }
+    return json(200, { available });
+  }
   if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST' });
   if (!available) return json(503, { error: 'Online checkout is currently unavailable.' });
 
