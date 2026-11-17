@@ -87,12 +87,33 @@ exports.handler = async (event) => {
       params.set(`${prefix}[price_data][unit_amount]`, item.cents);
       params.set(`${prefix}[price_data][product_data][name]`, item.name);
     });
-    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-      method: 'POST', headers: { Authorization: `Bearer ${key.trim()}`, 'Idempotency-Key': requestId,
-        'Stripe-Version': '2026-10-28.endive',
-        'Content-Type': 'application/x-www-form-urlencoded' }, body: params
-    });
-    const session = await response.json();
+    const sendSession = async (body, idempotencyKey, version = '2026-10-28.endive') => {
+      const headers = { Authorization: `Bearer ${key.trim()}`, 'Idempotency-Key': idempotencyKey,
+        'Content-Type': 'application/x-www-form-urlencoded' };
+      if (version) headers['Stripe-Version'] = version;
+      const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+        method: 'POST', headers, body
+      });
+      return { response, session: await response.json() };
+    };
+    let { response, session } = await sendSession(params, requestId);
+    if (session?.error?.type === 'idempotency_error') {
+      // Replay the pre-Endive request before issuing a replacement. If it actually
+      // created a session, reuse that session rather than creating a second one.
+      const legacyParams = new URLSearchParams(params);
+      legacyParams.delete('allowed_payment_method_types[0]');
+      legacyParams.set('payment_method_types[0]', 'card');
+      const legacy = await sendSession(legacyParams, requestId, null);
+      if (legacy.response.ok && legacy.session.url) {
+        return json(200, { url: legacy.session.url });
+      }
+      // Only the known, definitive rejection of the removed field is safe to
+      // replace. Keep the inventory reservation and a stable replacement key.
+      if (legacy.response.status === 400 && legacy.session?.error?.type === 'invalid_request_error' &&
+          legacy.session.error.param === 'payment_method_types') {
+        ({ response, session } = await sendSession(params, `${requestId}:endive-v1`));
+      }
+    }
     if (!response.ok || !session.url) {
       const failure = stripeFailure(response, session);
       console.error('Stripe session creation failed', requestId, failure);

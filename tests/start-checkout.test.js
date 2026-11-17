@@ -60,6 +60,49 @@ test('checkout reports safe Stripe diagnostics only on the test preview', async 
     result = await handler(event);
     assert.equal(result.statusCode, 200);
     assert.equal(JSON.parse(result.body).url, sessionUrl);
+    const normalFetch = global.fetch;
+    const requestId = JSON.parse(event.body).requestId;
+    const conflict = { status: 400, body: { error: { type: 'idempotency_error' } } };
+    const rejectedLegacy = { status: 400, body: { error: {
+      type: 'invalid_request_error', param: 'payment_method_types'
+    } } };
+    for (const scenario of [
+      { replies: [conflict, rejectedLegacy, { status: 200, body: { url: sessionUrl } }], expected: 200 },
+      { replies: [conflict, { status: 200, body: { url: sessionUrl } }], expected: 200 },
+      { replies: [conflict, { status: 500, body: { error: { type: 'api_error' } } }], expected: 502 }
+    ]) {
+      const calls = [];
+      let reservations = 0;
+      global.fetch = async (url, options) => {
+        if (url.includes('/rest/v1/rpc/')) {
+          reservations++;
+          return normalFetch(url, options);
+        }
+        calls.push(options);
+        const reply = scenario.replies[calls.length - 1];
+        assert.ok(reply, 'must not create an extra session');
+        return { status: reply.status, ok: reply.status === 200,
+          headers: new Headers(), json: async () => reply.body };
+      };
+      // A repeat must use the same replacement key and reserve inventory only once per request.
+      for (let attempt = 0; attempt < 2; attempt++) {
+        calls.length = 0;
+        reservations = 0;
+        result = await handler(event);
+        assert.equal(result.statusCode, scenario.expected);
+        assert.equal(reservations, 1);
+        assert.equal(calls.length, scenario.replies.length);
+        assert.equal(calls[0].headers['Idempotency-Key'], requestId);
+        assert.equal(calls[1].headers['Idempotency-Key'], requestId);
+        assert.equal(calls[1].headers['Stripe-Version'], undefined);
+        assert.equal(calls[1].body.get('payment_method_types[0]'), 'card');
+        assert.equal(calls[1].body.has('allowed_payment_method_types[0]'), false);
+        if (calls[2]) {
+          assert.equal(calls[2].headers['Idempotency-Key'], `${requestId}:endive-v1`);
+          assert.equal(calls[2].body.get('allowed_payment_method_types[0]'), 'card');
+        }
+      }
+    }
   } finally {
     process.env = originalEnv;
     global.fetch = originalFetch;
