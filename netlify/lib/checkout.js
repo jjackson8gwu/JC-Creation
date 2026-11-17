@@ -4,13 +4,24 @@ const json = (statusCode, body) => ({
 });
 
 async function rpc(name, data) {
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/${name}`, {
+  const key = process.env.SUPABASE_SERVICE_KEY.trim();
+  const base = process.env.SUPABASE_URL.trim().replace(/\/+$/, '');
+  const headers = { apikey: key, 'Content-Type': 'application/json' };
+  if (!key.startsWith('sb_secret_')) headers.Authorization = `Bearer ${key}`;
+  const response = await fetch(`${base}/rest/v1/rpc/${name}`, {
     method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(data)
   });
-  if (!response.ok) throw new Error('Checkout database request failed');
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const error = new Error('Checkout database request failed');
+    error.status = response.status;
+    if (typeof body?.code === 'string' && /^(?:PGRST\d{3}|[0-9A-Z]{5})$/.test(body.code)) {
+      error.code = body.code;
+    }
+    throw error;
+  }
   return response.json();
 }
 

@@ -13,8 +13,8 @@ exports.handler = async (event) => {
   }).filter(([, value]) => !value).map(([name]) => name);
   const enabledExactly = enabled === 'true';
   const available = enabledExactly && missing.length === 0;
+  const preview = event.rawUrl?.startsWith('https://deploy-preview-2--jccreations.netlify.app/');
   if (event.httpMethod === 'GET') {
-    const preview = event.rawUrl?.startsWith('https://deploy-preview-2--jccreations.netlify.app/');
     if (!available && preview) {
       const problems = [...missing];
       if (!enabledExactly) problems.push('STRIPE_PICKUP_ENABLED must be exactly true');
@@ -26,6 +26,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST' });
   if (!available) return json(503, { error: 'Online checkout is currently unavailable.' });
 
+  let stage = 'checkout request';
   try {
     const { items, requestId } = JSON.parse(event.body || '{}');
     const allowed = new Set(products.split(',').map(id => id.trim()));
@@ -35,12 +36,15 @@ exports.handler = async (event) => {
           !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 20)) {
       return json(400, { error: 'One or more items require an order request. Use Submit Order instead.' });
     }
+    stage = 'checkout origin';
     const returnUrl = new URL('/order/', origin);
     if (returnUrl.protocol !== 'https:') throw new Error('Checkout requires HTTPS');
+    stage = 'Supabase inventory reservation';
     const reservation = await rpc('reserve_pickup_checkout', {
       request_id: requestId, requested: items.map(({ id, quantity }) => ({ id, quantity }))
     });
     if (reservation.error) return json(409, { error: reservation.error });
+    stage = 'Stripe session creation';
     const params = new URLSearchParams({
       mode: 'payment', 'payment_method_types[0]': 'card',
       success_url: `${returnUrl}?checkout=returned`, cancel_url: `${returnUrl}?checkout=canceled`,
@@ -65,7 +69,10 @@ exports.handler = async (event) => {
       return json(502, { error: 'Checkout could not start. Retry this checkout or contact us.' });
     }
     return json(200, { url: session.url });
-  } catch {
-    return json(500, { error: 'Checkout could not start. Please try again or contact us.' });
+  } catch (error) {
+    const detail = [stage, error.status && `HTTP ${error.status}`, error.code].filter(Boolean).join(' · ');
+    console.error('Checkout failed:', detail);
+    const message = 'Checkout could not start. Please try again or contact us.';
+    return json(500, { error: preview ? `${message} [${detail}]` : message });
   }
 };
