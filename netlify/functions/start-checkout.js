@@ -1,5 +1,33 @@
 const { json, rpc } = require('../lib/checkout');
 
+// Stripe messages can echo submitted values, including a rejected API key.
+// Expose only constrained identifiers and explanations written here.
+function stripeFailure(response, session) {
+  const error = session?.error || {};
+  const isSecret = value => /(?:sk_|rk_|pk_|whsec_|sb_secret_)/.test(value);
+  const token = value => typeof value === 'string' && /^[a-z_]{1,80}$/.test(value) && !isSecret(value) ? value : undefined;
+  const param = typeof error.param === 'string' && /^[a-z0-9_\[\]]{1,150}$/.test(error.param) && !isSecret(error.param)
+    ? error.param : undefined;
+  const reference = response.headers?.get('request-id');
+  const request = typeof reference === 'string' && /^req_[a-zA-Z0-9]{1,80}$/.test(reference)
+    ? reference : undefined;
+  let hint;
+  if (response.status === 401 || error.code === 'api_key_expired' || error.code === 'secret_key_required') {
+    hint = 'Check STRIPE_SECRET_KEY in Netlify: use the Stripe sandbox secret key, then redeploy the preview.';
+  } else if (response.status === 403) {
+    hint = 'The Stripe key or account does not have permission to create Checkout Sessions. Check the failed request in Stripe.';
+  } else if (param === 'expires_at') {
+    hint = 'Stripe rejected the checkout expiration time. This needs a checkout code correction.';
+  } else if (error.code === 'stripe_tax_inactive' || /activate.*stripe tax|stripe tax.*activat/i.test(error.message || '')) {
+    hint = 'Automatic tax requires Stripe Tax setup. Check STRIPE_AUTOMATIC_TAX and your Stripe Tax settings.';
+  } else if (/business name|account name|business profile/i.test(error.message || '')) {
+    hint = 'Stripe requires business profile information. Open the failed request in Stripe for the exact account field.';
+  } else if (error.code === 'amount_too_small') {
+    hint = 'The order total is below Stripe\'s minimum payment amount.';
+  }
+  return { status: response.status, type: token(error.type), code: token(error.code), param, request, hint };
+}
+
 exports.handler = async (event) => {
   const { STRIPE_SECRET_KEY: key, STRIPE_WEBHOOK_SECRET: webhook, STRIPE_CHECKOUT_ORIGIN: origin,
     STRIPE_PICKUP_PRODUCTS: products, STRIPE_PICKUP_ENABLED: enabled } = process.env;
@@ -60,13 +88,18 @@ exports.handler = async (event) => {
       params.set(`${prefix}[price_data][product_data][name]`, item.name);
     });
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-      method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Idempotency-Key': requestId,
+      method: 'POST', headers: { Authorization: `Bearer ${key.trim()}`, 'Idempotency-Key': requestId,
         'Content-Type': 'application/x-www-form-urlencoded' }, body: params
     });
     const session = await response.json();
     if (!response.ok || !session.url) {
-      console.error('Stripe session creation failed', requestId, response.status);
-      return json(502, { error: 'Checkout could not start. Retry this checkout or contact us.' });
+      const failure = stripeFailure(response, session);
+      console.error('Stripe session creation failed', requestId, failure);
+      const message = 'Checkout could not start. Retry this checkout or contact us.';
+      const detail = ['Stripe', `HTTP ${failure.status}`, failure.type, failure.code,
+        failure.param && `field ${failure.param}`, failure.request].filter(Boolean).join(' · ');
+      return json(502, { error: preview
+        ? `${message} [${detail}]${failure.hint ? ` ${failure.hint}` : ''}` : message });
     }
     return json(200, { url: session.url });
   } catch (error) {
