@@ -45,6 +45,60 @@ function promoEligibleSubtotal(promo) {
 }
 
 // Returns { discount, subtotal, total } for the current cart + applied promo.
+async function setupPickupPayment(form) {
+  const endpoint = '/.netlify/functions/start-checkout';
+  const delivery = form.querySelector('#pickup');
+  const submit = form.querySelector('[type="submit"]');
+  if (!delivery || !submit) return;
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok || !(await response.json()).available) return;
+  } catch {
+    return;
+  }
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = submit.className;
+  button.textContent = 'Pay by card for pickup';
+  const status = document.createElement('p');
+  status.setAttribute('role', 'status');
+  submit.after(button, status);
+  const update = () => { button.hidden = delivery.value !== 'pickup'; };
+  delivery.addEventListener('change', update);
+  update();
+
+  button.addEventListener('click', async () => {
+    if (delivery.value !== 'pickup') return;
+    if (appliedPromo || cart.some(item => item.colors || item.color || item.selections)) {
+      status.textContent = 'For discounts, colors, or custom options, please submit an order request.';
+      return;
+    }
+    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+    const signature = JSON.stringify(items);
+    button.disabled = true;
+    status.textContent = 'Opening secure checkout…';
+    try {
+      const previous = JSON.parse(sessionStorage.getItem('jcc-pickup-checkout') || 'null');
+      const requestId = previous?.signature === signature && Date.now() - previous.time < 45 * 60 * 1000
+        ? previous.requestId : crypto.randomUUID();
+      if (previous?.requestId !== requestId) {
+        sessionStorage.setItem('jcc-pickup-checkout', JSON.stringify({ signature, requestId, time: Date.now() }));
+      }
+      const response = await fetch(endpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestId, items })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Checkout could not start.');
+      location.assign(result.url);
+    } catch (error) {
+      status.textContent = error.message;
+      button.disabled = false;
+    }
+  });
+}
+
 function calcCartTotals() {
   const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   let discount = 0;
@@ -634,6 +688,16 @@ function initializeEventListeners() {
       openCheckout();
     });
   }
+  const pickupReturn = new URLSearchParams(location.search).get('checkout');
+  if (pickupReturn === 'returned' || pickupReturn === 'canceled') {
+    const message = document.createElement('p');
+    message.setAttribute('role', 'status');
+    message.className = 'notification';
+    message.textContent = pickupReturn === 'returned'
+      ? 'You returned from Stripe. Check your payment receipt or contact us if you need to confirm the order.'
+      : 'Checkout was exited. An incomplete checkout may hold the items until it expires.';
+    document.body.prepend(message);
+  }
   
   const pickupSelect = document.getElementById("pickup");
   if (pickupSelect) {
@@ -662,6 +726,7 @@ function initializeEventListeners() {
   
   const checkoutForm = document.getElementById("checkout-form");
   if (checkoutForm) {
+    setupPickupPayment(checkoutForm);
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -691,14 +756,6 @@ function initializeEventListeners() {
         }
       }
 
-      // NOTE: inventory is deducted only AFTER Formspree confirms the order.
-      // Deducting first meant every failed submission silently ate stock.
-      const orderItems = cart.map(item => ({
-        id:       item.id || '',
-        name:     item.name,
-        quantity: item.quantity
-      }));
-
       // ── Submit order form to Formspree via AJAX ───────────────────────────
       try {
         const formData = new FormData(checkoutForm);
@@ -709,13 +766,6 @@ function initializeEventListeners() {
         });
 
         if (res.ok) {
-          // ── Deduct inventory (best-effort, non-blocking) ──────────────────
-          fetch('/.netlify/functions/update-inventory', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ items: orderItems })
-          }).catch(err => console.warn('Inventory update failed (non-critical):', err));
-
           // ── Log the promo redemption (best-effort, non-blocking) ──────────
           if (appliedPromo && typeof window.recordPromoRedemption === 'function') {
             const t = calcCartTotals();

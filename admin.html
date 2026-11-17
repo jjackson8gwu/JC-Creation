@@ -277,7 +277,8 @@
 <div id="login-screen">
   <h1>🔐 Admin</h1>
   <p>J&amp;C Creations Inventory Manager</p>
-  <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+  <input type="email" id="admin-email" placeholder="Email" autocomplete="username" aria-label="Email">
+  <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password" aria-label="Password">
   <button id="login-btn" onclick="login()">Log In</button>
   <div id="pw-error">Incorrect password. Try again.</div>
 </div>
@@ -744,21 +745,38 @@ const STORAGE_URL  = `${SUPABASE_URL}/storage/v1/object/public/product-images`;
 const REST_URL     = `${SUPABASE_URL}/rest/v1/products`;
 const STORAGE_API  = `${SUPABASE_URL}/storage/v1/object/product-images`;
 
-const ADMIN_PASSWORD = 'jcc2024admin'; // ← change this if you want
+let adminToken = null;
 
 // ============================================================
 // AUTH
 // ============================================================
-function login() {
-  const pw = document.getElementById('pw-input').value;
-  if (pw === ADMIN_PASSWORD) {
+async function login() {
+  const button = document.getElementById('login-btn');
+  if (button.disabled) return;
+  const password = document.getElementById('pw-input');
+  const error = document.getElementById('pw-error');
+  button.disabled = true;
+  error.style.display = 'none';
+  try {
+    const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: document.getElementById('admin-email').value.trim(), password: password.value })
+    });
+    const session = await response.json();
+    if (!response.ok || !session.access_token || session.user?.app_metadata?.jcc_admin !== true) {
+      throw new Error('Admin sign-in failed');
+    }
+    adminToken = session.access_token;
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-screen').style.display  = 'block';
-    initAdmin();
-  } else {
-    document.getElementById('pw-error').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
+    document.getElementById('admin-screen').style.display = 'block';
+    await initAdmin();
+  } catch {
+    error.textContent = 'Could not sign in. Check your email and password.';
+    error.style.display = 'block';
+  } finally {
+    password.value = '';
+    button.disabled = false;
   }
 }
 document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
@@ -861,7 +879,7 @@ async function sbFetch(path, opts = {}) {
     ...opts,
     headers: {
       'apikey':        SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Authorization': `Bearer ${adminToken}`,
       'Content-Type':  'application/json',
       'Prefer':        'return=representation',
       ...(opts.headers || {})
@@ -1081,21 +1099,26 @@ async function saveAllChanges() {
     if (delta.madeToOrder !== undefined) patch.made_to_order = delta.madeToOrder;
 
     try {
-      await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(id)}`, {
+      const p = products.find(x => x.id === id);
+      let path = `/rest/v1/products?id=eq.${encodeURIComponent(id)}`;
+      if (patch.quantity !== undefined && p) {
+        path += p.quantity == null ? '&quantity=is.null' : `&quantity=eq.${encodeURIComponent(p.quantity)}`;
+      }
+      const updated = await sbFetch(path, {
         method: 'PATCH', body: JSON.stringify(patch)
       });
-      // Apply locally
-      const p = products.find(x => x.id === id);
+      if (!updated?.length) throw new Error('Inventory changed. Recheck the current count before saving.');
       if (p) Object.assign(p, delta);
+      delete changes[id];
       saved++;
     } catch (e) {
       console.error('Save failed for', id, e.message);
       errs++;
     }
   }
-  changes = {};
   renderTable();
-  toast(`✓ Saved ${saved} product${saved !== 1 ? 's' : ''}${errs ? ` (${errs} errors)` : ''}`, 3000);
+  toast(errs ? `Saved ${saved}. ${errs} changes were kept as unsaved. Check current counts before retrying.`
+    : `Saved ${saved} product${saved !== 1 ? 's' : ''}.`, 5000);
 }
 
 // ============================================================
@@ -1223,7 +1246,7 @@ async function uploadPendingImages(productId) {
       method: 'POST',
       headers: {
         'apikey':        SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Authorization': `Bearer ${adminToken}`,
         'Content-Type':  img.file.type,
       },
       body: img.file
