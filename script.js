@@ -694,23 +694,31 @@ function initializeEventListeners() {
     message.setAttribute('role', 'status');
     message.className = 'notification';
     message.textContent = pickupReturn === 'returned'
-      ? 'You returned from Stripe. Check your payment receipt or contact us if you need to confirm the order.'
+      ? 'You returned from Stripe. If your payment completed, we’ll contact you using the email provided at checkout to arrange pickup once your order is ready. Check your payment receipt or contact us if you need to confirm the order.'
       : 'Checkout was exited. An incomplete checkout may hold the items until it expires.';
     document.body.prepend(message);
   }
   
   const pickupSelect = document.getElementById("pickup");
   if (pickupSelect) {
-    pickupSelect.addEventListener("change", (e) => {
+    const pickupNote = document.createElement('p');
+    pickupNote.id = 'pickup-note';
+    pickupNote.className = 'notification';
+    pickupNote.textContent = 'We’ll contact you using the email provided at checkout to arrange pickup once your order is ready.';
+    (pickupSelect.closest('.form-group') || pickupSelect).after(pickupNote);
+    const updateDeliveryNotes = () => {
+      pickupNote.hidden = pickupSelect.value !== 'pickup';
       const note = document.getElementById("shipping-note");
       if (note) {
-        if (e.target.value === "shipping") {
+        if (pickupSelect.value === "shipping") {
           note.classList.remove("hidden");
         } else {
           note.classList.add("hidden");
         }
       }
-    });
+    };
+    pickupSelect.addEventListener('change', updateDeliveryNotes);
+    updateDeliveryNotes();
   }
   
   document.addEventListener("click", (e) => {
@@ -779,7 +787,9 @@ function initializeEventListeners() {
             });
           }
 
-          alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
+          alert(formData.get('pickup') === 'pickup'
+            ? "Order request submitted! We'll contact you with payment details and arrange pickup once your order is ready."
+            : "Order request submitted! We'll contact you with shipping costs, payment details, and order confirmation.");
           cart = [];
           saveCart(cart);
           appliedPromo = null;
