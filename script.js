@@ -45,6 +45,146 @@ function promoEligibleSubtotal(promo) {
 }
 
 // Returns { discount, subtotal, total } for the current cart + applied promo.
+function explainCardPayment(form) {
+  const info = form.querySelector('.payment-info');
+  if (info) info.textContent = 'Use the card-payment button when available, or submit an order request for other payment options. Submitting a request does not charge your card.';
+}
+
+async function setupPickupPayment(form) {
+  const endpoint = '/.netlify/functions/start-checkout';
+  const delivery = form.querySelector('#pickup');
+  const submit = form.querySelector('[type="submit"]');
+  if (!delivery || !submit) return;
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok || !(await response.json()).available) return;
+  } catch {
+    return;
+  }
+  explainCardPayment(form);
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = submit.className;
+  button.textContent = 'Pay by card for pickup';
+  const status = document.createElement('p');
+  status.setAttribute('role', 'status');
+  submit.after(button, status);
+  const update = () => { button.hidden = delivery.value !== 'pickup'; };
+  delivery.addEventListener('change', update);
+  update();
+
+  button.addEventListener('click', async () => {
+    if (delivery.value !== 'pickup') return;
+    if (appliedPromo || cart.some(item => item.colors || item.color || item.selections)) {
+      status.textContent = 'For discounts, colors, or custom options, please submit an order request.';
+      return;
+    }
+    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+    const signature = JSON.stringify(items);
+    button.disabled = true;
+    status.textContent = 'Opening secure checkout…';
+    try {
+      const previous = JSON.parse(sessionStorage.getItem('jcc-pickup-checkout') || 'null');
+      const requestId = previous?.signature === signature && Date.now() - previous.time < 45 * 60 * 1000
+        ? previous.requestId : crypto.randomUUID();
+      if (previous?.requestId !== requestId) {
+        sessionStorage.setItem('jcc-pickup-checkout', JSON.stringify({ signature, requestId, time: Date.now() }));
+      }
+      const response = await fetch(endpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestId, items })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Checkout could not start.');
+      location.assign(result.url);
+    } catch (error) {
+      status.textContent = error.message;
+      button.disabled = false;
+    }
+  });
+}
+
+async function setupShippingPayment(form) {
+  const endpoint = '/.netlify/functions/shipping-checkout';
+  const delivery = form.querySelector('#pickup');
+  const submit = form.querySelector('[type="submit"]');
+  if (!delivery || !submit) return;
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok || !(await response.json()).available) return;
+  } catch { return; }
+  explainCardPayment(form);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = submit.className;
+  button.textContent = 'Calculate shipping';
+  const status = document.createElement('p');
+  status.setAttribute('role', 'status');
+  submit.after(button, status);
+  const note = document.getElementById('shipping-note');
+  if (note) note.textContent = 'Standard USPS shipping is available to the contiguous 48 states and Washington, DC. Calculate shipping below before paying. Oversized, heavier, and custom orders require a quote.';
+  let quotedSignature = null;
+  const update = () => {
+    button.hidden = status.hidden = delivery.value !== 'shipping';
+    button.textContent = 'Calculate shipping';
+    status.textContent = '';
+    quotedSignature = null;
+  };
+  delivery.addEventListener('change', update);
+  update();
+  button.addEventListener('click', async () => {
+    if (delivery.value !== 'shipping') return;
+    if (appliedPromo || cart.some(item => item.colors || item.color || item.selections)) {
+      status.textContent = 'For discounts, colors, or custom options, please submit an order request for a shipping quote.';
+      return;
+    }
+    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+    const signature = JSON.stringify(items);
+    const quoteOnly = quotedSignature !== signature;
+    if (!quoteOnly && !form.reportValidity()) return;
+    button.disabled = true;
+    try {
+      if (quoteOnly) {
+        status.textContent = 'Calculating shipping…';
+        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'quote', items }) });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Could not calculate shipping.');
+        if (delivery.value !== 'shipping' || JSON.stringify(cart.map(({ id, quantity }) => ({ id, quantity }))) !== signature) {
+          quotedSignature = null;
+          return;
+        }
+        const dollars = cents => (cents / 100).toFixed(2);
+        quotedSignature = signature;
+        status.textContent = `USPS shipping: $${dollars(result.shippingCents)}. Estimated packed weight: ${result.packedOz} oz. Items + shipping: $${dollars(result.itemSubtotalCents + result.shippingCents)} before any applicable tax. Check your delivery address, then continue to secure payment.`;
+        button.textContent = 'Pay by card with shipping';
+        return;
+      }
+      const fields = new FormData(form);
+      const customer = { name: fields.get('name'), email: fields.get('email'), phone: fields.get('phone'),
+        address: { line1: fields.get('street'), line2: fields.get('street2') || '', city: fields.get('city'),
+          state: fields.get('state'), postal_code: fields.get('zip'), country: 'US' } };
+      const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify({ items, customer })));
+      const checkoutSignature = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+      const previous = JSON.parse(sessionStorage.getItem('jcc-shipping-checkout') || 'null');
+      const requestId = previous?.signature === checkoutSignature && Date.now() - previous.time < 45 * 60 * 1000
+        ? previous.requestId : crypto.randomUUID();
+      if (previous?.requestId !== requestId) sessionStorage.setItem('jcc-shipping-checkout', JSON.stringify({
+        signature: checkoutSignature, requestId, time: Date.now()
+      }));
+      status.textContent = 'Opening secure checkout…';
+      const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'checkout', requestId, items, customer }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Shipping checkout could not start.');
+      if (delivery.value === 'shipping') location.assign(result.url);
+    } catch (error) {
+      status.textContent = error.message;
+    } finally { button.disabled = false; }
+  });
+}
+
 function calcCartTotals() {
   const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   let discount = 0;
@@ -634,19 +774,40 @@ function initializeEventListeners() {
       openCheckout();
     });
   }
+  const pickupReturn = new URLSearchParams(location.search).get('checkout');
+  if (pickupReturn === 'returned' || pickupReturn === 'canceled') {
+    const message = document.createElement('p');
+    message.setAttribute('role', 'status');
+    message.className = 'notification';
+    const shipped = new URLSearchParams(location.search).get('fulfillment') === 'shipping';
+    message.textContent = pickupReturn === 'returned'
+      ? shipped
+        ? 'You returned from Stripe. If your payment completed, we’ll contact you using the email provided at checkout when your order is ready to ship. Check your payment receipt or contact us if you need to confirm the order.'
+        : 'You returned from Stripe. If your payment completed, we’ll contact you using the email provided at checkout to arrange pickup once your order is ready. Check your payment receipt or contact us if you need to confirm the order.'
+      : 'Checkout was exited. An incomplete checkout may hold the items until it expires.';
+    document.body.prepend(message);
+  }
   
   const pickupSelect = document.getElementById("pickup");
   if (pickupSelect) {
-    pickupSelect.addEventListener("change", (e) => {
+    const pickupNote = document.createElement('p');
+    pickupNote.id = 'pickup-note';
+    pickupNote.className = 'notification';
+    pickupNote.textContent = 'We’ll contact you using the email provided at checkout to arrange pickup once your order is ready.';
+    (pickupSelect.closest('.form-group') || pickupSelect).after(pickupNote);
+    const updateDeliveryNotes = () => {
+      pickupNote.hidden = pickupSelect.value !== 'pickup';
       const note = document.getElementById("shipping-note");
       if (note) {
-        if (e.target.value === "shipping") {
+        if (pickupSelect.value === "shipping") {
           note.classList.remove("hidden");
         } else {
           note.classList.add("hidden");
         }
       }
-    });
+    };
+    pickupSelect.addEventListener('change', updateDeliveryNotes);
+    updateDeliveryNotes();
   }
   
   document.addEventListener("click", (e) => {
@@ -662,6 +823,8 @@ function initializeEventListeners() {
   
   const checkoutForm = document.getElementById("checkout-form");
   if (checkoutForm) {
+    setupPickupPayment(checkoutForm);
+    setupShippingPayment(checkoutForm);
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -691,14 +854,6 @@ function initializeEventListeners() {
         }
       }
 
-      // NOTE: inventory is deducted only AFTER Formspree confirms the order.
-      // Deducting first meant every failed submission silently ate stock.
-      const orderItems = cart.map(item => ({
-        id:       item.id || '',
-        name:     item.name,
-        quantity: item.quantity
-      }));
-
       // ── Submit order form to Formspree via AJAX ───────────────────────────
       try {
         const formData = new FormData(checkoutForm);
@@ -709,13 +864,6 @@ function initializeEventListeners() {
         });
 
         if (res.ok) {
-          // ── Deduct inventory (best-effort, non-blocking) ──────────────────
-          fetch('/.netlify/functions/update-inventory', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ items: orderItems })
-          }).catch(err => console.warn('Inventory update failed (non-critical):', err));
-
           // ── Log the promo redemption (best-effort, non-blocking) ──────────
           if (appliedPromo && typeof window.recordPromoRedemption === 'function') {
             const t = calcCartTotals();
@@ -729,7 +877,9 @@ function initializeEventListeners() {
             });
           }
 
-          alert("Order submitted successfully! We'll contact you shortly with payment details and order confirmation.");
+          alert(formData.get('pickup') === 'pickup'
+            ? "Order request submitted! We'll contact you with payment details and arrange pickup once your order is ready."
+            : "Order request submitted! We'll contact you with shipping costs, payment details, and order confirmation.");
           cart = [];
           saveCart(cart);
           appliedPromo = null;
