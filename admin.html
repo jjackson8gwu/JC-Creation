@@ -354,12 +354,26 @@
           <th onclick="sortBy('quantity')">Qty ↕</th>
           <th>Each?</th>
           <th>Made to Order</th>
-          <th>Actions</th>
+            <th>Shipping</th>
+            <th>Actions</th>
         </tr>
       </thead>
       <tbody id="product-tbody"></tbody>
     </table>
   </div>
+  <p id="shipping-setup-note" style="font-size:0.9rem;color:#333;background:#fff;padding:12px;border-radius:8px">Shipping weights become editable after the shipping database setup is applied.</p>
+  <div id="shipping-bulk-controls" hidden style="background:#fff;padding:12px;border-radius:8px;margin-bottom:12px">
+    <label for="bulk-shipping-mode">Set shipping for the products in this filter:</label>
+    <select id="bulk-shipping-mode">
+      <option value="quote">Quote required</option>
+      <option value="standard">Standard shipping</option>
+      <option value="pickup">Pickup only</option>
+    </select>
+    <button type="button" class="btn btn-blue btn-sm" onclick="setFilteredShippingMode()">Apply to filtered products</button>
+    <small>Changes are staged until you click Save Changes. Standard shipping skips items missing weights or requiring custom options.</small>
+  </div>
+  <button type="button" class="btn btn-gray" id="reconcile-btn" onclick="reconcileCheckoutStock()">Check expired checkout reservations</button>
+  <pre id="reconcile-report" style="white-space:pre-wrap;font-size:0.85rem;background:#fff;color:#333;border-radius:8px"></pre>
   </div><!-- end tab-section inventory -->
 
   <!-- ═══════════ ORDERS TAB ═══════════ -->
@@ -427,6 +441,7 @@
           <th onclick="oSortBy('quantity')">Qty ↕</th>
           <th onclick="oSortBy('unit_price')">Price ↕</th>
           <th>Line Total</th>
+          <th>Shipping / Tax</th>
           <th>Pack Status</th>
           <th>Pay Status</th>
           <th>Notes</th>
@@ -645,6 +660,27 @@
         <textarea id="f-description" placeholder="Short description of this item"></textarea>
       </div>
 
+      <fieldset class="form-group full" id="shipping-fields" disabled>
+        <legend>Shipping</legend>
+        <label for="f-shippingMode">Shipping eligibility</label>
+        <select id="f-shippingMode">
+          <option value="quote">Shipping quote required</option>
+          <option value="standard">Standard shipping — fits normal packaging</option>
+          <option value="pickup">Pickup only</option>
+        </select>
+        <label for="f-shippingWeight">Item weight in ounces (without the box)</label>
+        <input type="number" id="f-shippingWeight" min="0.01" max="1120" step="0.01" placeholder="e.g. 5">
+        <label for="f-shippingPreset">Use an estimated weight</label>
+        <select id="f-shippingPreset" onchange="if(this.value) document.getElementById('f-shippingWeight').value=this.value">
+          <option value="">Choose a preset…</option>
+          <option value="1">Small $1/$2/$3 minis — 1 oz</option>
+          <option value="4">Fidget — 4 oz</option>
+          <option value="5">Dragon — 5 oz</option>
+          <option value="8">Pokeball / heavier item — 8 oz</option>
+        </select>
+        <small>Choose standard shipping only for items that fit your normal packaging. Bulky, fragile, or unmeasured items can stay on quote required. Packaging is added once per order.</small>
+      </fieldset>
+
       <!-- Toggles -->
       <div class="form-group full" style="display:flex;gap:20px;flex-wrap:wrap;padding:4px 0">
         <label class="checkbox-row"><input type="checkbox" id="f-requiresColor"> Requires color choice</label>
@@ -746,6 +782,7 @@ const REST_URL     = `${SUPABASE_URL}/rest/v1/products`;
 const STORAGE_API  = `${SUPABASE_URL}/storage/v1/object/product-images`;
 
 let adminToken = null;
+let shippingSchemaAvailable = false;
 
 // ============================================================
 // AUTH
@@ -894,6 +931,17 @@ async function initAdmin() {
   toast('Loading products…');
   try {
     const rows = await sbFetch('/rest/v1/products?order=display_order.asc,name.asc&limit=1000');
+    shippingSchemaAvailable = rows.length > 0 && rows.every(row =>
+      Object.hasOwn(row, 'shipping_weight_oz') && Object.hasOwn(row, 'shipping_mode'));
+    if (!rows.length) {
+      try { await sbFetch('/rest/v1/products?select=shipping_weight_oz,shipping_mode&limit=1'); shippingSchemaAvailable = true; }
+      catch { shippingSchemaAvailable = false; }
+    }
+    document.getElementById('shipping-fields').disabled = !shippingSchemaAvailable;
+    document.getElementById('shipping-bulk-controls').hidden = !shippingSchemaAvailable;
+    document.getElementById('shipping-setup-note').textContent = shippingSchemaAvailable
+      ? 'Shipping: edit item weights in ounces and choose standard, quote required, or pickup only. Save inline changes with Save All Changes.'
+      : 'Shipping weights become editable after the shipping database setup is applied. Other product edits still work.';
     products = rows.map(mapRow);
     updateStats();
     populateCatFilter();
@@ -920,6 +968,8 @@ function mapRow(r) {
     priceEach:     r.price_each      || false,
     images:        r.images          || [],
     customOptions: r.custom_options  || [],
+    shippingWeightOz: r.shipping_weight_oz == null ? null : Number(r.shipping_weight_oz),
+    shippingMode: r.shipping_mode || 'quote',
     display_order: r.display_order   || 0,
   };
 }
@@ -956,11 +1006,16 @@ function updateStats() {
 function populateCatFilter() {
   const cats = [...new Set(products.map(p => p.category).filter(Boolean))].sort();
   const sel = document.getElementById('cat-filter');
+  const selected = sel.value;
+  const all = document.createElement('option');
+  all.value = ''; all.textContent = 'All Categories';
+  sel.replaceChildren(all);
   cats.forEach(c => {
     const o = document.createElement('option');
     o.value = c; o.textContent = c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     sel.appendChild(o);
   });
+  if (cats.includes(selected)) sel.value = selected;
 }
 
 // ============================================================
@@ -972,12 +1027,12 @@ function sortBy(key) {
   renderTable();
 }
 
-function renderTable() {
+function filteredProducts() {
   const search = document.getElementById('search-input').value.toLowerCase();
   const cat    = document.getElementById('cat-filter').value;
   const stock  = document.getElementById('stock-filter').value;
 
-  let rows = products.filter(p => {
+  return products.filter(p => {
     if (search && !p.name.toLowerCase().includes(search) && !p.category.toLowerCase().includes(search)) return false;
     if (cat && p.category !== cat) return false;
     if (stock === 'out' && (p.quantity > 0 || p.madeToOrder)) return false;
@@ -986,6 +1041,26 @@ function renderTable() {
     return true;
   });
 
+}
+
+function setFilteredShippingMode() {
+  if (!shippingSchemaAvailable) return;
+  const mode = document.getElementById('bulk-shipping-mode').value;
+  let staged = 0, skipped = 0;
+  for (const product of filteredProducts()) {
+    const weight = Object.hasOwn(changes[product.id] || {}, 'shippingWeightOz')
+      ? changes[product.id].shippingWeightOz : product.shippingWeightOz;
+    if (mode === 'standard' && (!(Number(weight) > 0) || product.requiresColor || product.madeToOrder ||
+        product.priceVaries || product.customOptions.length)) { skipped++; continue; }
+    markChange(product.id, 'shippingMode', mode);
+    staged++;
+  }
+  renderTable();
+  toast(`Shipping staged for ${staged} product${staged === 1 ? '' : 's'}. ${skipped} need a weight or custom quote. Click Save Changes to save.`, 6000);
+}
+
+function renderTable() {
+  const rows = filteredProducts();
   rows.sort((a, b) => {
     let av = a[sortKey], bv = b[sortKey];
     if (typeof av === 'string') av = av.toLowerCase();
@@ -1026,6 +1101,17 @@ function renderTable() {
           onclick="toggleField('${p.id}', 'madeToOrder')">
           ${mto ? 'Yes' : 'No'}
         </button>
+      </td>
+      <td style="white-space:nowrap">
+        <input aria-label="Shipping weight in ounces" class="qty-input" type="number" min="0.01" max="1120" step="0.01"
+          value="${c.shippingWeightOz !== undefined ? (c.shippingWeightOz ?? '') : (p.shippingWeightOz ?? '')}"
+          ${shippingSchemaAvailable ? '' : 'disabled'}
+          oninput="markChange('${p.id}', 'shippingWeightOz', this.value === '' ? null : Number(this.value))"> oz
+        <select aria-label="Shipping eligibility" style="padding:6px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:0.8rem" ${shippingSchemaAvailable ? '' : 'disabled'}
+          onchange="markChange('${p.id}', 'shippingMode', this.value)">
+          ${[['quote','Quote required'],['standard','Standard shipping'],['pickup','Pickup only']].map(([value,label]) =>
+            `<option value="${value}" ${(c.shippingMode ?? p.shippingMode) === value ? 'selected' : ''}>${label}</option>`).join('')}
+        </select>
       </td>
       <td style="white-space:nowrap">
         <button class="btn btn-blue btn-sm" onclick="openEditModal('${p.id}')">✏️ Edit</button>
@@ -1097,9 +1183,18 @@ async function saveAllChanges() {
     if (delta.price !== undefined)       patch.price         = delta.price;
     if (delta.priceEach !== undefined)   patch.price_each    = delta.priceEach;
     if (delta.madeToOrder !== undefined) patch.made_to_order = delta.madeToOrder;
+    if (shippingSchemaAvailable && delta.shippingWeightOz !== undefined) patch.shipping_weight_oz = delta.shippingWeightOz;
+    if (shippingSchemaAvailable && delta.shippingMode !== undefined) patch.shipping_mode = delta.shippingMode;
 
     try {
       const p = products.find(x => x.id === id);
+      if (patch.shipping_weight_oz != null && (!Number.isFinite(patch.shipping_weight_oz) || patch.shipping_weight_oz <= 0 || patch.shipping_weight_oz > 1120)) {
+        throw new Error('Enter a shipping weight between 0.01 and 1120 ounces.');
+      }
+      const candidateWeight = Object.hasOwn(patch, 'shipping_weight_oz') ? patch.shipping_weight_oz : p?.shippingWeightOz;
+      if ((patch.shipping_mode ?? p?.shippingMode) === 'standard' && !(Number(candidateWeight) > 0)) {
+        throw new Error('Standard shipping needs an item weight.');
+      }
       let path = `/rest/v1/products?id=eq.${encodeURIComponent(id)}`;
       if (patch.quantity !== undefined && p) {
         path += p.quantity == null ? '&quantity=is.null' : `&quantity=eq.${encodeURIComponent(p.quantity)}`;
@@ -1136,6 +1231,9 @@ function openAddModal() {
   document.getElementById('f-category').value    = '';
   document.getElementById('f-colorCount').value  = '1';
   document.getElementById('f-description').value = '';
+  document.getElementById('f-shippingWeight').value = '';
+  document.getElementById('f-shippingMode').value = 'quote';
+  document.getElementById('f-shippingPreset').value = '';
   document.getElementById('f-requiresColor').checked = false;
   document.getElementById('f-madeToOrder').checked   = false;
   document.getElementById('f-priceVaries').checked   = false;
@@ -1167,6 +1265,9 @@ function openEditModal(id) {
   document.getElementById('f-category').value    = p.category;
   document.getElementById('f-colorCount').value  = p.colorCount;
   document.getElementById('f-description').value = p.description;
+  document.getElementById('f-shippingWeight').value = p.shippingWeightOz ?? '';
+  document.getElementById('f-shippingMode').value = p.shippingMode;
+  document.getElementById('f-shippingPreset').value = '';
   document.getElementById('f-requiresColor').checked = p.requiresColor;
   document.getElementById('f-madeToOrder').checked   = p.madeToOrder;
   document.getElementById('f-priceVaries').checked   = p.priceVaries;
@@ -1275,6 +1376,16 @@ async function saveProduct() {
     return;
   }
 
+  const shippingWeightText = document.getElementById('f-shippingWeight').value;
+  const shippingWeight = shippingWeightText === '' ? null : Number(shippingWeightText);
+  const shippingMode = document.getElementById('f-shippingMode').value;
+  if (shippingSchemaAvailable && (shippingWeight !== null && (!Number.isFinite(shippingWeight) || shippingWeight <= 0 || shippingWeight > 1120)
+      || shippingMode === 'standard' && shippingWeight === null)) {
+    errEl.textContent = 'Enter a positive item weight in ounces before enabling standard shipping.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   const btn = document.getElementById('save-product-btn');
   btn.disabled = true;
   btn.textContent = 'Saving…';
@@ -1304,15 +1415,18 @@ async function saveProduct() {
       images,
       custom_options: getAdminCustomOptions(),
       display_order:  editTarget ? (editTarget.display_order || 0) : products.length,
+      ...(shippingSchemaAvailable ? { shipping_weight_oz: shippingWeight, shipping_mode: shippingMode } : {}),
     };
 
     if (editTarget) {
       // UPDATE
-      await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(id)}`, {
+      const stockFilter = editTarget.quantity == null ? '&quantity=is.null' : `&quantity=eq.${encodeURIComponent(editTarget.quantity)}`;
+      const saved = await sbFetch(`/rest/v1/products?id=eq.${encodeURIComponent(id)}${stockFilter}`, {
         method: 'PATCH', body: JSON.stringify(row)
       });
+      if (!saved?.length) throw new Error('Inventory changed while this item was open. Refresh the product list and check the count before saving.');
       const idx = products.findIndex(x => x.id === id);
-      if (idx >= 0) products[idx] = mapRow(row);
+      if (idx >= 0) products[idx] = mapRow(saved[0]);
       toast('✓ Product updated!', 3000);
     } else {
       // INSERT
@@ -1339,6 +1453,27 @@ async function saveProduct() {
 // ============================================================
 // DELETE
 // ============================================================
+async function reconcileCheckoutStock() {
+  if (!confirm('Check old reservations against the Stripe account configured for this preview? Verified unpaid, expired reservations may have stock restored. Run the test cleanup before switching to live keys.')) return;
+  const button = document.getElementById('reconcile-btn');
+  const report = document.getElementById('reconcile-report');
+  button.disabled = true;
+  report.textContent = 'Checking Stripe and inventory…';
+  try {
+    const response = await fetch('/.netlify/functions/reconcile-checkouts', {
+      method: 'POST', headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Could not check reservations.');
+    report.textContent = result.report.length
+      ? result.report.map(row => `${row.kind} ${row.id}: ${row.result}`).join('\n')
+      : 'No reservations are past expiration plus the 15-minute recovery grace period.';
+    if (Object.keys(changes).length) toast('Reservation check finished. Save or discard pending edits, then refresh to see current counts.', 6000);
+    else await initAdmin();
+  } catch (error) { report.textContent = error.message; }
+  finally { button.disabled = false; }
+}
+
 function askDelete(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
@@ -1758,7 +1893,7 @@ async function loadOrders() {
 
 function updateOrderStats() {
   const unpaidRows = orders.filter(o => o.pay_status === 'Unpaid');
-  const unpaidTotal = unpaidRows.reduce((s, o) => s + (o.quantity * o.unit_price), 0);
+  const unpaidTotal = unpaidRows.reduce((s, o) => s + orderRowTotal(o), 0);
   document.getElementById('ostat-unpaid').textContent       = '$' + unpaidTotal.toFixed(2);
   document.getElementById('ostat-unpaid-count').textContent = unpaidRows.length;
   document.getElementById('ostat-package').textContent      = orders.filter(o => o.pack_status === 'Pending').length;
@@ -1782,6 +1917,10 @@ function clearOrderFilters() {
   renderOrders();
 }
 
+function orderRowTotal(order) {
+  return order.quantity * order.unit_price + Number(order.shipping_amount || 0) + Number(order.tax_amount || 0);
+}
+
 function renderOrders() {
   const search = (document.getElementById('o-search').value || '').toLowerCase();
   const pack   = document.getElementById('o-pack').value;
@@ -1803,7 +1942,7 @@ function renderOrders() {
   });
 
   // Running total
-  const total = rows.reduce((s, o) => s + (o.quantity * o.unit_price), 0);
+  const total = rows.reduce((s, o) => s + orderRowTotal(o), 0);
   document.getElementById('orders-total-value').textContent = '$' + total.toFixed(2);
   const active = [search, pack, pay, source].filter(Boolean);
   document.getElementById('orders-total-label').textContent =
@@ -1814,7 +1953,7 @@ function renderOrders() {
   const payNext   = { Unpaid: 'Paid', Paid: 'Unpaid' };
 
   document.getElementById('orders-tbody').innerHTML = rows.length === 0
-    ? '<tr><td colspan="12" style="text-align:center;color:#aaa;padding:30px">No orders match these filters.</td></tr>'
+    ? '<tr><td colspan="13" style="text-align:center;color:#aaa;padding:30px">No orders match these filters.</td></tr>'
     : rows.map(o => {
         const lineTotal = (o.quantity * o.unit_price).toFixed(2);
         const src = o.source || 'in_person';
@@ -1827,6 +1966,7 @@ function renderOrders() {
           <td style="text-align:center">${o.quantity}</td>
           <td>$${(o.unit_price || 0).toFixed(2)}</td>
           <td style="font-weight:bold">$${lineTotal}</td>
+          <td style="white-space:nowrap;font-size:0.85rem">Shipping $${Number(o.shipping_amount || 0).toFixed(2)}<br>Tax $${Number(o.tax_amount || 0).toFixed(2)}</td>
           <td>
             <button class="pack-badge pack-${o.pack_status}"
               onclick="cycleOrderStatus('${o.id}','pack_status','${o.pack_status}','${packNext[o.pack_status]}')">
@@ -1839,7 +1979,9 @@ function renderOrders() {
               ${o.pay_status}
             </button>
           </td>
-          <td style="font-size:0.8rem;color:#666;max-width:120px;overflow:hidden;text-overflow:ellipsis">${escHtml(o.notes || '')}</td>
+          <td style="font-size:0.8rem;color:#666;min-width:130px">${o.checkout_reference
+            ? `<details><summary>Delivery details</summary><p style="min-width:220px;white-space:normal">${escHtml(o.notes || '')}</p></details>`
+            : escHtml(o.notes || '')}</td>
           <td>
             <button class="btn btn-red btn-sm" onclick="deleteOrder('${o.id}')">🗑</button>
           </td>

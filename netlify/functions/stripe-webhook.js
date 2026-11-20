@@ -1,5 +1,6 @@
 const { createHmac, timingSafeEqual } = require('node:crypto');
-const { json, rpc } = require('../lib/checkout');
+const { json } = require('../lib/checkout');
+const { finalizeSession } = require('../lib/finalize-checkout');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST' });
@@ -20,17 +21,13 @@ exports.handler = async (event) => {
   try {
     const notice = JSON.parse(raw.toString('utf8'));
     const session = notice.data.object;
-    const id = session.metadata?.reservation_id;
+    const shipping = Boolean(session.metadata?.shipping_reservation_id);
+    const id = shipping ? session.metadata.shipping_reservation_id : session.metadata?.reservation_id;
     if (!id) return json(200, { received: true });
     const paid = notice.type === 'checkout.session.completed' && session.payment_status === 'paid';
     const expired = notice.type === 'checkout.session.expired';
     if (paid || expired) {
-      const result = await rpc('finish_pickup_checkout', {
-        request_id: id, stripe_session: session.id, is_paid: paid,
-        subtotal: session.amount_subtotal, currency: session.currency,
-        buyer_name: session.customer_details?.name || 'Online customer',
-        buyer_email: session.customer_details?.email || '', test_mode: !notice.livemode
-      });
+      const result = await finalizeSession(session, shipping ? 'shipping' : 'pickup', notice.livemode);
       if (!result.ok) throw new Error('Checkout not finalized');
     }
     return json(200, { received: true });
